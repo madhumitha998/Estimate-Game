@@ -1,7 +1,7 @@
 public class Player {
     private int id;
     private int position;
-    private ArrayList<Card> hand;
+    private Hand hand = new Hand();
     private int bid;
     private boolean isTrickWinner;
     private boolean isDealer;
@@ -21,9 +21,7 @@ public class Player {
     }
 
     //Hand
-    public void addToHand(Card c){
-        hand.add(c);
-    }
+    //use hand.addCard() from Hand class to set the hand for a trick
 
     public ArrayList<Card> getHand(){
         return hand;
@@ -52,7 +50,7 @@ public class Player {
         isDealer = value;
     }
 
-    public boolean getIsDealer(){
+    public boolean IsDealer(){
         return isDealer;
     }
 
