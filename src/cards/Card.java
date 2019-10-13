@@ -119,7 +119,7 @@ public class Card implements Comparable {
    * suit value.
    */
    public static void setRankMajorSort() {
-      sortRankMajorOrder = true;
+      sortRankMajorOrder = false;
    }
    
    
@@ -129,7 +129,7 @@ public class Card implements Comparable {
    * rank value.
    */
    public static void setSuitMajorSort() {
-      sortRankMajorOrder = false;
+      sortRankMajorOrder = true;
    }
    
    
