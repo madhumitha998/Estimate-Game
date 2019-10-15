@@ -1,7 +1,7 @@
 // Rank.java - John K. Estell - 8 May 2003
 // last modified: 16 Febraury 2004
 // Implementation of the "rank" value for a playing card.
-
+package cards;
 
 import java.util.*;
 

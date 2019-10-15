@@ -1,6 +1,7 @@
 // Suit.java - John K. Estell - 8 May 2003
 // last modified: 23 Febraury 2004
 // Implementation of the "suit" value for a playing card.
+package cards;
 
 import java.util.*;
 
