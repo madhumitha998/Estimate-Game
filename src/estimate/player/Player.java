@@ -6,9 +6,9 @@ public class Player {
     private boolean isTrickWinner;
     private boolean isDealer;
     
-    public Player(id,position){
-        this.id=id;
-        this.position=position;
+    public Player(int id, int position){
+        this.id = id;
+        this.position = position;
     }
 
     //Position 
