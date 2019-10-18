@@ -1,3 +1,12 @@
+/**
+* The Player class defines a player in the game
+* 
+*
+* @author  Madhumitha
+* @version 1.2
+* @since   2019-10-19 
+*/
+
 public class Player {
     private int id;
     private int position;
