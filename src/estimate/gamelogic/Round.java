@@ -1,10 +1,18 @@
+/**
+* The Round class that represents 1 round of the game
+* 
+*
+* @author  Elias
+* @version 1.1
+* @since   2019-10-18 
+*/
+
 package gamelogic;
 
 import java.util.ArrayList;
 import cards.*;
 
 public class Round {
-	private ArrayList<Prediction> playerPrediction = new ArrayList<Prediction>();
 	private int roundNumber;
 	public Deck roundDeck;
 
