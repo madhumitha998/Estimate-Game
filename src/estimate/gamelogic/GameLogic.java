@@ -24,12 +24,14 @@ public class GameLogic {
     public int getDealer(ArrayList<Player> players) {
         players.forEach(
             player-> 
-                if (player.isDealer) {
+                if (player.isDealer()) {
                     return player.id
                 } 
         );
     }
 
+
+    // set player for isTrickWinner method
     public int getTrickWinner() {
         Hashmap winnerAtIndexZero = tableHand.sort()
         int winner = winnerAtIndexZero.get(winnerAtIndexZero.keySet().toArray()[0])
@@ -40,9 +42,8 @@ public class GameLogic {
     public void setPlayersHand(ArrayList<Player> players){
         Deck d = new Deck();
         d.shuffle();
+        // deal from deck --> add to hand
         for (Player p: players){
-            // deal from deck --> add to hand
-            // TODO: addCard method in player
             p.addCard(d.dealCard())
         }
     }
