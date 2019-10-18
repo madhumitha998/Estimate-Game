@@ -42,8 +42,8 @@ public class Computer extends Player{
             }
 
         }
-        /*check how to give exact percentage without rounding */
-        return trumpAndHigherCardsCnt/totalCardsInHand;
+        /*check if it gives exact percentage without rounding */
+        return (double)trumpAndHigherCardsCnt/totalCardsInHand;
     }
 
     private int indexOfBid(double num, int numPossibleBids, int medianIndex){
