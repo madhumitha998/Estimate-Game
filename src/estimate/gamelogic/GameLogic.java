@@ -42,10 +42,9 @@ public class GameLogic {
     public void setPlayersHand(ArrayList<Player> players){
         Deck d = new Deck();
         d.shuffle();
+        // deal from deck --> add to hand
         for (Player p: players){
-            // deal from deck --> add to hand
-            // to check
-            p.hand.addCard(d.dealCard())
+            p.addCard(d.dealCard())
         }
     }
 
