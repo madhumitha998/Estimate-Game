@@ -12,7 +12,7 @@ public class Player {
     }
 
     //Position 
-    public setPosition(int position){
+    public void setPosition(int position){
         this.position=position;
     }
 
