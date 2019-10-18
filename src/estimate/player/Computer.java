@@ -57,15 +57,17 @@ public class Computer extends Player{
 
         ArrayList possibleBids = new ArrayList<>();
         //set possibleBids array
-        if(isDealer()){
-            //possible bids
-           
-        } else {
-            //possible bid : 0-5
-            for (int i=0;i<=totTricksInRound;i++){
+        for (int i=0;i<=totTricksInRound;i++){
                 possibleBids.add(i,i);
-            }        
-        }
+        } 
+        if(isDealer()){
+            /*get sumOfBidsInTrick*/
+            //dummy value for now
+            int sumOfBidsInTrick = 4;
+            int excludedValueIndex = totTricksInRound - sumOfBidsInTrick;
+            possibleBids.remove(excludedValueIndex);
+        } 
+
         int numPossibleBids = possibleBids.size();
         //medianIndex
         int medianIndex ;
