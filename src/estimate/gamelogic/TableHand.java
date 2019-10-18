@@ -1,47 +1,32 @@
+import java.util.Collections;
+
 /**
  * Table hand should be an array instead to track position.
  */
 
-// import java.util.HashMap;
-// /**
-//  * TableHand
-//  */
-// public class TableHand extends Hand {
-//     private HashMap tableHand;
+ /**
+  * TableHand
+  */
+ public class TableHand {
+    private ArrayList<PlayerCardArray> tableHand;
+    private ArrayList<PlayerCardArray> sortedTableHand;
+     
+    public TableHand() {
+        tableHand = new ArrayList<PlayerCardArray>;
+        sortedTableHand = new ArrayList<PlayerCardArray>;
+    }
 
-//     public void addCard(Player player, Card card){
-//         tableHand.put(player.getPlayerId(), card);
-//     }
+    public void addCard(Player player, Card card) {
+        PlayerCardArray playerAndCard = new PlayerCardArray(player, card);
+        tableHand.add(playerAndCard);
+        sortedTableHand.add(playerAndCard);
+        
+    }
 
-//     public void sort() {
-//         MapUtil.<int, Card>sortByValue(tableHand);
-//     }
-// }// import java.util.HashMap;
-// /**
-//  * TableHand
-//  */
-// public class TableHand extends Hand {
-//     private HashMap tableHand;
+    public ArrayList<PlayerCardArray> sortedTableHand() {
+        Collections.sort(sortedTableHand, new PlayerCardComparator());
+        return sortedTableHand;
+    }
 
-//     public void addCard(Player player, Card card){
-//         tableHand.put(player.getPlayerId(), card);
-//     // import java.util.HashMap;
-// /**
-//  * TableHand
-//  */
-// public class TableHand extends Hand {
-//     private HashMap tableHand;
 
-//     public void addCard(Player player, Card card){
-//         tableHand.put(player.getPlayerId(), card);
-//     }
-
-//     public void sort() {
-//         MapUtil.<int, Card>sortByValue(tableHand);
-//     }
-// }}
-
-//     public void sort() {
-//         MapUtil.<int, Card>sortByValue(tableHand);
-//     }
-// }
+ }

@@ -32,12 +32,16 @@ public class GameLogic {
         );
     }
 
-
     // set player for isTrickWinner method
-    public int getTrickWinner() {
-        Hashmap winnerAtIndexZero = tableHand.sort()
-
-        int winner = winnerAtIndexZero.get(winnerAtIndexZero.keySet().toArray()[0])
+    public int getTrickWinner(ArrayList<Player> players) {
+        ArrayList<PlayerCardArray> winnerAtIndexZero = (tableHand.sortedTableHand()).get(0);
+        int winner = winnerAtIndexZero.getPlayerId();
+        for (Player p: players){
+            if (p.getPlayerId == winner) {
+                p.setTrickWinner(true);
+                break;
+            }
+        }
 
         return winner;
     }
