@@ -1,20 +1,22 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cards.Deck;
 import sun.tools.tree.VarDeclarationStatement;
 /**
  * GameLogic
  */
 public class GameLogic {
 
-    private ArrayList<Cards> deckOfCards;
+    private Deck deckOfCards;
     private Card leadSuit;
     private TableHand tableHand;
     private Card trumpSuit;
     private int roundCounter;
 
     public GameLogic() {
-        private tableCards = new Hand();
+        deckOfCards = new Deck();
+        tableHand = new Hand();
     }
 
     public void setTableHand(Player player, Card playerCard) {
@@ -34,9 +36,19 @@ public class GameLogic {
     // set player for isTrickWinner method
     public int getTrickWinner() {
         Hashmap winnerAtIndexZero = tableHand.sort()
+
         int winner = winnerAtIndexZero.get(winnerAtIndexZero.keySet().toArray()[0])
 
         return winner;
+    }
+
+    public void setTrump( TableHand tableHand) {
+        if (deckOfCards.getNumberOfCardsRemaining() == 48) {
+            trumpSuit = deckOfCards.dealCard();
+        } else {
+            System.out.println("Not enough players");
+        }
+   
     }
 
     public void setPlayersHand(ArrayList<Player> players){
