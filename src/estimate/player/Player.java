@@ -6,13 +6,13 @@ public class Player {
     private boolean isTrickWinner;
     private boolean isDealer;
     
-    public Player(id,position){
+    public Player(id, position){
         this.id=id;
         this.position=position;
     }
 
     //Position 
-    public setPosition(int position){
+    public void setPosition(int position){
         this.position=position;
     }
 

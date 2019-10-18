@@ -2,11 +2,11 @@ import java.util.ArrayList;
 
 public class Computer extends Player{
 
-    public Player(id,position){
+    public Computer(int id,int position){
         super(id,position);
     }
 
-    private double countTrumpAndHigherCards(Hand myHand){
+    private double percentOfTrumpAndHigher(Hand myHand){
         List<String> namesList = Arrays.asList( "a", "q", "k","j","10","9");
         ArrayList<String> HIGH_VALUES = new ArrayList<>();
         HIGH_VALUES.addAll(namesList); 
@@ -37,10 +37,17 @@ public class Computer extends Player{
     }
 
     public void bidWinningTricks(){
+        int totTricksInRound;
         if(isDealer()){
             //possible bids
             //medianIndex
             //countTrumpAndHigherCards
+        } else {
+            totTricksInRound = //from somewhere
+            if(totTricksInRound%2==0){
+                medianIndex = totTricksInRound/2;
+            }
+            //possible bid : 0-
         }
     }
 
