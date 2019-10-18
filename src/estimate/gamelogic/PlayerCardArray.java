@@ -1,7 +1,10 @@
 import java.util.ArrayList;
 import java.lang.Comparable;
 /**
- * PlayerCardArray
+ * PlayerCardArray is an object made up of the playerId and the Card that a player plays
+ * 
+ * @author abelwong2017
+ * @version 1.0
  */
 public class PlayerCardArray implements Comparable<PlayerCardArray> {
 
