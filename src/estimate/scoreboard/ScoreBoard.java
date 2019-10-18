@@ -5,7 +5,11 @@ import java.util.HashMap;
 import java.util.Collections;
 
 public class ScoreBoard{
-	private ArrayList<Rounds> scoreBoard;
+	// Prediction: HashMap<Integer, Integer, Integer> Prediction
+	// Rounds: ArrayList<Prediction>
+	// scoreBoard: ArrayList<Rounds>
+
+	// private HashMap<Integer, Integer> scoreBoard;
 	private HashMap<Integer, Integer> totalScore;
 	// HashMap<Integer, Integer> totalScore = new HashMap<Integer, Integer>();
 
