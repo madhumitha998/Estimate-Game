@@ -14,7 +14,7 @@ public class GameLogic {
     private int roundCounter;
 
     public GameLogic() {
-        tableHand = new Hand();
+        private tableCards = new Hand();
     }
 
     public void setTableHand(Player player, Card playerCard) {
@@ -23,18 +23,18 @@ public class GameLogic {
 
     public int getDealer(ArrayList<Player> players) {
         players.forEach(
-            player-> {
-                if (player.IsDealer()) {
-                    player.getPlayerId();
-                    break;
+            player-> 
+                if (player.isDealer()) {
+                    return player.id
                 } 
-            }   
         );
     }
 
+
+    // set player for isTrickWinner method
     public int getTrickWinner() {
-        Hashmap winnerAtIndexZero = tableHand.sort();
-        int winner = winnerAtIndexZero.get(winnerAtIndexZero.keySet().toArray()[0]);
+        Hashmap winnerAtIndexZero = tableHand.sort()
+        int winner = winnerAtIndexZero.get(winnerAtIndexZero.keySet().toArray()[0])
 
         return winner;
     }
@@ -44,18 +44,9 @@ public class GameLogic {
         d.shuffle();
         for (Player p: players){
             // deal from deck --> add to hand
-            // TODO: addCard method in player
-            p.addCard(d.dealCard());
+            // to check
+            p.hand.addCard(d.dealCard())
         }
-    }
-
-    public void setLeadSuit(TableHand tablehand) {
-        if ( tablehand.size() > 1 ) {
-            this.leadSuit = tablehand.get(0);
-        } else {
-            System.out.println("No cards on the table");
-        }
-        
     }
 
 
