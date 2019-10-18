@@ -49,5 +49,14 @@ public class GameLogic {
         }
     }
 
+    public void setLeadSuit(TableHand tablehand) {
+        if ( tablehand.size() > 1 ) {
+            this.leadSuit = tablehand.get(0);
+        } else {
+            System.out.println("No cards on the table");
+        }
+        
+    }
+
 
 }
