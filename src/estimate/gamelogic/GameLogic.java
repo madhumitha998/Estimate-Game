@@ -14,7 +14,7 @@ public class GameLogic {
     private int roundCounter;
 
     public GameLogic() {
-        private tableCards = new Hand();
+        tableHand = new Hand();
     }
 
     public void setTableHand(Player player, Card playerCard) {
@@ -23,16 +23,18 @@ public class GameLogic {
 
     public int getDealer(ArrayList<Player> players) {
         players.forEach(
-            player-> 
-                if (player.isDealer) {
-                    return player.id
+            player-> {
+                if (player.IsDealer()) {
+                    player.getPlayerId();
+                    break;
                 } 
+            }   
         );
     }
 
     public int getTrickWinner() {
-        Hashmap winnerAtIndexZero = tableHand.sort()
-        int winner = winnerAtIndexZero.get(winnerAtIndexZero.keySet().toArray()[0])
+        Hashmap winnerAtIndexZero = tableHand.sort();
+        int winner = winnerAtIndexZero.get(winnerAtIndexZero.keySet().toArray()[0]);
 
         return winner;
     }
@@ -43,7 +45,7 @@ public class GameLogic {
         for (Player p: players){
             // deal from deck --> add to hand
             // TODO: addCard method in player
-            p.addCard(d.dealCard())
+            p.addCard(d.dealCard());
         }
     }
 

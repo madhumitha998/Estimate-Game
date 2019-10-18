@@ -16,6 +16,10 @@ public class Player {
         this.position=position;
     }
 
+    public int getPlayerId() {
+        return this.id;
+    }
+
     public int getPosition(){
         return position;
     }
