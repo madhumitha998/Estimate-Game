@@ -6,7 +6,7 @@ import java.util.Comparator;
  * @author abelwong2017
  * @version 1.0
  */ 
-public class PlayerCardComparator implements Comperator<PlayerCardArray> {
+public class PlayerCardComparator implements Comparator<PlayerCardArray> {
     public int compare(PlayerCardArray o1, PlayerCardArray o2) {
         return (o1.compareTo(o2));
     }
