@@ -1,3 +1,5 @@
+package estimate.gamelogic;
+
 /**
 * The Round class that represents 1 round of the game
 * 

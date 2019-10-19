@@ -1,3 +1,5 @@
+package estimate.gamelogic;
+
 import java.util.Comparator;
 /**
  * StudentComparator used to compare an array made up of PlayerCardArray
