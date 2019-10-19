@@ -1,4 +1,4 @@
-package estimate.gamelogic;;
+package estimate.gamelogic;
 
 import estimate.player.*;
 
