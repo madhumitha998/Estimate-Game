@@ -7,6 +7,7 @@
 * @since   2019-10-19 
 */
 import cards.*;
+import estimate.player.*;
 import java.util.*;
 
 public class Player {
@@ -42,7 +43,7 @@ public class Player {
     }
 
     public PlayerHand getHand(){
-        return hand;
+        return hand.getHand();
     }
 
     //Bid
