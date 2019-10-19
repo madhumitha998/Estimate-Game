@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import cards.Deck;
+import cards.*;
+import estimate.*;
 
 /**
  * Main logic of game is here. GameLogic is called by the Front end to execute business logic
