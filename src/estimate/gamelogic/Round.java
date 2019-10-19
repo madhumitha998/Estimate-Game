@@ -7,7 +7,7 @@
 * @since   2019-10-18 
 */
 
-package gamelogic;
+package estimate.gamelogic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
