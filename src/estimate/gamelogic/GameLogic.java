@@ -22,8 +22,8 @@ public class GameLogic {
 
     public GameLogic() {
         deckOfCards = new Deck();
-        tableHand = new Hand();
-        arrayOfPlayers = new AraryOfPlayers();
+        tableHand = new TableHand();
+        arrayOfPlayers = new ArrayOfPlayers();
     }
 
     public void initialisePlayers() {
