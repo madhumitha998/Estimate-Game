@@ -22,6 +22,8 @@ public class ScoreBoard{
 	private ArrayList<HashMap<Integer, ArrayList<Integer>>> roundScore;
 	private ArrayList<ArrayList<HashMap<Integer, ArrayList<Integer>>>> scoreBoard;
 	private HashMap<Integer, Integer> totalScore;
+	private int playerScore;
+	private Tricks t;
 
 	// HashMap<Integer, Integer> totalScore = new HashMap<Integer, Integer>();
 
@@ -35,10 +37,10 @@ public class ScoreBoard{
 		// set a hashmap of predictions according to player
 		// value: array of bids and tricks
 		// key: player id
-		Tricks t = new Tricks();
+		// Tricks t = new Tricks();
 		for (Player p: players){
 			ArrayList<Integer> bidAndTricksWon = new ArrayList<Integer>();
-			bidAndTricksWon.add(p.getBid(), Tricks.tricksWon(p));
+			bidAndTricksWon.add(p.getBid(), t.tricksWon(p));
 			
 			prediction.put(p.getPlayerId(), bidAndTricksWon);
 			roundScore.add(prediction);	//append prediction to roundScore, based on number of rounds
@@ -48,12 +50,11 @@ public class ScoreBoard{
 
 	public void setScore(ArrayList<Player> players) {
 		// calculates the score of each player after each round
-		int playerScore;
 		for(Player p: players){
 			if (p.getTrickWinner()){
-				playerScore = playerScore + (10 + p.getBid());
+				playerScore = playerScore + (10 + t.tricksWon(p));
 			}else{
-				playerScore = playerScore - (10 + p.getBid());
+				playerScore = playerScore - (10 + t.tricksWon(p));
 			}
 			totalScore.put(p.getPlayerId(), playerScore);
 		}
