@@ -8,7 +8,7 @@
 */
 package estimate.player;
 import cards.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.lang.Math;
 
 public class Computer extends Player{
