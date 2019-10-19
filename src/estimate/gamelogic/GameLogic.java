@@ -118,7 +118,7 @@ public class GameLogic {
      * @return returns playerId of winner
      */
     public int getTrickWinner(ArrayList<Player> players) {
-        ArrayList<PlayerCardArray> winnerAtIndexZero = (tableHand.sortedTableHand()).get(0);
+        PlayerCardArray winnerAtIndexZero = (tableHand.sortedTableHand()).get(0);
         int winner = winnerAtIndexZero.getPlayerId();
         for (Player p: players){
             if (p.getPlayerId() == winner) {
