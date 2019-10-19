@@ -12,7 +12,7 @@ import java.util.*;
 public class Player {
     private int id;
     private int position;
-    private Hand hand = new Hand();
+    private PlayerHand hand = new PlayerHand();
     private int bid;
     private boolean isTrickWinner;
     private boolean isDealer;
@@ -41,7 +41,7 @@ public class Player {
         hand.addCard(c);
     }
 
-    public ArrayList<Card> getHand(){
+    public PlayerHand getHand(){
         return hand;
     }
 

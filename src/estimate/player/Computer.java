@@ -7,7 +7,6 @@
 * @since   2019-10-19 
 */
 import cards.*;
-import estimate.*;
 import java.util.ArrayList;
 import java.lang.Math;
 
@@ -17,7 +16,7 @@ public class Computer extends Player{
         super(id,position);
     }
 
-    private double percentOfTrumpAndHigher(Hand myHand){
+    private double percentOfTrumpAndHigher(PlayerHand myHand){
         List<String> namesList = Arrays.asList( "a", "q", "k","j","10","9");
         ArrayList<String> HIGH_VALUES = new ArrayList<>();
         HIGH_VALUES.addAll(namesList); 
@@ -88,7 +87,7 @@ public class Computer extends Player{
         }
 
         //countTrumpAndHigherCards
-        Hand myHand = super.getHand();
+        PlayerHand myHand = super.getHand();
         double num = percentOfTrumpAndHigher(myHand);
 
         //index of bid
