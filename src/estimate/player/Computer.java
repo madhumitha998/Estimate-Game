@@ -88,8 +88,7 @@ public class Computer extends Player{
         }
 
         //countTrumpAndHigherCards
-        PlayerHand myHand = super.getHand();
-        double num = percentOfTrumpAndHigher(myHand);
+        double num = percentOfTrumpAndHigher(super.getHand());
 
         //index of bid
         int bidIndex= indexOfBid(num, numPossibleBids,medianIndex);

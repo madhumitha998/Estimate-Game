@@ -44,8 +44,8 @@ public class Player {
         hand.addCard(c);
     }
 
-    public ArrayList<Card> getHand(){
-        return hand.getHand();
+    public PlayerHand getHand(){
+        return hand;
     }
 
     //Bid
