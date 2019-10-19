@@ -1,6 +1,6 @@
 package gamelogic;
 
-import player.*;
+import estimate.player.*;
 
 public class Tricks{
 	private int playerTrickCounter;
