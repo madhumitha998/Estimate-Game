@@ -6,7 +6,6 @@
 * @version 1.2
 * @since   2019-10-19 
 */
-
 import cards.*;
 import estimate.*;
 import java.util.ArrayList;
@@ -102,7 +101,7 @@ public class Computer extends Player{
     }
 
     public Card playCard(){
-
+        return null;
     }
 
 

@@ -4,7 +4,7 @@
 // Uses the Card class.  Requires subclass for specifying
 // the specifics of what constitutes the evaluation of a hand 
 // for the game being implemented.
-import cards.*;
+package cards;
 
 import java.util.*;
 
