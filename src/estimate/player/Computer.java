@@ -7,7 +7,8 @@
 * @since   2019-10-19 
 */
 
-import cards;
+import cards.*;
+import estimate.*;
 import java.util.ArrayList;
 import java.lang.Math;
 

@@ -6,7 +6,8 @@
 * @version 1.2
 * @since   2019-10-19 
 */
-import cards;
+import cards.*;
+import java.util.*;
 
 public class Player {
     private int id;
