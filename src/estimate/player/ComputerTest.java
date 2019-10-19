@@ -1,3 +1,5 @@
+package estimate.player;
+
 import cards.*;
 import estimate.player.*;
 public class ComputerTest {

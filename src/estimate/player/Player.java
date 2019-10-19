@@ -6,6 +6,8 @@
 * @version 1.2
 * @since   2019-10-19 
 */
+package estimate.player;
+
 import cards.*;
 import estimate.player.*;
 import java.util.*;
