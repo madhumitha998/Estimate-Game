@@ -39,7 +39,6 @@ public class Player {
     }
 
     //Hand
-    //use hand.addCard() from Hand class to set the hand for a trick
     public void setHand(Card c){
         hand.addCard(c);
     }
