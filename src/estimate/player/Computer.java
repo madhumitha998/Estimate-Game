@@ -94,7 +94,7 @@ public class Computer extends Player{
         int bidIndex= indexOfBid(num, numPossibleBids,medianIndex);
 
         //set bid for Computer
-        int bid = possibleBids.get(bidIndex);
+        int bid = (int)possibleBids.get(bidIndex);
         super.setBid(bid);
 
     }
