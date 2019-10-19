@@ -3,6 +3,8 @@ package helperFunctions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.List;
 
 public class MapUtil {
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
