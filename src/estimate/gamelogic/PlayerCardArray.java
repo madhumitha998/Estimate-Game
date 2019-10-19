@@ -2,6 +2,7 @@ package estimate.gamelogic;
 
 import java.util.ArrayList;
 import java.lang.Comparable;
+import cards.*;
 /**
  * PlayerCardArray is an object made up of the playerId and the Card that a player plays
  * 
