@@ -3,6 +3,9 @@ import java.util.ArrayList;
 /**
  * ArrayOfPlayers Set at the start of game to initialise the group of players in the game. 
  * All edits of player attributes has to be done in this array of players
+ * 
+ * @author abelwong2017
+ * @version 1.0
  */
 public class ArrayOfPlayers {
 
