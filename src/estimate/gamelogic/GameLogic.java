@@ -11,6 +11,7 @@ import sun.tools.tree.VarDeclarationStatement;
  */
 public class GameLogic {
 
+    private ArrayOfPlayers arrayOfPlayers;
     private Deck deckOfCards;
     private Card leadSuit;
     private TableHand tableHand;
@@ -20,6 +21,21 @@ public class GameLogic {
     public GameLogic() {
         deckOfCards = new Deck();
         tableHand = new Hand();
+        arrayOfPlayers = new AraryOfPlayers();
+    }
+
+    public void initialisePlayers() {
+        Player player1 = new Player();
+
+    }
+
+    /**
+     * Sets the order of players at the start of every round 
+     */
+    public void setPlayerOrder(){
+        // First player is to the left of the dealer aka: playerIDs in ascending order
+
+        // Fringe case: the left of 4 will be 1
     }
 
     /**
@@ -65,6 +81,17 @@ public class GameLogic {
      */
     public void setTableHand(Player player, Card playerCard) {
         tableHand.addCard(player, playerCard);
+    }
+
+    /**
+     * Sets the dealer at the start of the round. 
+     */
+    public void setDealerAtStartOfRound() {
+        // If round 0, dealer is the highest card
+
+
+        // If round > 0, dealer is the person to the left of the dealer
+
     }
     
     /**
@@ -112,13 +139,23 @@ public class GameLogic {
    
     }
 
-    public void setPlayersHand(ArrayList<Player> players){
-        Deck d = new Deck();
-        d.shuffle();
+    /**
+     * Add card to player's hand
+     * Takes into account the round (different round deals different cards)
+     * @param players
+     */
+    public void setPlayersHand(ArrayOfPlayers players, Round round){
+        deckOfCards.shuffle();
+        
+        ArrayList<Player> playersArray = players.getArrayOfPlayers();
+
         // deal from deck --> add to hand
-        for (Player p: players){
-            p.addCard(d.dealCard())
+        for (Player p: playersArray){
+            p.addCard(deckOfCards.dealCard())
         }
+
+        players.updatePlayerStates(playersArray);
+
     }
 
 
