@@ -110,6 +110,7 @@ public class GameLogic {
                     return p.getPlayerId();
                 } 
         }
+        return -1;
     }
 
     /**
