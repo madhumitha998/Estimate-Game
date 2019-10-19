@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import cards.Deck;
-import sun.tools.tree.VarDeclarationStatement;
+
 /**
  * Main logic of game is here. GameLogic is called by the Front end to execute business logic
  * 
@@ -16,7 +15,7 @@ public class GameLogic {
     private Card leadSuit;
     private TableHand tableHand;
     private Card trumpSuit;
-    private int roundCounter;
+    private Round round;
 
     public GameLogic() {
         deckOfCards = new Deck();
@@ -25,8 +24,10 @@ public class GameLogic {
     }
 
     public void initialisePlayers() {
-        Player player1 = new Player();
-
+        Player player1 = new Player(1,1);
+        Player player2 = new Player(2,2);
+        Player player3 = new Player(3,3);
+        Player player4 = new Player(4,4);
     }
 
     /**
@@ -100,12 +101,12 @@ public class GameLogic {
      * @return
      */
     public int getDealer(ArrayList<Player> players) {
-        players.forEach(
-            player-> 
-                if (player.isDealer()) {
-                    return player.id
+
+        for(Player p: players) {
+            if (p.isDealer()) {
+                    return p.getPlayerId();
                 } 
-        );
+        }
     }
 
     /**
@@ -141,7 +142,7 @@ public class GameLogic {
 
     /**
      * Add card to player's hand
-     * Takes into account the round (different round deals different cards)
+     * TODO: Takes into account the round (different round deals different cards)
      * @param players
      */
     public void setPlayersHand(ArrayOfPlayers players, Round round){
@@ -151,7 +152,7 @@ public class GameLogic {
 
         // deal from deck --> add to hand
         for (Player p: playersArray){
-            p.addCard(deckOfCards.dealCard())
+            p.addCard(deckOfCards.dealCard());
         }
 
         players.updatePlayerStates(playersArray);
