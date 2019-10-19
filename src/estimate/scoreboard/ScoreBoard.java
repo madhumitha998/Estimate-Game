@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Collections;
 
+import helperFunctions.*;
+
 public class ScoreBoard{
 	private HashMap<Integer, ArrayList<Integer>> prediction;
 	private ArrayList<HashMap<Integer, ArrayList<Integer>>> roundScore;
@@ -21,27 +23,29 @@ public class ScoreBoard{
 
 	// HashMap<Integer, Integer> totalScore = new HashMap<Integer, Integer>();
 
-	public ScoreBoard(ArrayList<Player> players){
-		for(Player p: players){
-			scoreBoard.put(p.id, 0);
-		}
-	}
+	// public ScoreBoard(ArrayList<Player> players){
+	// 	for(Player p: players){
+	// 		scoreBoard.put(p.getPlayerId(), 0);
+	// 	}
+	// }
 
 	public void setPrediction(ArrayList<Player> players){
 		// set a hashmap of predictions according to player
 		// value: array of bids and tricks
 		// key: player id
+		Tricks t = new Tricks();
 		for (Player p: players){
 			ArrayList<Integer> bidAndTricksWon = new ArrayList<Integer>();
-			bidAndTricksWon.add(p.getBid(), trickswon);
+			bidAndTricksWon.add(p.getBid(), Tricks.tricksWon(p));
 			
-			prediction.put(p.id, bidAndTricksWon);
+			prediction.put(p.getPlayerId(), bidAndTricksWon);
 			roundScore.add(prediction);	//append prediction to roundScore, based on number of rounds
 			scoreBoard.add(roundScore);
 		}
 	}
 
 	public void setScore(ArrayList<Player> players) {
+		// calculates the score of each player after each round
 		int playerScore;
 		for(Player p: players){
 			if (p.getTrickWinner()){
@@ -49,22 +53,27 @@ public class ScoreBoard{
 			}else{
 				playerScore = playerScore - (10 + p.getBid());
 			}
-			totalScore.put(p.id, playerScore);
+			totalScore.put(p.getPlayerId(), playerScore);
 		}
 	}
 
-	public HashMap getWinner(Player player, int round){
+	public HashMap getWinner(int round){
+		// gets the game winner if player score >= 100 or round == 11
 		HashMap<Integer, Integer> gameWinner = new HashMap<Integer, Integer>();
 		if(round<11){
 			for (Integer i: totalScore.values()) {
 				if (i >= 100){
-					gameWinner.put(player.id, i);
+					gameWinner.put(MapUtil.getKey(totalScore, i), i);
 				}
 			}
 		}else{
 			int maxScore = (Collections.max(totalScore.values()));
-			gameWinner.put(player.id, maxScore);
+			gameWinner.put(MapUtil.getKey(totalScore, maxScore), maxScore);
 		}
 		return gameWinner;	
+	}
+
+	public HashMap viewScore(){
+		return totalScore;
 	}
 }
