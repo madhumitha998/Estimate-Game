@@ -7,7 +7,6 @@
 * @since   2019-10-19 
 */
 package estimate.player;
-
 import cards.*;
 import java.util.ArrayList;
 import java.lang.Math;

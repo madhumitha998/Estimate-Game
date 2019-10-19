@@ -44,7 +44,7 @@ public class Player {
         hand.addCard(c);
     }
 
-    public PlayerHand getHand(){
+    public ArrayList<Card> getHand(){
         return hand.getHand();
     }
 
