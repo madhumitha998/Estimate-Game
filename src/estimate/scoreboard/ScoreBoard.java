@@ -37,7 +37,6 @@ public class ScoreBoard{
 		// set a hashmap of predictions according to player
 		// value: array of bids and tricks
 		// key: player id
-		// Tricks t = new Tricks();
 		for (Player p: players){
 			ArrayList<Integer> bidAndTricksWon = new ArrayList<Integer>();
 			bidAndTricksWon.add(p.getBid(), t.tricksWon(p));
