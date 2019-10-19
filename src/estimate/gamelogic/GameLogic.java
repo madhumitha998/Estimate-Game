@@ -18,6 +18,37 @@ public class GameLogic {
         deckOfCards = new Deck();
         tableHand = new Hand();
     }
+    public void initialiseDeck() {
+        Rank aceCard = Rank.ACE;
+        Rand twoCard = Rank.TWO;
+        Rank threeCard = Rank.THREE;
+        Rand fourCard = Rank.FOUR;
+        Rank fiveCard = Rank.FIVE;
+        Rand sixCard = Rank.SIX;
+        Rank sevenCard = Rank.SEVEN;
+        Rand eightCard = Rank.EIGHT;
+        Rank nineCard = Rank.NINE;
+        Rand tenCard = Rank.TEN;
+        Rank jackCard = Rank.JACK;
+        Rand queenCard = Rank.QUEEN;
+        Rank kingCard = Rank.KING;
+
+        Suit clubs = Suit.CLUBS;
+        Suit diamonds = Suit.DIAMONDS;
+        Suit hearts = Suit.HEARTS;
+        Suit spades = Suit.SPADES;
+
+        Rank[] rankCards = {aceCard,twoCard,threeCard,fourCard,fiveCard,sixCard,sevenCard,eightCard,nineCard,tenCard,jackCard,queenCard,kingCard};
+
+        Suit[] suits = {clubs,diamonds,hearts,spades};
+
+        for (Suit suit: suits) {
+            for (Rank rank: rankCards) {
+                Card aCard = new Card(suit,rank,null);
+                deckOfCards.addCard(aCard);
+            }
+        }
+    }
 
     public void setTableHand(Player player, Card playerCard) {
         tableHand.addCard(player, playerCard);
