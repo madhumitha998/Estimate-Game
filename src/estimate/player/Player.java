@@ -70,7 +70,7 @@ public class Player {
         isDealer = value;
     }
 
-    public boolean IsDealer(){
+    public boolean isDealer(){
         return isDealer;
     }
 
