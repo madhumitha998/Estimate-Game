@@ -1,7 +1,7 @@
 package estimate.gamelogic;
 import estimate.player.*;
 
-import java.util.Collections;
+import java.util.*;
  /**
   * TableHand: Holds all the cards that players play on the table
   * Arraylist used as positioning of array indicates which player goes first
@@ -13,8 +13,8 @@ import java.util.Collections;
     private ArrayList<PlayerCardArray> sortedTableHand;
      
     public TableHand() {
-        tableHand = new ArrayList<PlayerCardArray>;
-        sortedTableHand = new ArrayList<PlayerCardArray>;
+        tableHand = new ArrayList<PlayerCardArray>();
+        sortedTableHand = new ArrayList<PlayerCardArray>();
     }
 
     /**
