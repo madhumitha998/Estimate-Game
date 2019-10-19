@@ -121,7 +121,7 @@ public class GameLogic {
         ArrayList<PlayerCardArray> winnerAtIndexZero = (tableHand.sortedTableHand()).get(0);
         int winner = winnerAtIndexZero.getPlayerId();
         for (Player p: players){
-            if (p.getPlayerId == winner) {
+            if (p.getPlayerId() == winner) {
                 p.setTrickWinner(true);
                 break;
             }
@@ -155,7 +155,7 @@ public class GameLogic {
 
         // deal from deck --> add to hand
         for (Player p: playersArray){
-            p.addCard(deckOfCards.dealCard());
+            p.setHand(deckOfCards.dealCard());
         }
 
         players.updatePlayerStates(playersArray);
