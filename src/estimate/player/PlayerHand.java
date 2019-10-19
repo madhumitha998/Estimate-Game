@@ -14,7 +14,7 @@ public class PlayerHand extends Hand {
         return 1;
     };
 
-    public PlayerHand getHand(){
+    public ArrayList<Card> getHand(){
         return hand;
     }
 }
