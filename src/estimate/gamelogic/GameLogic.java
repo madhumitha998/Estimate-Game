@@ -3,7 +3,7 @@ package estimate.gamelogic;
 import java.util.ArrayList;
 import java.util.HashMap;
 import cards.*;
-import estimate.*;
+import estimate.player.*;
 
 /**
  * Main logic of game is here. GameLogic is called by the Front end to execute business logic
@@ -47,17 +47,17 @@ public class GameLogic {
      */
     public void initialiseDeck() {
         Rank aceCard = Rank.ACE;
-        Rand twoCard = Rank.TWO;
+        Rank twoCard = Rank.TWO;
         Rank threeCard = Rank.THREE;
-        Rand fourCard = Rank.FOUR;
+        Rank fourCard = Rank.FOUR;
         Rank fiveCard = Rank.FIVE;
-        Rand sixCard = Rank.SIX;
+        Rank sixCard = Rank.SIX;
         Rank sevenCard = Rank.SEVEN;
-        Rand eightCard = Rank.EIGHT;
+        Rank eightCard = Rank.EIGHT;
         Rank nineCard = Rank.NINE;
-        Rand tenCard = Rank.TEN;
+        Rank tenCard = Rank.TEN;
         Rank jackCard = Rank.JACK;
-        Rand queenCard = Rank.QUEEN;
+        Rank queenCard = Rank.QUEEN;
         Rank kingCard = Rank.KING;
 
         Suit clubs = Suit.CLUBS;
