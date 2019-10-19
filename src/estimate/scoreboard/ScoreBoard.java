@@ -33,9 +33,10 @@ public class ScoreBoard{
 		// set a hashmap of predictions according to player
 		// value: array of bids and tricks
 		// key: player id
+		Tricks t = new Tricks();
 		for (Player p: players){
 			ArrayList<Integer> bidAndTricksWon = new ArrayList<Integer>();
-			bidAndTricksWon.add(p.getBid(), trickswon);
+			bidAndTricksWon.add(p.getBid(), Tricks.tricksWon(p));
 			
 			prediction.put(p.getPlayerId(), bidAndTricksWon);
 			roundScore.add(prediction);	//append prediction to roundScore, based on number of rounds
