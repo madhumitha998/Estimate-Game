@@ -1,1 +1,1 @@
-javac -d classes -sourcepath src src/ComputerTest.java;
+javac -d classes -cp src src/estimate/gamelogic/GameLogic.java
