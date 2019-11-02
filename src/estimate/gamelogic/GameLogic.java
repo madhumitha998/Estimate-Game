@@ -31,6 +31,10 @@ public class GameLogic {
         Player player2 = new Player(2,2);
         Player player3 = new Player(3,3);
         Player player4 = new Player(4,4);
+        arrayOfPlayers.addPlayer(player1);
+        arrayOfPlayers.addPlayer(player2);
+        arrayOfPlayers.addPlayer(player3);
+        arrayOfPlayers.addPlayer(player4);
     }
 
     /**
@@ -40,6 +44,10 @@ public class GameLogic {
         // First player is to the left of the dealer aka: playerIDs in ascending order
 
         // Fringe case: the left of 4 will be 1
+    }
+
+    public Deck getDeck() {
+        return deckOfCards;
     }
 
     /**
