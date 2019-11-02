@@ -1,1 +1,0 @@
-javac -d classes -cp src src/estimate/gamelogic/GameLogic.java
