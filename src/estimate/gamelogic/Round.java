@@ -22,9 +22,9 @@ public class Round {
 		this.roundNumber = roundNumber;
 	}
 
-	public Round(){
-		roundDeck = new Deck();
-	}
+	// public Round(){
+	// 	roundDeck = new Deck();
+	// }
 
 	public void setRound(int roundNumber){
 		this.roundNumber = roundNumber;
