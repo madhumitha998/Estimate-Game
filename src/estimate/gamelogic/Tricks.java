@@ -3,12 +3,16 @@ package estimate.gamelogic;
 import estimate.player.*;
 
 public class Tricks{
-	private int playerTrickCounter;
+	private int trick;
 
-	public int tricksWon(Player player){
+	public Tricks(){
+		int trick = 0;
+	}
+
+	public int calculateTricksWon(Player player){
 		if (player.getTrickWinner()){
-			playerTrickCounter++;
-		}		
-		return playerTrickCounter;
+			trick++;
+		}
+		return trick;
 	}
 }
