@@ -75,7 +75,7 @@ public class Player {
 
     /**
      * Remove Card from hand
-     * @param c
+     * @param
      * @return
      */
     public Card removeFromHand(int cardIndex){
@@ -133,5 +133,8 @@ public class Player {
         isDealer = value;
     }
 
+    public String toString() {
+        return String.format("%s", this.getPlayerId());
+    }
 
 }

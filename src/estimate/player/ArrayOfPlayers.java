@@ -11,11 +11,8 @@ import java.util.ArrayList;
  */
 public class ArrayOfPlayers {
 
-    private ArrayList<Player> players;
+    private ArrayList<Player> players = new ArrayList<>();
 
-    public ArrayOfPlayers() {
-        players = new ArrayList<>();
-    }
 
     public void addPlayer(Player player){
         players.add(player);
@@ -23,6 +20,10 @@ public class ArrayOfPlayers {
 
     public Player getPlayerByIndex(int index) {
         return players.get(index);
+    }
+
+    public int getNumberOfPlayers() {
+        return players.size();
     }
 
     public ArrayList<Player> getArrayOfPlayers() {

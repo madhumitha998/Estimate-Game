@@ -14,7 +14,7 @@ public class PlayerCardArray implements Comparable<PlayerCardArray> {
     int playerId;
     Card playerCard;
     
-    PlayerCardArray(int playerId, Card playerCard) {
+    public PlayerCardArray(int playerId, Card playerCard) {
         this.playerId = playerId;
         this.playerCard = playerCard;
     }
