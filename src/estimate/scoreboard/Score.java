@@ -1,9 +1,15 @@
+/**
+* The Score class that keeps track of the score for 1 round
+* 
+*
+* @author  Elias
+* @version 1
+* 
+*/
+
 package estimate.scoreboard;
 
 import java.util.*;
-
-// import estimate.player.*;
-// import estimate.gamelogic.*;
 
 
 public class Score {
