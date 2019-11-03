@@ -20,62 +20,115 @@ public class Player {
     private boolean isTrickWinner;
     private boolean isDealer;
     
+    /**
+     * Initialise a player with its ID and position
+     * @param id
+     * @param position
+     */
     public Player(int id, int position){
         this.id = id;
         this.position = position;
     }
 
-    //Position 
-    public void setPosition(int position){
-        this.position=position;
-    }
-
+    /**
+     * Get the Player's ID
+     * @return
+     */
     public int getPlayerId() {
         return this.id;
     }
 
+    /**
+     * Get the Position of the player
+     * @return
+     */
     public int getPosition(){
         return position;
     }
 
-    //Hand
-    public void setHand(Card c){
-        hand.addCard(c);
+
+    /**
+     * Set the Position of the player
+     * @param position
+     */
+    public void setPosition(int position){
+        this.position=position;
     }
 
+
+    /**
+     * Returns the player's hand. PlayerHand is a separate class
+     * @return
+     */
     public PlayerHand getHand(){
         return hand;
     }
 
-    //Bid
-    public void setBid(int bid){
-        this.bid = bid;
+    /**
+     * Adds a card to the player's Hand. PlayerHand is a class
+     * @param c
+     */
+    public void setHand(Card c){
+        hand.addCard(c);
     }
 
+
+    /**
+     * Remove Card from hand
+     * @param c
+     * @return
+     */
+    public Card removeFromHand(Card c){
+        return hand.removeCard(c);
+    }
+
+    /**
+     * Get Player's bid for the current round
+     * @return
+     */
     public int getBid(){
         return bid;
     }
 
-    //TrickWinner
-    public void setTrickWinner(boolean value){
-        isTrickWinner = value;
+    /**
+     * Sets the current bid for the current round
+     * @param bid
+     */
+    public void setBid(int bid){
+        this.bid = bid;
     }
 
+    /**
+     * Tells you if player is the trick winner. 
+     * @return
+     */
     public boolean getTrickWinner(){
         return isTrickWinner;
     }
 
-    //IsDealer
-    public void setIsDealer(boolean value){
-        isDealer = value;
+    /**
+     * Sets isTrickWinner Status to true / false
+     * @param value
+     */
+    public void setTrickWinner(boolean value){
+        isTrickWinner = value;
     }
 
+    /**
+     * Returns the status of the dealer
+     * @return
+     */
     public boolean isDealer(){
         return isDealer;
     }
 
-    public Card removeCard(Card c){
-        return hand.removeCard(c);
+    /**
+     * Sets dealer status to true / false
+     * @param value
+     */
+    public void setIsDealer(boolean value){
+        isDealer = value;
     }
+
 
 }
