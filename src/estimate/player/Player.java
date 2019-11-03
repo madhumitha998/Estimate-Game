@@ -74,5 +74,8 @@ public class Player {
         return isDealer;
     }
 
+    public void removeCard(Card c){
+        hand.removeCard(c);
+    }
 
 }
