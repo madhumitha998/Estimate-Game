@@ -29,10 +29,10 @@ public class GameLogic {
     }
 
     public void initialisePlayers() {
-        Player player1 = new Player(1,1);
-        Player player2 = new Player(2,2);
-        Player player3 = new Player(3,3);
-        Player player4 = new Player(4,4);
+        Player player1 = new Player(0,0);
+        Player player2 = new Player(1,1);
+        Player player3 = new Player(2,2);
+        Player player4 = new Player(3,3);
         arrayOfPlayers.addPlayer(player1);
         arrayOfPlayers.addPlayer(player2);
         arrayOfPlayers.addPlayer(player3);
@@ -115,25 +115,24 @@ public class GameLogic {
     /**
      * Sets the dealer at the start of the round. 
      */
-    public void setDealerAtStartOfRound() {
-        // If round 0, dealer is the highest card
-        ArrayList<Player> playersArray = this.arrayOfPlayers.getArrayOfPlayers();
-        for (Player p: playersArray){
-            p.setHand(this.deckOfCards.dealCard());
-        }
-        for (Player p: playersArray) {
-            Card highestCard = p.getHand().getHighestCard();
-            tableHand.addCard(p, p.removeCard(highestCard));
-        }
-        int theDealerIndex = tableHand.sortedTableHand().get(0).getPlayerId();
-
-        playersArray.get(theDealerIndex).setIsDealer(true);
-
-        this.arrayOfPlayers.updatePlayerStates(playersArray);
-
-        // If round > 0, dealer is the person to the left of the dealer
-
-    }
+//    public void setDealerAtStartOfRound() {
+//        // If round 0, dealer is the highest card
+//        ArrayList<Player> playersArray = this.arrayOfPlayers.getArrayOfPlayers();
+//        for (Player p: playersArray){
+//            p.setHand(this.deckOfCards.dealCard());
+//        }
+//        for (Player p: playersArray) {
+//
+//        }
+//        int theDealerIndex = tableHand.sortedTableHand().get(0).getPlayerId();
+//
+//        playersArray.get(theDealerIndex).setIsDealer(true);
+//
+//        this.arrayOfPlayers.updatePlayerStates(playersArray);
+//
+//        // If round > 0, dealer is the person to the left of the dealer
+//
+//    }
     
     /**
      * Checks the players to see who the dealer is

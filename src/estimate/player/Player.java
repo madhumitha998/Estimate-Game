@@ -78,8 +78,8 @@ public class Player {
      * @param c
      * @return
      */
-    public Card removeFromHand(Card c){
-        return hand.removeCard(c);
+    public Card removeFromHand(int cardIndex){
+        return hand.removeCard(cardIndex);
     }
 
     /**
