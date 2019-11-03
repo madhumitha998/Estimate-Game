@@ -32,12 +32,13 @@ public class TestComputer {
     }
     @Test
     public void indexOfBidTest() {
-
-
+        Computer com1 = new Computer(0,3);
+        assertEquals(0, com1.indexOfBid(0.25, 4, 2));
+        assertEquals(2, com1.indexOfBid(0.65, 4, 1));
     }
     @Test
     public void bidWinningTricksTest() {
-
+        Computer com1 = new Computer(0,3);
 
     }
 }

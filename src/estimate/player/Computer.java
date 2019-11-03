@@ -47,12 +47,12 @@ public class Computer extends Player{
         return (double)trumpAndHigherCardsCnt/totalCardsInHand;
     }
 
-    public int indexOfBid(double num, int numPossibleBids, int medianIndex){
-        if(num<=0.25){
+    public int indexOfBid(double percentOfTrumpAndHigher, int numPossibleBids, int medianIndex){
+        if(percentOfTrumpAndHigher<=0.25){
             return Math.max(0,medianIndex-2);
-        } else if (num<=0.50){
+        } else if (percentOfTrumpAndHigher<=0.50){
             return Math.max(0,medianIndex-1);
-        } else if (num<=0.75){
+        } else if (percentOfTrumpAndHigher<=0.75){
             return Math.min(numPossibleBids-1,medianIndex+1);
         } else {
             return Math.min(numPossibleBids-1,medianIndex+2);
