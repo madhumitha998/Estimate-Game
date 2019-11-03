@@ -32,14 +32,14 @@ public class ScoreBoard{
     /**
      * calculates the score of each player after each round
      */
-	public static List calculateRoundPlayerScore(ArrayList<Player> players) {
+	public List calculateRoundPlayerScore(ArrayList<Player> players) {
 		List roundPlayerScores = new ArrayList<Integer>();
 		for (Player p: players){
 			int playerScore = 0;
 			if (p.getTrickWinner()){
-				playerScore = playerScore + (10 + t.tricksWon(p));
+				playerScore = playerScore + (10 + tricks.calculateTricksWon(p));
 			}else{
-				playerScore = playerScore - (10 + t.tricksWon(p));
+				playerScore = playerScore - (10 + tricks.calculateTricksWon(p));
 			}
 			roundPlayerScores.add(playerScore);
 		}
@@ -50,7 +50,7 @@ public class ScoreBoard{
 	/**
      * gets the bid amount of each player after each round
      */
-	public static List getRoundBids(ArrayList<Player> players){
+	public List getRoundBids(ArrayList<Player> players){
 		List roundBids = new ArrayList<Integer>();
 		for (Player p: players){
 			roundBids.add(p.getBid());
@@ -62,10 +62,10 @@ public class ScoreBoard{
 	/**
      * gets the total tricks won of each player after each round
      */
-	public static List getTricksWon(ArrayList<Player> players){
+	public List getTricksWon(ArrayList<Player> players){
 		List tricksWon = new ArrayList<Integer>();
 		for (Player p: players){
-			tricksWon.add(t.tricksWon(p));
+			tricksWon.add(tricks.calculateTricksWon(p));
 		}
 		return tricksWon;
 	}
