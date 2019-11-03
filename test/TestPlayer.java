@@ -31,6 +31,11 @@ public class TestPlayer {
         // Remove Form hand
         player1.removeFromHand(0);
         assertEquals(0, player1.getHand().getHand().size());
+
+        // Remove with Card
+        player1.setHand(testCard);
+        player1.removeFromHand(testCard);
+        assertEquals(0, player1.getHand().getHand().size());
     }
 
 }
