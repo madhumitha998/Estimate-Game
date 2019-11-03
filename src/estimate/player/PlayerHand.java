@@ -15,6 +15,7 @@ public class PlayerHand extends Hand {
         return 1;
     };
 
+<<<<<<< HEAD
    public Card getHighestCard(){
        ArrayList<Card> sortHand = Collections.sort( hand );
        int size = sortHand.getNumberOfCards();
@@ -26,6 +27,8 @@ public class PlayerHand extends Hand {
         return sortHand.get(0);
     }
 
+=======
+>>>>>>> bd951e4bca527259940e34dc241a82a015a68b0c
     public ArrayList<Card> getHand(){
         return hand;
     }
