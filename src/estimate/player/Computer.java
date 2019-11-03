@@ -105,9 +105,9 @@ public class Computer extends Player{
         //if computer is first player, position should be 1
         if(getPosition()==1){
             if(bid>0){
-                hand.evaluateHand("Highest");
+                return hand.getHighestCard();
             } else {
-                hand.evaluateHand("Lowest");
+                return hand.getLowestCard();
             }
         } 
         

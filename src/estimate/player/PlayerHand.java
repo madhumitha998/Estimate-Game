@@ -9,10 +9,21 @@ public class PlayerHand extends Hand {
     public PlayerHand(){
     }
 
-    public int evaluateHand(String condition){
+    public int evaluateHand(){
         /* dummy return value for now */
         return 1;
     };
+
+    public Card getHighestCard(){
+        hand.sort();
+        int size = hand.getNumberOfCards();
+        return hand.get(size-1);   
+    }
+
+    public Card getLowestCard(){
+        hand.sort();
+        return hand.get(0);     
+    }
 
     public ArrayList<Card> getHand(){
         return hand;
