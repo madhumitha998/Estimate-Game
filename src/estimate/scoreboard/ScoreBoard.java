@@ -37,9 +37,9 @@ public class ScoreBoard{
 		for (Player p: players){
 			int playerScore = 0;
 			if (p.getTrickWinner()){
-				playerScore = playerScore + (10 + t.tricksWon(p));
+				playerScore = playerScore + (10 + tricks.calculateTricksWon(p));
 			}else{
-				playerScore = playerScore - (10 + t.tricksWon(p));
+				playerScore = playerScore - (10 + tricks.calculateTricksWon(p));
 			}
 			roundPlayerScores.add(playerScore);
 		}
