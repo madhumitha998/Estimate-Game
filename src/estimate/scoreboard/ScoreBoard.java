@@ -3,79 +3,126 @@
 * 
 *
 * @author  Elias
-* @version 1.3
+* @version 2
 * @since   2019-10-18 
 */
 
-package scoreboard;
+package estimate.scoreboard;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Collections;
+import java.util.*;
 
 import estimate.player.*;
 import estimate.gamelogic.*;
 import helperFunctions.*;
 
 public class ScoreBoard{
-	private HashMap<Integer, ArrayList<Integer>> prediction;
-	private ArrayList<HashMap<Integer, ArrayList<Integer>>> roundScore;
-	private ArrayList<ArrayList<HashMap<Integer, ArrayList<Integer>>>> scoreBoard;
-	private HashMap<Integer, Integer> totalScore;
-	private int playerScore;
-	private Tricks t;
+	private ArrayList<Integer> roundPlayerScores;
+	private ArrayList<Integer> roundBids;
+	private ArrayList<Integer> tricksWon;
+	private HashMap<Integer, Score> totalScore;
+	private ArrayList<Integer> cumulativePlayerScore;
+	private Tricks tricks;
+	private Round round;
 
-	// HashMap<Integer, Integer> totalScore = new HashMap<Integer, Integer>();
-
-	// public ScoreBoard(ArrayList<Player> players){
-	// 	for(Player p: players){
-	// 		scoreBoard.put(p.getPlayerId(), 0);
-	// 	}
-	// }
-
-	public void setPrediction(ArrayList<Player> players){
-		// set a hashmap of predictions according to player
-		// value: array of bids and tricks
-		// key: player id
-		for (Player p: players){
-			ArrayList<Integer> bidAndTricksWon = new ArrayList<Integer>();
-			bidAndTricksWon.add(p.getBid(), t.tricksWon(p));
-			
-			prediction.put(p.getPlayerId(), bidAndTricksWon);
-			roundScore.add(prediction);	//append prediction to roundScore, based on number of rounds
-			scoreBoard.add(roundScore);
-		}
+	public ScoreBoard(){
+		totalScore = new HashMap<Integer, Score>();
+		cumulativePlayerScore = new ArrayList<Integer>(Collections.nCopies(4,0));
 	}
 
-	public void setScore(ArrayList<Player> players) {
-		// calculates the score of each player after each round
-		for(Player p: players){
+    /**
+     * calculates the score of each player after each round
+     */
+	public static List calculateRoundPlayerScore(ArrayList<Player> players) {
+		List roundPlayerScores = new ArrayList<Integer>();
+		for (Player p: players){
+			int playerScore = 0;
 			if (p.getTrickWinner()){
 				playerScore = playerScore + (10 + t.tricksWon(p));
 			}else{
 				playerScore = playerScore - (10 + t.tricksWon(p));
 			}
-			totalScore.put(p.getPlayerId(), playerScore);
+			roundPlayerScores.add(playerScore);
+		}
+		return roundPlayerScores;
+	}
+
+
+	/**
+     * gets the bid amount of each player after each round
+     */
+	public static List getRoundBids(ArrayList<Player> players){
+		List roundBids = new ArrayList<Integer>();
+		for (Player p: players){
+			roundBids.add(p.getBid());
+		}
+		return roundBids;
+	}
+
+
+	/**
+     * gets the total tricks won of each player after each round
+     */
+	public static List getTricksWon(ArrayList<Player> players){
+		List tricksWon = new ArrayList<Integer>();
+		for (Player p: players){
+			tricksWon.add(t.tricksWon(p));
+		}
+		return tricksWon;
+	}
+
+
+	/**
+     * calculates the cumulative score for each player
+     */
+	public void getCumulativePlayerScore(){
+		for (int i = 0; i < 4; i++){
+			roundPlayerScores.set(i, (roundPlayerScores.get(i) + cumulativePlayerScore.get(i)));
 		}
 	}
 
-	public HashMap getWinner(int round){
-		// gets the game winner if player score >= 100 or round == 11
+
+	/**
+     * gets the score for the current round
+     */
+	public Score getCurrentScore(ArrayList<Player> players){
+		Score score = new Score(roundBids, tricksWon, roundPlayerScores);
+		return score;
+	}
+
+
+	/**
+     * updates the total score with the current score for the round
+     */
+	public void updateFullScore(Score score){
+		int roundNumber = round.getRound();
+		totalScore.put(roundNumber, score);
+	}
+
+
+	/**
+     * returns the totalscore
+     */
+	public HashMap viewScore(){
+		return totalScore;
+	}
+
+
+	/**
+     * returns the game winner if player score >= 100 or round == 11
+     */
+	public HashMap getWinner(){
 		HashMap<Integer, Integer> gameWinner = new HashMap<Integer, Integer>();
-		if(round<11){
-			for (Integer i: totalScore.values()) {
-				if (i >= 100){
-					gameWinner.put(MapUtil.getKey(totalScore, i), i);
+
+		if (round.getRound() < 11){
+			for (int i = 0; i < cumulativePlayerScore.size(); i++) {
+				if (cumulativePlayerScore.get(i) >= 100){
+					gameWinner.put(i, cumulativePlayerScore.get(i));
 				}
 			}
 		}else{
-			int maxScore = (Collections.max(totalScore.values()));
-			gameWinner.put(MapUtil.getKey(totalScore, maxScore), maxScore);
+			int maxScore = Collections.max(cumulativePlayerScore);
+			gameWinner.put(cumulativePlayerScore.indexOf(maxScore), maxScore);
 		}
 		return gameWinner;	
-	}
-
-	public HashMap viewScore(){
-		return totalScore;
 	}
 }
