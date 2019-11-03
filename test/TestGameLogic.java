@@ -16,14 +16,14 @@ public class TestGameLogic {
         assertEquals(test.getDeck().getSizeOfDeck(), 0);
     }
     @Test
-    public void initializeDeck() {
+    public void testInitializeDeck() {
         GameLogic test = new GameLogic();
         test.initialiseDeck();
         assertEquals(test.getDeck().getSizeOfDeck(), 52);
     }
 
     @Test
-    public void setPlayerHand() {
+    public void testSetPlayerHand() {
 //        Check that there are no cards at first
         GameLogic test = new GameLogic();
         test.initialisePlayers();

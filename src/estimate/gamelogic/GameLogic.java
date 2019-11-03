@@ -1,6 +1,7 @@
 package estimate.gamelogic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import cards.*;
 import estimate.player.*;
@@ -202,8 +203,10 @@ public class GameLogic {
             }
             System.out.println("added once");
         }
+        Collections.sort(playerReceivingCardOrder, (a, b ) -> a.getPlayerId() - b.getPlayerId());
+        System.out.println(playerReceivingCardOrder.get(0).getPlayerId());
 
-        this.arrayOfPlayers.updatePlayerStates(playersArray);
+        this.arrayOfPlayers.updatePlayerStates(playerReceivingCardOrder);
 
     }
 
