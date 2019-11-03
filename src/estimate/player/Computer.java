@@ -38,7 +38,7 @@ public class Computer extends Player{
             }
 
             //check if card is High value 
-            if (HIGH_VALUES.contains(c.getRank().getSymbol()) ) {
+            else if (HIGH_VALUES.contains(c.getRank().getSymbol()) ) {
                 trumpAndHigherCardsCnt+=1;
             }
 
