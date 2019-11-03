@@ -90,6 +90,7 @@ public abstract class Hand implements Comparable {
    * Sorts the card in the hand.
    * Sort is performed according to the order specified in the {@link Card} class.
    */
+   //uses compareTo method in Card to do the sorting
    public void sort() {
       Collections.sort( hand );
    }

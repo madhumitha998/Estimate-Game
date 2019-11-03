@@ -9,7 +9,7 @@ public class PlayerHand extends Hand {
     public PlayerHand(){
     }
 
-    public int evaluateHand(){
+    public int evaluateHand(String condition){
         /* dummy return value for now */
         return 1;
     };

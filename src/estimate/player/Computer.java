@@ -100,7 +100,19 @@ public class Computer extends Player{
     }
 
     public Card playCard(){
+        int bid = getBid();
+        PlayerHand hand = getHand();
+        //if computer is first player, position should be 1
+        if(getPosition()==1){
+            if(bid>0){
+                hand.evaluateHand("Highest");
+            } else {
+                hand.evaluateHand("Lowest");
+            }
+        } 
+        
         return null;
+        //If computer is first player then he will be trickwinner for prev trick
     }
 
 
