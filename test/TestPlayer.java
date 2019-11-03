@@ -37,3 +37,4 @@ public class TestPlayer {
         player1.removeFromHand(testCard);
         assertEquals(0, player1.getHand().getHand().size());
     }
+}
