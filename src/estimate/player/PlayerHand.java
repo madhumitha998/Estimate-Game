@@ -16,15 +16,13 @@ public class PlayerHand extends Hand {
     };
 
     public Card getHighestCard(){
-        Hand sortHand = (Hand)hand ;
-        sortHand.sort();
+        ArrayList<Card> sortHand = Collections.sort( hand );
         int size = sortHand.getNumberOfCards();
         return sortHand.get(size-1);   
     }
 
     public Card getLowestCard(){
-        Hand sortHand = (Hand)hand ;
-        sortHand.sort();
+        ArrayList<Card> sortHand = Collections.sort( hand );
         return sortHand.get(0);     
     }
 

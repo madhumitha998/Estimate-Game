@@ -112,7 +112,6 @@ public class Computer extends Player{
         } 
         
         return null;
-        //If computer is first player then he will be trickwinner for prev trick
     }
 
 
