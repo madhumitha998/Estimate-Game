@@ -44,7 +44,7 @@ public class GameLogic {
      */
     public ArrayOfPlayers startNewGame() {
         initialiseDeck();
-//        setDealerAtStartOfRound();
+        setDealerAtStartOfRound();
         setPlayersHand(round);
         setTrump();
         return getArrayOfPlayers();
@@ -53,7 +53,24 @@ public class GameLogic {
     public ArrayOfPlayers getArrayOfPlayers() {
         return this.arrayOfPlayers;
     }
-    
+
+    /**
+     * Sets the dealer at the start of the round.
+     */
+    public void setDealerAtStartOfRound() {
+        // If round 0, dealer is the highest card
+        ArrayList<Player> playersArray = this.arrayOfPlayers.getArrayOfPlayers();
+        for (Player p: playersArray){
+            tableHand.addCard(p, deckOfCards.dealCard());
+        }
+
+        int theDealerIndex = tableHand.sortedTableHand().get(0).getPlayerId();
+        playersArray.get(theDealerIndex).setIsDealer(true);
+        this.arrayOfPlayers.updatePlayerStates(playersArray);
+        // If round > 0, dealer is the person to the left of the dealer
+
+    }
+
     /**
      * Sets the order of players at the start of every round 
      */
@@ -112,23 +129,6 @@ public class GameLogic {
     public void setTableHand(Player player, Card playerCard) {
         tableHand.addCard(player, playerCard);
     }
-
-    /**
-     * Sets the dealer at the start of the round. 
-     */
-   public void setDealerAtStartOfRound() {
-       // If round 0, dealer is the highest card
-       ArrayList<Player> playersArray = this.arrayOfPlayers.getArrayOfPlayers();
-       for (Player p: playersArray){
-           tableHand.addCard(p, deckOfCards.dealCard());
-       }
-    
-       int theDealerIndex = tableHand.sortedTableHand().get(0).getPlayerId();
-       playersArray.get(theDealerIndex).setIsDealer(true);
-       this.arrayOfPlayers.updatePlayerStates(playersArray);
-       // If round > 0, dealer is the person to the left of the dealer
-
-   }
     
     /**
      * Checks the players to see who the dealer is
