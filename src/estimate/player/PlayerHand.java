@@ -15,15 +15,15 @@ public class PlayerHand extends Hand {
         return 1;
     };
 
-    public Card getHighestCard(){
-        ArrayList<Card> sortHand = Collections.sort( hand );
-        int size = sortHand.getNumberOfCards();
-        return sortHand.get(size-1);   
-    }
+   public Card getHighestCard(){
+       ArrayList<Card> sortHand = Collections.sort( hand );
+       int size = sortHand.getNumberOfCards();
+       return sortHand.get(size-1);
+   }
 
     public Card getLowestCard(){
         ArrayList<Card> sortHand = Collections.sort( hand );
-        return sortHand.get(0);     
+        return sortHand.get(0);
     }
 
     public ArrayList<Card> getHand(){

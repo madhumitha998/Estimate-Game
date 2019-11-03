@@ -123,7 +123,7 @@ public class GameLogic {
         }
         for (Player p: playersArray) {
             Card highestCard = p.getHand().getHighestCard();
-            tableHand.addCard(p, p.removeHand(highestCard));
+            tableHand.addCard(p, p.removeCard(highestCard));
         }
         int theDealerIndex = tableHand.sortedTableHand().get(0).getPlayerId();
 
