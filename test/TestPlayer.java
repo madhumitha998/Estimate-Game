@@ -21,20 +21,37 @@ public class TestPlayer {
         player1.setPosition(1);
         assertEquals(1, player1.getPosition());
 
-        // TestHand
-        assertTrue(player1.getHand()instanceof PlayerHand);
+        // Test Hand
+        assertTrue(player1.getHand() != null);
 
         // SetHand
+        assertEquals(0, player1.getHand().getNumberOfCards());
         player1.setHand(testCard);
-        assertEquals(1, player1.getHand().getHand().size());
+        assertEquals(1, player1.getHand().getNumberOfCards());
 
-        // Remove Form hand
+        // Remove From hand using index
         player1.removeFromHand(0);
-        assertEquals(0, player1.getHand().getHand().size());
+        assertEquals(0, player1.getHand().getNumberOfCards());
 
-        // Remove with Card
+        // Remove from hand using Card
         player1.setHand(testCard);
         player1.removeFromHand(testCard);
-        assertEquals(0, player1.getHand().getHand().size());
+        assertEquals(0, player1.getHand().getNumberOfCards());
+
+        //getBid
+        player1.setBid(3);
+        assertEquals(3, player1.getBid());
+
+        //getTrickWinner
+        player1.setTrickWinner(true);
+        assertTrue(player1.getTrickWinner());
+        player1.setTrickWinner(false);
+        assertEquals(false, player1.getTrickWinner());
+
+        // getIsDealer
+        player1.setIsDealer(true);
+        assertTrue(player1.isDealer());
+        player1.setIsDealer(false);
+        assertEquals(false, player1.isDealer());
     }
 }
