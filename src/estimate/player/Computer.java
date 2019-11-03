@@ -100,16 +100,11 @@ public class Computer extends Player{
     }
 
     public Card playCard(){
-        int bid = getBid();
-        PlayerHand hand = getHand();
+        //int bid = getBid();
+        //PlayerHand hand = getHand();
         //if computer is first player, position should be 1
-        if(getPosition()==1){
-            if(bid>0){
-                return hand.getHighestCard();
-            } else {
-                return hand.getLowestCard();
-            }
-        } 
+        //if(getPosition()==1){
+        //} 
         
         return null;
     }
