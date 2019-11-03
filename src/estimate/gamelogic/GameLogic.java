@@ -19,6 +19,7 @@ public class GameLogic {
     private TableHand tableHand;
     private Card trumpSuit;
     private Round round;
+    // private ScoreBoard scoreboard;
 
     public GameLogic() {
         deckOfCards = new Deck();
@@ -37,6 +38,20 @@ public class GameLogic {
         arrayOfPlayers.addPlayer(player4);
     }
 
+    /**
+     * 
+     */
+    public ArrayOfPlayers startNewGame() {
+        initialiseDeck();
+        setDealerAtStartOfRound();
+        setPlayersHand(round);
+        setTrump();
+        return getArrayOfPlayers();
+    }
+
+    public ArrayOfPlayers getArrayOfPlayers() {
+        return this.arrayOfPlayers;
+    }
     /**
      * Sets the order of players at the start of every round 
      */
@@ -62,7 +77,7 @@ public class GameLogic {
         Rank sixCard = Rank.SIX;
         Rank sevenCard = Rank.SEVEN;
         Rank eightCard = Rank.EIGHT;
-        Rank nineCard = Rank.NINE;
+        Rank nineCard = Rank.NINE;  
         Rank tenCard = Rank.TEN;
         Rank jackCard = Rank.JACK;
         Rank queenCard = Rank.QUEEN;
@@ -143,7 +158,7 @@ public class GameLogic {
      * Sets the trump at the start of the game when all players have been dealt a card
      * @param tableHand
      */
-    public void setTrump( TableHand tableHand) {
+    public void setTrump() {
         if (deckOfCards.getNumberOfCardsRemaining() == 48) {
             trumpSuit = deckOfCards.dealCard();
         } else {
@@ -157,17 +172,38 @@ public class GameLogic {
      * TODO: Takes into account the round (different round deals different cards)
      * @param players
      */
-    public void setPlayersHand(ArrayOfPlayers players, Round round){
+    public void setPlayersHand(Round round){
         deckOfCards.shuffle();
         
-        ArrayList<Player> playersArray = players.getArrayOfPlayers();
-
-        // deal from deck --> add to hand
-        for (Player p: playersArray){
-            p.setHand(deckOfCards.dealCard());
+        ArrayList<Player> playersArray = this.arrayOfPlayers.getArrayOfPlayers();
+        ArrayList<Player> playerReceivingCardOrder = new ArrayList<>();
+        int dealerIndex = 0;
+        for (int playerCounter = 0; playerCounter < playersArray.size() ; playerCounter ++ ) {
+            Player selectedPlayer = playersArray.get(playerCounter);
+            if (selectedPlayer.isDealer()) {
+                dealerIndex = playerCounter;
+                break;
+            }
+        }
+        for (int toTheRightOfDealer = dealerIndex + 1; toTheRightOfDealer < playersArray.size(); toTheRightOfDealer++ ) {
+            playerReceivingCardOrder.add(playersArray.get(toTheRightOfDealer));
         }
 
-        players.updatePlayerStates(playersArray);
+        for (int toTheLeftOfDealer = 0; toTheLeftOfDealer < dealerIndex; toTheLeftOfDealer++ ) {
+            playerReceivingCardOrder.add(playersArray.get(toTheLeftOfDealer));
+        }
+
+        int[] cardsToDealPerRound = {1,2,3,4,5,6,5,4,3,2,1};
+        
+        for (int cardsToDeal = 0; cardsToDeal < cardsToDealPerRound[round.getRound() - 1]; cardsToDeal++) {
+            for (Player p: playerReceivingCardOrder){
+                p.setHand(deckOfCards.dealCard());
+                
+            }
+            System.out.println("added once");
+        }
+
+        this.arrayOfPlayers.updatePlayerStates(playersArray);
 
     }
 
