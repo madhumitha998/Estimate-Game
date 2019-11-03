@@ -120,17 +120,12 @@ public class GameLogic {
        // If round 0, dealer is the highest card
        ArrayList<Player> playersArray = this.arrayOfPlayers.getArrayOfPlayers();
        for (Player p: playersArray){
-           p.setHand(this.deckOfCards.dealCard());
+           tableHand.addCard(p, deckOfCards.dealCard());
        }
-       for (Player p: playersArray) {
-
-       }
+    
        int theDealerIndex = tableHand.sortedTableHand().get(0).getPlayerId();
-
        playersArray.get(theDealerIndex).setIsDealer(true);
-
        this.arrayOfPlayers.updatePlayerStates(playersArray);
-
        // If round > 0, dealer is the person to the left of the dealer
 
    }
