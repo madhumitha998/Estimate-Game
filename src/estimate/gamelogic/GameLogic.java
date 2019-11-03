@@ -29,10 +29,15 @@ public class GameLogic {
     }
 
     public void initialisePlayers() {
-        Player player1 = new Player(0,0);
-        Player player2 = new Player(1,1);
-        Player player3 = new Player(2,2);
-        Player player4 = new Player(3,3);
+
+
+        Player player0 = new Player(10,10);
+        Player player1 = new Player(1,1);
+        Player player2 = new Player(2,2);
+        Player player3 = new Player(3,3);
+        Player player4 = new Player(4,4);
+
+        arrayOfPlayers.addPlayer(player0);
         arrayOfPlayers.addPlayer(player1);
         arrayOfPlayers.addPlayer(player2);
         arrayOfPlayers.addPlayer(player3);
@@ -40,13 +45,21 @@ public class GameLogic {
     }
 
     /**
-     * 
+     * Sets the round number
+     * @param roundNumber
+     */
+    public void setRound(int roundNumber) {
+        this.round = new Round(roundNumber);
+    }
+
+    /**
+     * STarts a new game
      */
     public ArrayOfPlayers startNewGame() {
-        initialiseDeck();
-        setDealerAtStartOfRound();
-        setPlayersHand(round);
-        setTrump();
+        initialiseDeck(); // Done testing
+        setDealerAtStartOfGame(); // Done testing
+        setPlayersHand(round); //Done testing
+        setTrump(); //Done testing
         return getArrayOfPlayers();
     }
 
@@ -55,9 +68,9 @@ public class GameLogic {
     }
 
     /**
-     * Sets the dealer at the start of the round.
+     * Sets the dealer at the start of the Game.
      */
-    public void setDealerAtStartOfRound() {
+    public void setDealerAtStartOfGame() {
         // If round 0, dealer is the highest card
         ArrayList<Player> playersArray = this.arrayOfPlayers.getArrayOfPlayers();
         for (Player p: playersArray){
@@ -132,17 +145,23 @@ public class GameLogic {
     
     /**
      * Checks the players to see who the dealer is
-     * @param players
      * @return
      */
-    public int getDealer(ArrayList<Player> players) {
-
+    public int getDealer() {
+        ArrayList<Player> players = arrayOfPlayers.getArrayOfPlayers();
         for(Player p: players) {
             if (p.isDealer()) {
                     return p.getPlayerId();
-                } 
+                }
         }
         return -1;
+    }
+
+    /**
+     * Get Trump Suit
+     */
+    public Card getTrumpSuit() {
+        return this.trumpSuit;
     }
 
     /**
@@ -164,14 +183,19 @@ public class GameLogic {
     }
 
     /**
-     * Sets the trump at the start of the game when all players have been dealt a card
-     * @param tableHand
+     * Sets the trump at the start of the round after all players have been dealt a card
+     * @param
      */
     public void setTrump() {
-        if (deckOfCards.getNumberOfCardsRemaining() == 48) {
-            trumpSuit = deckOfCards.dealCard();
+        int[] cardsToDealPerRound = {1,2,3,4,5,6,5,4,3,2,1};
+        int roundNumber = this.round.getRound();
+        int remainingCards = 52 - (cardsToDealPerRound[roundNumber -1] * 4) ;
+        System.out.println(deckOfCards.getNumberOfCardsRemaining());
+        System.out.println(remainingCards);
+        if (deckOfCards.getNumberOfCardsRemaining() == remainingCards) {
+            this.trumpSuit = deckOfCards.dealCard();
         } else {
-            System.out.println("Not enough players");
+            System.out.println("Spoilt broskis, not enough cards in the deck");
         }
    
     }
@@ -179,7 +203,7 @@ public class GameLogic {
     /**
      * Add card to player's hand
      * Takes into account the round (different round deals different cards)
-     * @param players
+     * @param
      */
     public void setPlayersHand(Round round){
         deckOfCards.shuffle();
@@ -207,12 +231,13 @@ public class GameLogic {
         for (int cardsToDeal = 0; cardsToDeal < cardsToDealPerRound[round.getRound() - 1]; cardsToDeal++) {
             for (Player p: playerReceivingCardOrder){
                 p.setHand(deckOfCards.dealCard());
-                
             }
-            System.out.println("added once");
+//            System.out.println("added once");
         }
         Collections.sort(playerReceivingCardOrder, (a, b ) -> a.getPlayerId() - b.getPlayerId());
-        System.out.println(playerReceivingCardOrder.get(0).getPlayerId());
+
+        // This should be random every time it is run because dealer will always be changing?
+//        System.out.println(playerReceivingCardOrder.get(0).getPlayerId());
 
         this.arrayOfPlayers.updatePlayerStates(playerReceivingCardOrder);
 
