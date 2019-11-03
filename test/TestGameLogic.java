@@ -20,6 +20,8 @@ public class TestGameLogic {
         GameLogic test = new GameLogic();
         test.initialiseDeck();
         assertEquals(test.getDeck().getSizeOfDeck(), 52);
+//        Card cardType = new Card();
+        assertTrue(test.getDeck().dealCard() instanceof Card);
     }
 
     @Test
