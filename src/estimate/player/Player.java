@@ -81,6 +81,9 @@ public class Player {
     public Card removeFromHand(int cardIndex){
         return hand.removeCard(cardIndex);
     }
+    public Card removeFromHand(Card card){
+        return hand.removeCard(card);
+    }
 
     /**
      * Get Player's bid for the current round

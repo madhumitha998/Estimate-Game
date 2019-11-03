@@ -44,7 +44,7 @@ public class GameLogic {
      */
     public ArrayOfPlayers startNewGame() {
         initialiseDeck();
-        setDealerAtStartOfRound();
+//        setDealerAtStartOfRound();
         setPlayersHand(round);
         setTrump();
         return getArrayOfPlayers();
