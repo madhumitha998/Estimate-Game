@@ -5,7 +5,7 @@ import estimate.player.Player;
 import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestPlayer {
+public class TestPlayer2 {
 
     @Test
     public void testSetPosition(){
