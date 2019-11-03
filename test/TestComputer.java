@@ -10,19 +10,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestComputer {
     @Test
-    public void computerTest() {
+    public void percentOfTrumpAndHigherTest() {
         Computer com1 = new Computer(0,3);
         Card testCard = new Card(Suit.CLUBS, Rank.ACE, null );
 
-        assertEquals(0, com1.getPlayerId());
 
-        assertEquals(3, com1.getPosition());
+    }
+    @Test
+    public void indexOfBidTest() {
 
-        com1.setPosition(1);
-        assertEquals(1, com1.getPosition());
 
-        // Test Hand
-        assertTrue(com1.getHand() != null);
+    }
+    @Test
+    public void bidWinningTricksTest() {
+
 
     }
 }

@@ -17,7 +17,7 @@ public class Computer extends Player{
         super(id,position);
     }
 
-    private double percentOfTrumpAndHigher(PlayerHand myHand){
+    public double percentOfTrumpAndHigher(PlayerHand myHand){
         List<String> namesList = Arrays.asList( "a", "q", "k","j","10","9");
         ArrayList<String> HIGH_VALUES = new ArrayList<>();
         HIGH_VALUES.addAll(namesList); 
@@ -47,7 +47,7 @@ public class Computer extends Player{
         return (double)trumpAndHigherCardsCnt/totalCardsInHand;
     }
 
-    private int indexOfBid(double num, int numPossibleBids, int medianIndex){
+    public int indexOfBid(double num, int numPossibleBids, int medianIndex){
         if(num<=0.25){
             return Math.max(0,medianIndex-2);
         } else if (num<=0.50){
@@ -88,10 +88,10 @@ public class Computer extends Player{
         }
 
         //countTrumpAndHigherCards
-        double num = percentOfTrumpAndHigher(super.getHand());
+        double percentOfTrumpAndHigher = percentOfTrumpAndHigher(super.getHand());
 
         //index of bid
-        int bidIndex= indexOfBid(num, numPossibleBids,medianIndex);
+        int bidIndex= indexOfBid(percentOfTrumpAndHigher, numPossibleBids,medianIndex);
 
         //set bid for Computer
         int bid = (int)possibleBids.get(bidIndex);
