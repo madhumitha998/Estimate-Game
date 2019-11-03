@@ -19,7 +19,7 @@ import java.util.*;
  */
 public abstract class Hand implements Comparable {
     
-   private java.util.List hand = new ArrayList(); 
+   protected java.util.List hand = new ArrayList();
 
 
   /**
