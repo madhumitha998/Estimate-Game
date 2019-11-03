@@ -99,6 +99,7 @@ public class GameLogic {
                 deckOfCards.addCard(aCard);
             }
         }
+        deckOfCards.shuffle();
     }
 
     /**
@@ -116,7 +117,19 @@ public class GameLogic {
      */
     public void setDealerAtStartOfRound() {
         // If round 0, dealer is the highest card
+        ArrayList<Player> playersArray = this.arrayOfPlayers.getArrayOfPlayers();
+        for (Player p: playersArray){
+            p.setHand(this.deckOfCards.dealCard());
+        }
+        for (Player p: playersArray) {
+            Card highestCard = p.getHand().getHighestCard();
+            tableHand.addCard(p, p.removeHand(highestCard));
+        }
+        int theDealerIndex = tableHand.sortedTableHand().get(0).getPlayerId();
 
+        playersArray.get(theDealerIndex).setIsDealer(true);
+
+        this.arrayOfPlayers.updatePlayerStates(playersArray);
 
         // If round > 0, dealer is the person to the left of the dealer
 
