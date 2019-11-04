@@ -5,31 +5,29 @@ import java.lang.Math;
 
 public class SelectCard {
 
-    public pickSmallestCard(Playerhand playerhand, Suit trumpSuit){
+    public Card pickSmallestCard(PlayerHand playerhand, Suit trumpSuit){
         ArrayList<Card> cardArrayList = playerhand.getHand();
         
-        //List 1
-        List<String> suitRankingList = Arrays.asList( "Clubs", "Diamonds", "Hearts","Spades");
+        //List for suit
+        List<String> suitList = Arrays.asList( "Clubs", "Diamonds", "Hearts","Spades");
           
 
         //get Trump suit for round
         //dummy value for now
-        String trumpSuitName = trumpSuit.getname();
-        suitRanking.remove(trumpSuitName);
-        suitRanking.add(trumpSuitName);
+        String trumpSuitName = trumpSuit.getName();
+        suitList.remove(trumpSuitName);
+        suitList.add(trumpSuitName);
 
-        //hashmap for rankValue
-        final java.util.List VALUES_ACE_HIGH =
-        Collections.unmodifiableList( 
-            Arrays.asList( new Rank[] { TWO, THREE, FOUR, FIVE, SIX, SEVEN,
-                                     EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE } ) );
+        //List for ranking
+        List<String> rankList = Arrays.asList( "Two", "Three", "Four","Five","Six","Seven",
+                "Eight","Nine","Ten","Jack","Queen","King","Ace");
 
-        Card smallestCard;
+        Card smallestCard = null;
         int smallestValue = 0;
         for (Card c : cardArrayList) {
             Rank cardRank = c.getRank();
-            int rankValue = VALUES_ACE_HIGH.indexOf( cardRank )+1;
-            int suitValue = suitRankingList.indexof(c.getSuit().getName())*10;
+            int rankValue = rankList.indexOf( cardRank )+1;
+            int suitValue = suitList.indexOf(c.getSuit().getName())*10;
             int cardValue = rankValue + suitValue;
             if(smallestValue==0){
                 smallestValue = cardValue;

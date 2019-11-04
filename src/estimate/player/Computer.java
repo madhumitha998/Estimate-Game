@@ -10,6 +10,7 @@ package estimate.player;
 import cards.*;
 import java.util.*;
 import java.lang.Math;
+import estimate.player.SelectCard;
 
 public class Computer extends Player{
 
@@ -114,5 +115,9 @@ public class Computer extends Player{
         return null;
     }
 
-
+    //tester function
+    public Card selectCard(){
+        SelectCard selectcard = new SelectCard();
+        selectcard.pickSmallestCard(getHand(), Suit.SPADES);
+    }
 }
