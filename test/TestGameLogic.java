@@ -78,8 +78,8 @@ public class TestGameLogic {
         GameLogic test = new GameLogic();
         test.initialisePlayers();
         test.initialiseDeck();
-        test.setRound(4);
-        test.setPlayersHand(new Round(4));
+        test.setRound(1);
+        test.setPlayersHand(new Round(1));
 
         // Ensure no printed line in console
         test.setTrump();
@@ -93,5 +93,19 @@ public class TestGameLogic {
     /**
      * Test StartNewGame()
      */
+    @Test
+    public void testStartNewGame() {
+        GameLogic test = new GameLogic();
+        ArrayOfPlayers arrayOfPlayers = test.startNewGame();
+
+        //Check ArrayOfPlayers class
+        assertTrue(arrayOfPlayers instanceof ArrayOfPlayers);
+
+        int numPlayers = arrayOfPlayers.getNumberOfPlayers();
+        assertEquals(4,numPlayers);
+
+
+    }
+
 
 }

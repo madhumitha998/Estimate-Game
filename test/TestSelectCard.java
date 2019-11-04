@@ -53,6 +53,6 @@ public class TestSelectCard {
         assertEquals(testCard2, selectCard.pickLargestCard(computerHand, Suit.SPADES));
         assertEquals(testCard3, selectCard.pickLargestCard(computerHand, Suit.HEARTS));
     }
-    
+
 
 }

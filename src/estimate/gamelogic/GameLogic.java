@@ -31,13 +31,13 @@ public class GameLogic {
     public void initialisePlayers() {
 
 
-        Player player0 = new Player(10,10);
-        Player player1 = new Player(1,1);
-        Player player2 = new Player(2,2);
-        Player player3 = new Player(3,3);
-        Player player4 = new Player(4,4);
+//        Player player0 = new Player(10,10);
+        Player player1 = new Player(0,0);
+        Player player2 = new Player(1,1);
+        Player player3 = new Player(2,2);
+        Player player4 = new Player(3,3);
 
-        arrayOfPlayers.addPlayer(player0);
+//        arrayOfPlayers.addPlayer(player0);
         arrayOfPlayers.addPlayer(player1);
         arrayOfPlayers.addPlayer(player2);
         arrayOfPlayers.addPlayer(player3);
@@ -56,6 +56,9 @@ public class GameLogic {
      * STarts a new game
      */
     public ArrayOfPlayers startNewGame() {
+        // Remember to start Round from 1 not 0
+        setRound(1);
+        initialisePlayers();
         initialiseDeck(); // Done testing
         setDealerAtStartOfGame(); // Done testing
         setPlayersHand(round); //Done testing
@@ -77,8 +80,9 @@ public class GameLogic {
             tableHand.addCard(p, deckOfCards.dealCard());
         }
 
-        int theDealerIndex = tableHand.sortedTableHand().get(0).getPlayerId();
-        playersArray.get(theDealerIndex).setIsDealer(true);
+        int theDealerId = tableHand.sortedTableHand().get(0).getPlayerId();
+        System.out.println(theDealerId);
+        playersArray.get(theDealerId).setIsDealer(true);
         this.arrayOfPlayers.updatePlayerStates(playersArray);
         // If round > 0, dealer is the person to the left of the dealer
 
@@ -190,10 +194,17 @@ public class GameLogic {
         int[] cardsToDealPerRound = {1,2,3,4,5,6,5,4,3,2,1};
         int roundNumber = this.round.getRound();
         int remainingCards = 52 - (cardsToDealPerRound[roundNumber -1] * 4) ;
-        System.out.println(deckOfCards.getNumberOfCardsRemaining());
-        System.out.println(remainingCards);
+        System.out.println(deckOfCards.getNumberOfCardsRemaining() + " Number of cards in deck");
+
+        //For other rounds
         if (deckOfCards.getNumberOfCardsRemaining() == remainingCards) {
             this.trumpSuit = deckOfCards.dealCard();
+            System.out.println(remainingCards + " number of expected cards");
+        }
+            // For first round
+        else if ( roundNumber == 1 &&(deckOfCards.getNumberOfCardsRemaining() == remainingCards - 4)) {
+            this.trumpSuit = deckOfCards.dealCard();
+            System.out.println(remainingCards - 4 + " number of expected cards in round 1");
         } else {
             System.out.println("Spoilt broskis, not enough cards in the deck");
         }
@@ -218,11 +229,12 @@ public class GameLogic {
                 break;
             }
         }
-        for (int toTheRightOfDealer = dealerIndex + 1; toTheRightOfDealer < playersArray.size(); toTheRightOfDealer++ ) {
+
+        for (int toTheRightOfDealer = (dealerIndex%3) + 1; toTheRightOfDealer < playersArray.size(); toTheRightOfDealer++ ) {
             playerReceivingCardOrder.add(playersArray.get(toTheRightOfDealer));
         }
 
-        for (int toTheLeftOfDealer = 0; toTheLeftOfDealer < dealerIndex; toTheLeftOfDealer++ ) {
+        for (int toTheLeftOfDealer = 0; toTheLeftOfDealer <= (dealerIndex%3); toTheLeftOfDealer++ ) {
             playerReceivingCardOrder.add(playersArray.get(toTheLeftOfDealer));
         }
 
