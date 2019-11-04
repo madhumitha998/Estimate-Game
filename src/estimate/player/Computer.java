@@ -104,6 +104,11 @@ public class Computer extends Player{
         PlayerHand hand = getHand();
         //if computer is first player, position should be 1
         if(getPosition()==1){
+            if(bid>0){
+
+            } else {
+                
+            }
         } 
         
         return null;
