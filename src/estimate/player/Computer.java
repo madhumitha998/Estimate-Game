@@ -10,6 +10,7 @@ package estimate.player;
 import cards.*;
 import java.util.*;
 import java.lang.Math;
+import estimate.player.SelectCard;
 
 public class Computer extends Player{
 
@@ -33,7 +34,7 @@ public class Computer extends Player{
             Card c = myHand.getCard(i);
             
             //check if trump suit 
-            if(c.suitToString()==trumpSuitName){
+            if(c.suitToString().equals(trumpSuitName)){
                 trumpAndHigherCardsCnt+=1;
             }
 
@@ -104,10 +105,14 @@ public class Computer extends Player{
         PlayerHand hand = getHand();
         //if computer is first player, position should be 1
         if(getPosition()==1){
+            if(bid>0){
+
+            } else {
+                
+            }
         } 
         
         return null;
     }
-
 
 }
