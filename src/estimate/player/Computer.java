@@ -115,9 +115,4 @@ public class Computer extends Player{
         return null;
     }
 
-    //tester function
-    public Card selectCard(){
-        SelectCard selectcard = new SelectCard();
-        selectcard.pickSmallestCard(getHand(), Suit.SPADES);
-    }
 }

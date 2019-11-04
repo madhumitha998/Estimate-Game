@@ -5,6 +5,10 @@ import java.lang.Math;
 
 public class SelectCard {
 
+    public SelectCard(){
+        
+    }
+
     public Card pickSmallestCard(PlayerHand playerhand, Suit trumpSuit){
         ArrayList<Card> cardArrayList = playerhand.getHand();
         
