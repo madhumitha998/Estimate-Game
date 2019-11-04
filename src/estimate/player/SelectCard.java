@@ -8,8 +8,8 @@ public class SelectCard {
     public SelectCard(){
         
     }
-
-    public int pickSmallestCard(PlayerHand playerhand, Suit trumpSuit){
+    //This method returns the smallest Card in hand taking into account trump suit
+    public Card pickSmallestCard(PlayerHand playerhand, Suit trumpSuit){
         ArrayList<Card> cardArrayList = playerhand.getHand();
         
         //List for suit
@@ -44,6 +44,6 @@ public class SelectCard {
                 }
             }
         }
-        return smallestValue;
+        return smallestCard;
     }
 }

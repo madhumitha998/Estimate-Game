@@ -29,7 +29,8 @@ public class TestSelectCard {
         computerHand.addCard(testCard3);
         computerHand.addCard(testCard4);
 
-        assertEquals(4, selectCard.pickSmallestCard(computerHand, Suit.SPADES));
+        assertEquals(testCard, selectCard.pickSmallestCard(computerHand, Suit.SPADES));
+        assertEquals(testCard4, selectCard.pickSmallestCard(computerHand, Suit.CLUBS));
     }
     
 
