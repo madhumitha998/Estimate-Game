@@ -17,7 +17,7 @@ public class TestSelectCard {
         SelectCard selectCard = new SelectCard();
         PlayerHand computerHand = new PlayerHand();
         //normal card
-        Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
+        Card testCard = new Card(Suit.CLUBS, Rank.FIVE, null );
         //Trump and high card
         Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
         //high card
@@ -29,7 +29,7 @@ public class TestSelectCard {
         computerHand.addCard(testCard3);
         computerHand.addCard(testCard4);
 
-        assertEquals(testCard2, selectCard.pickSmallestCard(computerHand, Suit.SPADES));
+        assertEquals(4, selectCard.pickSmallestCard(computerHand, Suit.SPADES));
     }
     
 

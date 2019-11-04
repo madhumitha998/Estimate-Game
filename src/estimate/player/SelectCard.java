@@ -9,18 +9,19 @@ public class SelectCard {
         
     }
 
-    public Card pickSmallestCard(PlayerHand playerhand, Suit trumpSuit){
+    public int pickSmallestCard(PlayerHand playerhand, Suit trumpSuit){
         ArrayList<Card> cardArrayList = playerhand.getHand();
         
         //List for suit
         List<String> suitList = Arrays.asList( "Clubs", "Diamonds", "Hearts","Spades");
-          
+        ArrayList<String> suitArrayList = new ArrayList<>();
+        suitArrayList.addAll(suitList);
 
         //get Trump suit for round
         //dummy value for now
         String trumpSuitName = trumpSuit.getName();
-        suitList.remove(trumpSuitName);
-        suitList.add(trumpSuitName);
+        suitArrayList.remove(trumpSuitName);
+        suitArrayList.add(trumpSuitName);
 
         //List for ranking
         List<String> rankList = Arrays.asList( "Two", "Three", "Four","Five","Six","Seven",
@@ -29,9 +30,9 @@ public class SelectCard {
         Card smallestCard = null;
         int smallestValue = 0;
         for (Card c : cardArrayList) {
-            Rank cardRank = c.getRank();
-            int rankValue = rankList.indexOf( cardRank )+1;
-            int suitValue = suitList.indexOf(c.getSuit().getName())*10;
+            String cardRankName = c.getRank().getName();
+            int rankValue = rankList.indexOf( cardRankName ) + 1;
+            int suitValue = suitArrayList.indexOf(c.getSuit().getName())*10;
             int cardValue = rankValue + suitValue;
             if(smallestValue==0){
                 smallestValue = cardValue;
@@ -43,6 +44,6 @@ public class SelectCard {
                 }
             }
         }
-        return smallestCard;
+        return smallestValue;
     }
 }
