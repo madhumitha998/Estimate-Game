@@ -34,7 +34,7 @@ public class Computer extends Player{
             Card c = myHand.getCard(i);
             
             //check if trump suit 
-            if(c.suitToString()==trumpSuitName){
+            if(c.suitToString().equals(trumpSuitName)){
                 trumpAndHigherCardsCnt+=1;
             }
 
