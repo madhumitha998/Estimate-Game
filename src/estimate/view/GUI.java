@@ -85,8 +85,8 @@ public class GUI{
                 JOptionPane.showMessageDialog(estimationGame, "ESTIMATION GAME MADE BY:\n - ABEL \n - ELIAS \n - MADHUMITHA \n\nThanks for playing", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         });
-
-
+    }
+    
 	public static void main(String args[]){
 		try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
