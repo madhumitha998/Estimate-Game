@@ -102,13 +102,18 @@ public class Computer extends Player{
 
     public Card playCard(){
         int bid = getBid();
-        PlayerHand hand = getHand();
+        PlayerHand playerHand = getHand();
+        //get Trumpsuit for round
+        /*dummy value for now */
+        Suit trumpSuit = Suit.DIAMONDS;
+
+        SelectCard selectCard = new SelectCard();
         //if computer is first player, position should be 1
         if(getPosition()==1){
             if(bid>0){
-
+                selectCard.pickLargestCard(playerHand,trumpSuit);
             } else {
-                
+                selectCard.pickSmallestCard(playerHand,trumpSuit);
             }
         } 
         
