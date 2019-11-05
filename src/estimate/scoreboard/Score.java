@@ -9,6 +9,8 @@
 
 package estimate.scoreboard;
 
+import estimate.player.Player;
+
 import java.util.*;
 
 
@@ -30,4 +32,30 @@ public class Score {
 		score.put("Tricks Won", tricksWon);
 		score.put("Score", roundScore);
 	}
+
+	public void setRoundBid (ArrayList<Integer> roundBid) {
+		this.roundBid = roundBid;
+	}
+
+	/**
+	 * Adds to the existing Score function the tricks won in the current trick
+	 * @param trickScore
+	 */
+	public void addTricksWon(ArrayList<Integer> trickScore) {
+		for (int i = 0 ; i < trickScore.size() ; i ++ ) {
+			Integer currentScore = tricksWon.get(i);
+			Integer newScore = currentScore + trickScore.get(i);
+			tricksWon.set(i, newScore);
+		}
+	}
+
+	/**
+	 * Calculate Score based on the current variables
+	 */
+//	public void calculateScore(){
+//
+//	}
+
+
+
 }

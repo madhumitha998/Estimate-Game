@@ -20,6 +20,7 @@ public class GameLogic {
     private TableHand tableHand;
     private Card trumpSuit;
     private Round round;
+ // private Score; <- this score will always be replaced in a new round
     // private ScoreBoard scoreboard;
 
     public GameLogic() {
@@ -66,6 +67,28 @@ public class GameLogic {
         return getArrayOfPlayers();
     }
 
+    /**
+     * method of starting a subRound()
+     * Takes in player input and input into the tablehand
+     * Computers will then process and play their card into tablehand
+     * Evaluate the table hand
+     * Set winning player's trick winner attribute
+     * Record this trick in round's score
+     * return the winner
+     */
+
+    /**
+     * Method for returning the current score
+     */
+
+    /**
+     * Method for returning the full score
+     */
+
+    /**
+     *  Gets ArrayOfPlayers
+     * @return
+     */
     public ArrayOfPlayers getArrayOfPlayers() {
         return this.arrayOfPlayers;
     }

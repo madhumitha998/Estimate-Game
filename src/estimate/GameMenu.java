@@ -4,7 +4,7 @@
 
 // public class GameMenu {
 //     private GameLogic gameLogic;
-
+//      private ScoreBoard;
 //     public GameMenu() {
 //         this.gameLogic = new GameLogic();
 //     }
@@ -59,6 +59,7 @@
 
                 // Score currentScore = gameLogic.currentScore()
                 // FE Updates the currentScore
+            // Update the gameLogic.Scoreboard with round score
 
             // winner = gameLogic.getWinner()
             // if not null, break out of while loop

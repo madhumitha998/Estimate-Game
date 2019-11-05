@@ -31,6 +31,7 @@ public class ScoreBoard{
 
     /**
      * calculates the score of each player after each round
+	 * Assumes that players array is ascending-ly sorted according to ID of player
      */
 	public List calculateRoundPlayerScore(ArrayList<Player> players) {
 		List roundPlayerScores = new ArrayList<Integer>();
@@ -125,4 +126,22 @@ public class ScoreBoard{
 		}
 		return gameWinner;	
 	}
+
+	/**
+	 * Adds a round to the ScoreBoard hashmap
+	 */
+	public void addRoundToScoreboard(Score roundScore) {
+
+	}
+
+	/**
+	 * Get current round results
+	 */
+
+	/**
+	 * Add winner of trick to current round
+	 */
+
+
+
 }
