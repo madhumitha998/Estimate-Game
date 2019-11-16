@@ -7,7 +7,7 @@ import cards.*;
 import estimate.player.*;
 
 /**
- * Main logic of game is here. GameLogic is called by the Front end to execute business logic
+ * Main logic of game is here. GameLogic is called by the controller to execute business logic
  * 
  * @author abelwong2017
  * @version 1.0
@@ -30,8 +30,6 @@ public class GameLogic {
     }
 
     public void initialisePlayers() {
-
-
 //        Player player0 = new Player(10,10);
         Player player1 = new Player(0,0);
         Player player2 = new Player(1,1);
@@ -69,12 +67,19 @@ public class GameLogic {
 
     /**
      * method of starting a subRound()
+     * get the number of cards in hand
+     * If num of Cards == cards per trick, first player == left of dealer
+     * Get player position and start looping through player to play a card
+     *  If player instanceof computer, then play a card
+     *  call the play card method of computer
+     *  Display the card played
+     * If physical normal player, then get input from player
      * Takes in player input and input into the tablehand
-     * Computers will then process and play their card into tablehand
-     * Evaluate the table hand
+     * Evaluate the table hand once 4 cards in the tablehand
+     * display winner
      * Set winning player's trick winner attribute
      * Record this trick in round's score
-     * return the winner
+     * Set winning player as the first position and all to the left of him as subsequent players
      */
 
     /**

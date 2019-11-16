@@ -48,6 +48,8 @@
 
 
         // While round != 11
+            
+    
             // gameLogic.getRound()
             // Use the round to calculate how many tricks there are
             // While tricks are not played finished
@@ -69,8 +71,6 @@
         // Winner winner = gameLogic.getWinner() (Winner contains score, player)
         // FE Display COngratulatory Screen for Winner
         // FE Prompts to ask for starting a new game
-
-
 
 
 //     }

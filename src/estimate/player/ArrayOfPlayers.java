@@ -26,6 +26,7 @@ public class ArrayOfPlayers {
         return players.size();
     }
 
+    //ID 0 will always be human
     public ArrayList<Player> getArrayOfPlayers() {
         return players;
     }

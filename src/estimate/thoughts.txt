@@ -1,0 +1,25 @@
+Within a round:
+    0. Identify the dealer
+    1. Deal the x cards to all players
+    1a. x depends on the current round
+        total of 11 rounds, with each round having {1,2,3,4,5,6,5,4,3,2,1} cards
+    1b. dealer chooses the trump card by opening the top card in the deck 
+    1c. The suit is chosen as the trump for that round (Display trump suit to FE)
+
+    2. player on the left of the dealer places bid on how many tricks he might win (dealer last) (Each bid needs to be displayed on the FE)
+        last player aka the dealer cannot bid the number that makes the total bids == number of tricks for that round 
+        Front end must show the numbers that the dealer can choose from (0 to numOfTricks, excluding x where x is >0 && (numOfTricks - sum of bids) )
+        Store the bids for the round
+
+    1. First player = Left of the dealer starts first trick of every trick
+    Within a trick:
+
+        2. Leading suit == suit that first player starts with (Display to FE)
+        3. Player follows suit / trump suit if no lead suit (Display to FE)
+        4. After dealer plays the last card, the winner of the trick is determined and stored ()
+
+        1. First player = winner of previous trick
+
+1. At the end of the round, score is calculated and stored
+2. Game ends when player hits 100 points || max (player's score) && round == 11
+
