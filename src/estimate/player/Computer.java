@@ -18,15 +18,12 @@ public class Computer extends Player{
         super(id,position);
     }
 
-    public double percentOfTrumpAndHigher(PlayerHand myHand){
+    public double percentOfTrumpAndHigher(PlayerHand myHand, Suit trumpSuit){
         List<String> namesList = Arrays.asList( "a", "q", "k","j","10","9");
         ArrayList<String> HIGH_VALUES = new ArrayList<>();
         HIGH_VALUES.addAll(namesList); 
-        
-        //Gets trump suit for current round
-        /* String trumpSuitName = gameLogic.trumpCard.suitToString(). */
-        //but for now i will create a dummy value for testing
-        String trumpSuitName = "Hearts";
+
+        String trumpSuitName = trumpSuit.getName();
         int trumpAndHigherCardsCnt = 0;
 
         int totalCardsInHand=myHand.getNumberOfCards();
@@ -60,16 +57,13 @@ public class Computer extends Player{
         }
     }
 
-    public void bidWinningTricks(int totTricksInRound){
+    public void bidWinningTricks(int totTricksInRound, int sumOfBidsInTrick, Suit trumpSuit){
         ArrayList possibleBids = new ArrayList<>();
         //set possibleBids array
         for (int i=0;i<=totTricksInRound;i++){
                 possibleBids.add(i,i);
         } 
         if(isDealer()){
-            /*get sumOfBidsInTrick*/
-            //dummy value for now
-            int sumOfBidsInTrick = 4;
             int excludedValueIndex = totTricksInRound - sumOfBidsInTrick;
             possibleBids.remove(excludedValueIndex);
         } 
@@ -84,7 +78,7 @@ public class Computer extends Player{
         }
 
         //countTrumpAndHigherCards
-        double percentOfTrumpAndHigher = percentOfTrumpAndHigher(getHand());
+        double percentOfTrumpAndHigher = percentOfTrumpAndHigher(getHand(), trumpSuit);
 
         //index of bid
         int bidIndex= indexOfBid(percentOfTrumpAndHigher, numPossibleBids,medianIndex);

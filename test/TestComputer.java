@@ -27,7 +27,8 @@ public class TestComputer {
         computerHand.addCard(testCard3);
         computerHand.addCard(testCard4);
 
-        assertEquals(0.75, com1.percentOfTrumpAndHigher(computerHand));
+        Suit trumpSuit = Suit.HEARTS;
+        assertEquals(0.75, com1.percentOfTrumpAndHigher(computerHand,trumpSuit));
 
     }
     @Test
@@ -55,8 +56,9 @@ public class TestComputer {
         com1.setIsDealer(true);
 
         int totTricksInRound = 5;
-
-        com1.bidWinningTricks(totTricksInRound);
+        int sumOfBidsInTrick = 4;
+        Suit trumpSuit = Suit.HEARTS;
+        com1.bidWinningTricks(totTricksInRound, sumOfBidsInTrick, trumpSuit);
         assertEquals(4,com1.getBid());
 
     }
