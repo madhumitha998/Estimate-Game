@@ -33,7 +33,7 @@ public class SelectCard {
         for (Card c : cardArrayList) {
             String cardRankName = c.getRank().getName();
             int rankValue = rankList.indexOf( cardRankName ) + 1;
-            int suitValue = suitArrayList.indexOf(c.getSuit().getName())*10;
+            int suitValue = suitArrayList.indexOf(c.getSuit().getName())*13;
             int cardValue = rankValue + suitValue;
             if(smallestValue==0){
                 smallestValue = cardValue;
@@ -74,7 +74,7 @@ public class SelectCard {
         for (Card c : cardArrayList) {
             String cardRankName = c.getRank().getName();
             int rankValue = rankList.indexOf( cardRankName ) + 1;
-            int suitValue = suitArrayList.indexOf(c.getSuit().getName())*10;
+            int suitValue = suitArrayList.indexOf(c.getSuit().getName())*13;
             int cardValue = rankValue + suitValue;
             if(largestValue==0){
                 largestValue = cardValue;
@@ -88,4 +88,64 @@ public class SelectCard {
         }
         return largestCard;
     }
+
+//    public Card pickBestCard1(PlayerHand playerhand, Suit trumpSuit, Suit leadSuit, Card HighestPlayedCard){
+//        ArrayList<Card> cardArrayList = playerhand.getHand();
+//
+//        //List for suit
+//        List<String> suitList = Arrays.asList( "Clubs", "Diamonds", "Hearts","Spades");
+//        ArrayList<String> suitArrayList = new ArrayList<>();
+//        suitArrayList.addAll(suitList);
+//
+//        //List for ranking
+//        List<String> rankList = Arrays.asList( "Two", "Three", "Four","Five","Six","Seven",
+//                "Eight","Nine","Ten","Jack","Queen","King","Ace");
+//
+//        //get Trump suit for round
+//        //dummy value for now
+//        String trumpSuitName = trumpSuit.getName();
+//
+//        //get Lead suit for round
+//        //dummy value for now
+//        String leadSuitName = leadSuit.getName();
+//
+//        //Rearrange suit order
+//        suitArrayList.remove(trumpSuitName);
+//        suitArrayList.remove(leadSuitName);
+//        suitArrayList.add(leadSuitName);
+//        if(!trumpSuitName.equals(leadSuitName)){
+//            suitArrayList.add(trumpSuitName);
+//        }
+//
+//        //get Card Suit, rank and cardValue
+//        String highestCardSuitName = HighestPlayedCard.getSuit().getName();
+//        String highestCardRankName = HighestPlayedCard.getRank().getName();
+//        int highestCardRankValue = rankList.indexOf( cardRankName ) + 1;
+//        int highestCardSuitValue = suitArrayList.indexOf(c.getSuit().getName())*13;
+//        int highestCardCardValue = highestCardRankValue + highestCardSuitValue;
+//
+//        Card bestCard = null;
+//        int bestCardValue = 0;
+//
+//        //create cardValue to Card Hashmap
+//        HashMap<Integer, Card> cardValueToCard = new HashMap<Integer, Card>();
+//        for (Card c : cardArrayList) {
+//            String cardRankName = c.getRank().getName();
+//            int rankValue = rankList.indexOf( cardRankName ) + 1;
+//            int suitValue = suitArrayList.indexOf(c.getSuit().getName())*13;
+//            int cardValue = rankValue + suitValue;
+//            cardValueToCard.put(cardValue,c);
+//        }
+//
+//        //if highestcard is trump suit
+//        if(highestCardSuitName.equals(trumpSuitName)){
+//            int smallestValue=0;
+//            for (int cardValue : cardValueToCard.keySet()) {
+//                if(cardValue>highestCardCardValue){
+//
+//                }
+//            }
+//        }
+//        return bestCard;
+//    }
 }
