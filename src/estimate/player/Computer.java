@@ -60,12 +60,7 @@ public class Computer extends Player{
         }
     }
 
-    public void bidWinningTricks(){
-        int totTricksInRound;
-        /* get totTricksInRound from Round.java method or somewhere */
-        //dummy value for now
-        totTricksInRound = 5;
-
+    public void bidWinningTricks(int totTricksInRound){
         ArrayList possibleBids = new ArrayList<>();
         //set possibleBids array
         for (int i=0;i<=totTricksInRound;i++){

@@ -54,7 +54,9 @@ public class TestComputer {
         assertEquals(4,com1.getHand().getNumberOfCards());
         com1.setIsDealer(true);
 
-        com1.bidWinningTricks();
+        int totTricksInRound = 5;
+
+        com1.bidWinningTricks(totTricksInRound);
         assertEquals(4,com1.getBid());
 
     }
