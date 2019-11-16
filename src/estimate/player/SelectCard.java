@@ -120,7 +120,9 @@ public class SelectCard {
        //other suit cards
        ArrayList<Card> otherCards = new ArrayList<>();
 
-       for(Card myCard: cardArrayList){
+       //if highest played card is not trump suit->lead suit
+       if(!highestPlayedCard.suitToString().equals(trumpSuitName)){
+        for(Card myCard: cardArrayList){
             String mySuitName = myCard.suitToString();
             //leadSuit
             if(mySuitName.equals(leadSuitName)){
@@ -136,24 +138,63 @@ public class SelectCard {
             } else {
                 otherCards.add(myCard);
             }  
-       }
-       //Sort all the arraylists
-       Collections.sort(leadHigherCards);
-       Collections.sort(leadRestCards);
-       Collections.sort(trumpHigherCards);
-       Collections.sort(trumpRestCards );
-       Collections.sort(otherCards);
+        }
+        //Sort all the arraylists
+        Collections.sort(leadHigherCards);
+        Collections.sort(leadRestCards);
+        Collections.sort(trumpHigherCards);
+        Collections.sort(trumpRestCards );
+        Collections.sort(otherCards);
 
-       //picking the best card
-       if(!leadHigherCards.isEmpty()){
+        //picking the best card
+        if(!leadHigherCards.isEmpty()){
             return leadHigherCards.get(0);
-       } else if(!trumpRestCards.isEmpty()) {
+        } else if(!trumpRestCards.isEmpty()) {
             return trumpRestCards.get(0);
-       } else if(!leadRestCards.isEmpty()) {
+        } else if(!leadRestCards.isEmpty()) {
             return leadRestCards.get(0);
-       } else {
+        } else {
             return otherCards.get(0);
+        }
+
+       } else {
+        for(Card myCard: cardArrayList){
+            String mySuitName = myCard.suitToString();
+            //leadSuit
+            if(mySuitName.equals(trumpSuitName)){
+                if(myCard.compareTo(highestPlayedCard)>0){
+                    //arraylist of trumpsuit higher than that is played
+                    trumpHigherCards.add(myCard);
+                } else{
+                    //arraylist of rest of trumpsuit cards
+                    trumpRestCards.add(myCard);
+                }
+            } else if(mySuitName.equals(leadSuitName)){
+                leadRestCards.add(myCard);
+            } else {
+                otherCards.add(myCard);
+            }  
+        }
+        //Sort all the arraylists
+        Collections.sort(leadHigherCards);
+        Collections.sort(leadRestCards);
+        Collections.sort(trumpHigherCards);
+        Collections.sort(trumpRestCards );
+        Collections.sort(otherCards);
+
+        //picking the best card
+        if(!trumpHigherCards.isEmpty()){
+            return trumpHigherCards.get(0);
+        } else if(!leadRestCards.isEmpty()) {
+            return leadRestCards.get(0);
+        } else if(!trumpRestCards.isEmpty()) {
+            return trumpRestCards.get(0);
+        } else {
+            return otherCards.get(0);
+        }
+
        }
+       
        
        
 
