@@ -100,15 +100,9 @@ public class Computer extends Player{
 
     }
 
-    public Card playCard(){
+    public Card playCard(Suit trumpSuit,Suit leadSuit, Card highestPlayedCard){
         int bid = getBid();
         PlayerHand playerHand = getHand();
-        //get Trumpsuit for round, leadsuit for trick, highestPlayedCard so far
-        /*dummy values for now */
-        Suit trumpSuit = Suit.CLUBS;
-        Suit leadSuit = Suit.DIAMONDS;
-        Card highestPlayedCard = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
-
         SelectCard selectCard = new SelectCard();
         //if computer is first player, position should be 1
         if(getPosition()==1){

@@ -78,7 +78,11 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        assertEquals(testCard3,com1.playCard());
+        Suit trumpSuit = Suit.CLUBS;
+        Suit leadSuit = Suit.DIAMONDS;
+        Card highestPlayedCard = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
+
+        assertEquals(testCard3,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
 
     }
 }
