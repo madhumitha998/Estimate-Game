@@ -134,7 +134,7 @@ public class Scoreboard {
             int playerId = i.getKey();
             int playerTotalScore = i.getValue();
 
-            if (playerTotalScore == 100 && round != 11 ) {
+            if (playerTotalScore >= 100 && round != 11 ) {
                 int[] winner = new int[]{playerId, playerTotalScore};
                 return winner;
             } else if (round == 11 ) {

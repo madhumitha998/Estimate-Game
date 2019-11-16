@@ -39,12 +39,18 @@ public class TestGameLogic {
         GameLogic test = new GameLogic();
         test.initialisePlayers();
         test.initialiseDeck();
+        test.setDealer(1);
+
+        test.initialiseDeck();
         ArrayOfPlayers arrayPlayersTest = test.getArrayOfPlayers();
         ArrayList<Card> player1Cards = arrayPlayersTest.getPlayerByIndex(0).getHand().getHand();
         assertEquals(0, player1Cards.size());
 
 //        Check the right number of cards in hand in 4th round
-        test.setPlayersHand(new Round(4));
+        test.setPlayersHand(new Round(1));
+
+        test.setPlayerOrder(1);
+
         arrayPlayersTest = test.getArrayOfPlayers();
         for (Player p : arrayPlayersTest.getArrayOfPlayers()){
             System.out.println(p);
@@ -52,9 +58,11 @@ public class TestGameLogic {
         System.out.println(arrayPlayersTest.getNumberOfPlayers());
         player1Cards = arrayPlayersTest.getPlayerByIndex(0).getHand().getHand();
         ArrayList<Card> player4Cards = arrayPlayersTest.getPlayerByIndex(3).getHand().getHand();
-        assertEquals(4, player1Cards.size());
-        assertEquals(4, player4Cards.size());
-        assertEquals((52-16),test.getDeck().getNumberOfCardsRemaining() );
+        assertEquals(1, player1Cards.size());
+        assertEquals(1, player4Cards.size());
+        assertEquals((52-4),test.getDeck().getNumberOfCardsRemaining() );
+
+        System.out.println(Arrays.deepToString(arrayPlayersTest.getArrayOfPlayers().toArray()));
     }
 
     /**
@@ -65,8 +73,10 @@ public class TestGameLogic {
         GameLogic test = new GameLogic();
         test.initialisePlayers();
         test.initialiseDeck();
-        test.setDealerAtStartOfGame();
+        test.setDealer(1);
         // Output of sysout should always be changing from 0-3 (Dealer should be random based on highest card)
+        System.out.println(test.getDealer());
+        test.setDealer(3);
         System.out.println(test.getDealer());
     }
 
@@ -105,6 +115,38 @@ public class TestGameLogic {
         assertEquals(4,numPlayers);
 
 
+    }
+
+    @Test
+    public void testSetPlayerOrder() {
+//        Check that there are no cards at first
+        GameLogic test = new GameLogic();
+        test.initialisePlayers();
+        test.initialiseDeck();
+        test.setDealer(1);
+
+        test.initialiseDeck();
+        ArrayOfPlayers arrayPlayersTest = test.getArrayOfPlayers();
+        ArrayList<Card> player1Cards = arrayPlayersTest.getPlayerByIndex(0).getHand().getHand();
+        assertEquals(0, player1Cards.size());
+
+//        Check the right number of cards in hand in 4th round
+        test.setPlayersHand(new Round(1));
+
+        test.setPlayerOrder(1);
+
+        arrayPlayersTest = test.getArrayOfPlayers();
+        for (Player p : arrayPlayersTest.getArrayOfPlayers()){
+            System.out.println(p);
+        }
+        System.out.println(arrayPlayersTest.getNumberOfPlayers());
+        player1Cards = arrayPlayersTest.getPlayerByIndex(0).getHand().getHand();
+        ArrayList<Card> player4Cards = arrayPlayersTest.getPlayerByIndex(3).getHand().getHand();
+        assertEquals(1, player1Cards.size());
+        assertEquals(1, player4Cards.size());
+        assertEquals((52-4),test.getDeck().getNumberOfCardsRemaining() );
+
+        System.out.println(Arrays.deepToString(arrayPlayersTest.getArrayOfPlayers().toArray()));
     }
 
 

@@ -134,7 +134,7 @@ public class Player {
     }
 
     public String toString() {
-        return String.format("%s", this.getPlayerId());
+        return String.format("Id: %s, Position: %s", this.getPlayerId() ,this.getPosition() );
     }
 
 }

@@ -28,9 +28,9 @@ public class Deck {
    * Creates an empty deck of cards.
    */
    public Deck() {
-      deck = new ArrayList();
-      index = 0;
-   }
+        deck = new ArrayList();
+        index = 0;
+    }
   
   
   /**
