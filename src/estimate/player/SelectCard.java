@@ -92,15 +92,6 @@ public class SelectCard {
    public Card pickBestCard1(PlayerHand playerhand, Suit trumpSuit, Suit leadSuit, Card highestPlayedCard){
        ArrayList<Card> cardArrayList = playerhand.getHand();
 
-       //List for suit
-       List<String> suitList = Arrays.asList( "Clubs", "Diamonds", "Hearts","Spades");
-       ArrayList<String> suitArrayList = new ArrayList<>();
-       suitArrayList.addAll(suitList);
-
-       //List for ranking
-       List<String> rankList = Arrays.asList( "Two", "Three", "Four","Five","Six","Seven",
-               "Eight","Nine","Ten","Jack","Queen","King","Ace");
-
        //get Trump suit for round
        //dummy value for now
        String trumpSuitName = trumpSuit.getName();
@@ -157,6 +148,7 @@ public class SelectCard {
             return otherCards.get(0);
         }
 
+        //If highest played card is trumpsuit
        } else {
         for(Card myCard: cardArrayList){
             String mySuitName = myCard.suitToString();
@@ -194,9 +186,15 @@ public class SelectCard {
         }
 
        }
-       
-       
-       
-
    }
+
+
+
+
+
+
+
+
+
+
 }

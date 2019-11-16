@@ -121,7 +121,7 @@ public class Computer extends Player{
             if(bid>0){
                 selectCard.pickBestCard1(playerHand,trumpSuit,leadSuit,highestPlayedCard);
             } else {
-                
+
             }
         }
         
