@@ -104,7 +104,7 @@ public class Computer extends Player{
         int bid = getBid();
         PlayerHand playerHand = getHand();
         //get Trumpsuit for round, leadsuit for trick, highestPlayedCard so far
-        /*dummy value for now */
+        /*dummy values for now */
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.DIAMONDS;
         Card highestPlayedCard = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
@@ -113,19 +113,17 @@ public class Computer extends Player{
         //if computer is first player, position should be 1
         if(getPosition()==1){
             if(bid>0){
-                selectCard.pickLargestCard(playerHand,trumpSuit);
+                return selectCard.pickLargestCard(playerHand,trumpSuit);
             } else {
-                selectCard.pickSmallestCard(playerHand,trumpSuit);
+                return selectCard.pickSmallestCard(playerHand,trumpSuit);
             }
         } else {
             if(bid>0){
-                selectCard.pickBestCard1(playerHand,trumpSuit,leadSuit,highestPlayedCard);
+                return selectCard.pickBestCard1(playerHand,trumpSuit,leadSuit,highestPlayedCard);
             } else {
-
+                return selectCard.pickBestCard2(playerHand,trumpSuit,leadSuit,highestPlayedCard);
             }
         }
-        
-        return null;
     }
 
 }
