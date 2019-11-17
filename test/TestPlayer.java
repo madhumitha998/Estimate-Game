@@ -4,6 +4,7 @@ import cards.Suit;
 import estimate.player.Player;
 import estimate.player.PlayerHand;
 import org.junit.jupiter.api.Test;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -53,5 +54,16 @@ public class TestPlayer {
         assertTrue(player1.isDealer());
         player1.setIsDealer(false);
         assertEquals(false, player1.isDealer());
+    }
+
+    @Test
+    public void testAvailableBids() {
+        Player player1 = new Player(0,3);
+        ArrayList<Integer> result =  player1.getAvailableBids(3, 2);
+        ArrayList<Integer> expected = new ArrayList<>();
+        expected.add(0);
+        expected.add(2);
+        expected.add(3);
+        assertEquals(expected,result);
     }
 }

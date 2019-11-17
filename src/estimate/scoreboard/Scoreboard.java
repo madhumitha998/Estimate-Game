@@ -150,4 +150,14 @@ public class Scoreboard {
         return null;
     }
 
+    /**
+     * Returns the total bids thus far for the current round
+     * @param round
+     * @return
+     */
+    public int getTotalBidForRound(int round) {
+        Score scoreDeets = scoreboardDetails.get(round);
+        return scoreDeets.totalBids();
+    }
+
 }

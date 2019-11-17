@@ -106,8 +106,19 @@ public class Score {
         return scores.get("roundScore");
     }
 
+    /**
+     * Returns total bids for the round
+     * @return
+     */
+    public int getTotalBids() {
+        int totalBidsSoFar =0;
+        for (int i = 0 ; i < 4 ; i ++) {
+            int predictionForPlayer = scores.get("predictions").get(i);
+            totalBidsSoFar += predictionForPlayer;
+        }
+        return totalBidsSoFar;
 
-
+    }
 
 
 

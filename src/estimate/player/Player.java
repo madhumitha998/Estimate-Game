@@ -10,6 +10,8 @@ package estimate.player;
 
 import cards.*;
 import estimate.player.*;
+
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Player {
@@ -135,6 +137,26 @@ public class Player {
 
     public String toString() {
         return String.format("Id: %s, Position: %s", this.getPlayerId() ,this.getPosition() );
+    }
+
+    public ArrayList<Integer> getAvailableBids(int tricksToWinForRound, int totalBidsSoFar) {
+        ArrayList<Integer> returnList = new ArrayList<>();
+
+        if (this.position != 3) {
+            for (int i = 0; i <= tricksToWinForRound ; i ++) {
+                returnList.add(i);
+            }
+        }else {
+            if ((tricksToWinForRound - totalBidsSoFar) >= 0 ) {
+                int forbiddenBid = (tricksToWinForRound - totalBidsSoFar);
+                for (int i = 0; i <= tricksToWinForRound ; i ++) {
+                    if (i != forbiddenBid) {
+                        returnList.add(i);
+                    }
+                }
+            }
+        }
+        return returnList;
     }
 
 }

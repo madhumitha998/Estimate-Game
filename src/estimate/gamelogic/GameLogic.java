@@ -154,6 +154,9 @@ public class GameLogic {
      * Record this trick in round's score
      * Set winning player as the first position and all to the left of him as subsequent players
      */
+//    public void startSubRound() {
+//        get
+//    }
 
 
     /**
