@@ -12,6 +12,7 @@ import java.util.*;
  public class TableHand {
     private ArrayList<PlayerCardArray> tableHand;
     private ArrayList<PlayerCardArray> sortedTableHand;
+
      
     public TableHand() {
         tableHand = new ArrayList<PlayerCardArray>();
@@ -39,10 +40,15 @@ import java.util.*;
      * Sorts the cards on the table and returns an array list with the winning/highest card and player at index 0
      * @return returns an array list of player and card according to descending order
      */
-    public ArrayList<PlayerCardArray> sortedTableHand() {
-        Collections.sort(sortedTableHand, new PlayerCardComparator() );
+    public ArrayList<PlayerCardArray> sortedTableHand(Suit trumpSuit) {
+        Collections.sort(sortedTableHand, new PlayerCardComparator(trumpSuit) );
         return sortedTableHand;
     }
+
+     public ArrayList<PlayerCardArray> sortedTableHand() {
+         Collections.sort(sortedTableHand, new PlayerCardComparator() );
+         return sortedTableHand;
+     }
 
     public String toString() {
         return "Table Hand Cards \n " + Arrays.deepToString(tableHand.toArray(new PlayerCardArray[tableHand.size()]));

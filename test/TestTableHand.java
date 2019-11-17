@@ -27,4 +27,25 @@ public class TestTableHand {
         System.out.println(test.getTableHand());
 
     }
+
+    @Test
+    public void testTableHandSort() {
+        Card testTrump = new Card(Suit.HEARTS, Rank.TWO, null );
+        Card testCard1 = new Card(Suit.SPADES, Rank.FIVE, null );
+        Card testCard2 = new Card(Suit.DIAMONDS, Rank.KING, null );
+        Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
+        Card testCard4 = new Card(Suit.HEARTS, Rank.TWO, null );
+
+        GameLogic test = new GameLogic();
+        test.initialisePlayers();
+        TableHand tableHand = test.getTableHand();
+        tableHand.addCard(test.getArrayOfPlayers().getArrayOfPlayers().get(0),testCard1);
+        tableHand.addCard(test.getArrayOfPlayers().getArrayOfPlayers().get(0),testCard2);
+        tableHand.addCard(test.getArrayOfPlayers().getArrayOfPlayers().get(0),testCard3);
+        tableHand.addCard(test.getArrayOfPlayers().getArrayOfPlayers().get(0),testCard4);
+
+        System.out.println(tableHand.sortedTableHand(testTrump.getSuit())) ;
+        System.out.println("Expected: 2H, 5S, JC, KD");
+
+    }
 }

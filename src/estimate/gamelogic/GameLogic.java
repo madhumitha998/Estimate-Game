@@ -314,7 +314,7 @@ public class GameLogic {
      * @return returns playerId of winner
      */
     public int getTrickWinner(ArrayList<Player> players) {
-        PlayerCardArray winnerAtIndexZero = (tableHand.sortedTableHand()).get(0);
+        PlayerCardArray winnerAtIndexZero = (tableHand.sortedTableHand(this.trumpSuit.getSuit())).get(0);
         int winner = winnerAtIndexZero.getPlayerId();
         for (Player p: players){
             if (p.getPlayerId() == winner) {
@@ -415,16 +415,16 @@ public class GameLogic {
         tableHand.clearTableHand();
         // Display Table Hand
         System.out.println(tableHand.toString());
-
+        System.out.println("Trump suit: " + this.getTrumpSuit().getSuit());
 
         for (Player p : arrayOfPlayers.getArrayOfPlayers()) {
             Card highestPlayedCard;
             Card leadSuit;
-            if (tableHand.sortedTableHand().size() == 0 ) {
+            if (tableHand.sortedTableHand( this.trumpSuit.getSuit() ).size() == 0 ) {
                 highestPlayedCard = null;
                 leadSuit = null;
             } else {
-                highestPlayedCard = tableHand.sortedTableHand().get(0).getPlayerCard();
+                highestPlayedCard = tableHand.sortedTableHand(this.trumpSuit.getSuit()).get(0).getPlayerCard();
                 leadSuit = this.leadSuit;
             }
 
@@ -473,12 +473,26 @@ public class GameLogic {
             }
         }
 //        Evaluate the subround and add to scoreboard
-        ArrayList<PlayerCardArray> sortedTableHand = tableHand.sortedTableHand();
+        ArrayList<PlayerCardArray> sortedTableHand = tableHand.sortedTableHand(this.trumpSuit.getSuit());
         PlayerCardArray winner = sortedTableHand.get(0);
 
         // Display winner of the round
         System.out.println("The winner is player ID: "+winner.getPlayerId());
         scoreboard.addTricksWon(roundNumber, winner.getPlayerId());
+
+        //set Winner for player
+        for (Player p : arrayOfPlayers.getArrayOfPlayers()) {
+            if ( p.getPlayerId() == winner.getPlayerId() ) {
+                p.setTrickWinner(true);
+            } else {
+                p.setTrickWinner(false);
+            }
+        }
+
+        //Set position for players
+        if (round != 11) {
+            setPlayerOrder(round);
+        }
 
         // Clear tableHand at end of subround
         tableHand.clearTableHand();
@@ -500,6 +514,8 @@ public class GameLogic {
         roundLoop:
         for (int round = 1 ; round <= 11 ; round ++) {
             this.round = round;
+            // Display arrayOfPLayers
+
             int numberOfSubRounds = cardsToDealPerRound[round - 1];
             setPlayersHand(round); //Done testing
             setTrump(); //Done testing
