@@ -56,19 +56,42 @@ public class GameLogic {
 
             this.arrayOfPlayers.updatePlayerStates(playerArray);
 
+        } else {
+            System.out.println("Entered Else");
+            // if not the same cards, then check for isWinner
+            // player that isWinner is starts the nextRound
+            // everyone to the left is the next subsequent person
+            int winnerId = -1;
+            for(Player p : arrayOfPlayers.getArrayOfPlayers() ) {
+                if (p.getTrickWinner() == true) {
+                    winnerId = p.getPlayerId();
+                    System.out.println("Winner ID Found Else Statement " + winnerId);
+                    p.setTrickWinner(false);
+                    break;
+                }
+            }
+            int firstPosition = winnerId;
+            int secondPosition = clockWiseNext(firstPosition);
+            int thirdPosition = clockWiseNext(secondPosition);
+            int fourthPosition = clockWiseNext(thirdPosition);
+
+            ArrayList<Player> players = arrayOfPlayers.getArrayOfPlayers();
+            int[] positionList = new int[]{firstPosition, secondPosition, thirdPosition,fourthPosition};
+            Collections.sort(players, (a, b ) -> a.getPlayerId() - b.getPlayerId());
+
+            arrayOfPlayers.getPlayerByIndex(positionList[0]).setPosition(0);
+            arrayOfPlayers.getPlayerByIndex(positionList[1]).setPosition(1);
+            arrayOfPlayers.getPlayerByIndex(positionList[2]).setPosition(2);
+            arrayOfPlayers.getPlayerByIndex(positionList[3]).setPosition(3);
+
+            Collections.sort(players, (a, b ) -> a.getPosition() - b.getPosition());
+
+            // This should be random every time it is run because dealer will always be changing?
+//        System.out.println(playerReceivingCardOrder.get(0).getPlayerId());
+            this.arrayOfPlayers.updatePlayerStates(players);
+
         }
-        // check if roundCards == number of cards in hand
-        // if same same cards in hand then it is the beginning of the round
-        // First player to the left of dealer is the first position
-        // set the playing position for the other members
 
-        // if not the same cards, then check for isWinner
-        // player that isWinner is starts the nextRound
-        // everyone to the left is the next subsequent person
-
-        // First player is to the left of the dealer aka: playerIDs in ascending order
-
-        // Fringe case: the left of 4 will be 1
     }
 
     public GameLogic() {

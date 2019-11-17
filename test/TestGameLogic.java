@@ -2,7 +2,9 @@ import cards.Card;
 import cards.*;
 import java.util.*;
 import estimate.gamelogic.GameLogic;
+import estimate.gamelogic.PlayerCardArray;
 import estimate.gamelogic.Round;
+import estimate.gamelogic.TableHand;
 import estimate.player.ArrayOfPlayers;
 import estimate.player.Player;
 import org.junit.jupiter.api.Test;
@@ -121,6 +123,8 @@ public class TestGameLogic {
     public void testSetPlayerOrder() {
 //        Check that there are no cards at first
         GameLogic test = new GameLogic();
+        TableHand tableHand = new TableHand();
+
         test.initialisePlayers();
         test.initialiseDeck();
         test.setDealer(1);
@@ -146,7 +150,28 @@ public class TestGameLogic {
         assertEquals(1, player4Cards.size());
         assertEquals((52-4),test.getDeck().getNumberOfCardsRemaining() );
 
-        System.out.println(Arrays.deepToString(arrayPlayersTest.getArrayOfPlayers().toArray()));
+        System.out.println("Position for first round when no cards are played" + Arrays.deepToString(arrayPlayersTest.getArrayOfPlayers().toArray()));
+
+        System.out.println();
+
+        for (Player p : arrayPlayersTest.getArrayOfPlayers()){
+            tableHand.addCard(p, p.removeFromHand(0)); ;
+        }
+        PlayerCardArray winner = tableHand.sortedTableHand().get(0);
+
+        System.out.println("Winner of first Trick: " + winner.getPlayerId());
+
+        for (Player p : arrayPlayersTest.getArrayOfPlayers()){
+            if (p.getPlayerId() == winner.getPlayerId()) {
+                p.setTrickWinner(true);
+            } else {
+                p.setTrickWinner(false);
+            }
+        }
+        test.setPlayerOrder(1);
+
+        System.out.println("Position for first round, second trick. This ia after 1 card per person is played: " + Arrays.deepToString(arrayPlayersTest.getArrayOfPlayers().toArray()));
+
     }
 
 
