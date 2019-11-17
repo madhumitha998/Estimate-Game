@@ -18,4 +18,13 @@ public class PlayerHand extends Hand {
     public ArrayList<Card> getHand(){
         return hand;
     }
+
+    public String toString() {
+        String returnString = String.format("Player's Hand \n" );
+        for (Card c : hand) {
+            returnString += "" + c.getRank().toString() + " " + c.getSuit().toString() + "\n";
+        }
+
+        return returnString;
+    }
 }

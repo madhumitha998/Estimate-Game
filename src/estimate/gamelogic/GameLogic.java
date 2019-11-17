@@ -26,11 +26,18 @@ public class GameLogic {
     private TableHand tableHand;
     private Card trumpSuit;
     private Round round;
+    private int roundNumber;
     private Scoreboard scoreboard;
     private int[] cardsToDealPerRound = {1,2,3,4,5,6,5,4,3,2,1};
 
  // private Score; <- this score will always be replaced in a new round
     // private ScoreBoard scoreboard;
+
+    public TableHand getTableHand() {
+        return this.tableHand;
+    }
+
+
 
     /**
      * Sets the order of players at the start of every round / subround
@@ -110,9 +117,9 @@ public class GameLogic {
     public void initialisePlayers() {
 //        Player player0 = new Player(10,10);
         Player player1 = new Player(0,0);
-        Player player2 = new Player(1,1);
-        Player player3 = new Player(2,2);
-        Player player4 = new Player(3,3);
+        Player player2 = new Computer(1,1);
+        Player player3 = new Computer(2,2);
+        Player player4 = new Computer(3,3);
 
 //        arrayOfPlayers.addPlayer(player0);
         arrayOfPlayers.addPlayer(player1);
@@ -140,28 +147,12 @@ public class GameLogic {
         setDealer(1); // Done testing
         setPlayersHand(round); //Done testing
         setTrump(); //Done testing
+        setPlayerOrder(1);
+        System.out.println("Player Order at start of Game:  " + getArrayOfPlayers().getArrayOfPlayers() + "\n");
         return getArrayOfPlayers();
     }
 
-    /**
-     * method of starting a subRound()
-     * get the number of cards in hand
-     * If num of Cards == cards per trick, first player == left of dealer
-     * Get player position and start looping through player to play a card
-     *  If player instanceof computer, then play a card
-     *  call the play card method of computer
-     *  Display the card played
-     * If physical normal player, then get input from player
-     * Takes in player input and input into the tablehand
-     * Evaluate the table hand once 4 cards in the tablehand
-     * display winner
-     * Set winning player's trick winner attribute
-     * Record this trick in round's score
-     * Set winning player as the first position and all to the left of him as subsequent players
-     */
-//    public void startSubRound() {
-//        get
-//    }
+
 
 
     /**
@@ -402,6 +393,80 @@ public class GameLogic {
 
         this.arrayOfPlayers.updatePlayerStates(playerReceivingCardOrder);
 
+    }
+
+    /**
+     * method of starting a subRound()
+     * get the number of cards in hand
+     * If num of Cards == cards per trick, first player == left of dealer
+     * Get player position and start looping through player to play a card
+     *  If player instanceof computer, then play a card
+     *  call the play card method of computer
+     *  Display the card played
+     * If physical normal player, then get input from player
+     * Takes in player input and input into the tablehand
+     * Evaluate the table hand once 4 cards in the tablehand
+     * display winner
+     * Set winning player's trick winner attribute
+     * Record this trick in round's score
+     * Set winning player as the first position and all to the left of him as subsequent players
+     */
+    public void startSubRound(int roundNumber) {
+        System.out.println("At the start" + this.arrayOfPlayers.getArrayOfPlayers());
+        setPlayerOrder(roundNumber);
+        tableHand.clearTableHand();
+        // Display Table Hand
+        System.out.println(tableHand.toString());
+
+        System.out.println("Within sub round methdd "+ arrayOfPlayers.getArrayOfPlayers());
+        for (Player p : arrayOfPlayers.getArrayOfPlayers()) {
+            Card highestPlayedCard;
+            if (tableHand.sortedTableHand().size() == 0 ) {
+                highestPlayedCard = null;
+            } else {
+                highestPlayedCard = tableHand.sortedTableHand().get(0).getPlayerCard();
+            }
+
+            System.out.println("First Player ID: " + p.getPlayerId() + "\n");
+
+            if (p instanceof Computer) {
+                System.out.println("Entered Computer");
+                Computer pComputer = (Computer) p;
+                Card cardForCompToPlay = pComputer.playCard(trumpSuit.getSuit(), leadSuit.getSuit(), highestPlayedCard);
+
+                tableHand.addCard(p, p.removeFromHand(cardForCompToPlay));
+
+                // Display Table Hand
+                System.out.println(tableHand.toString());
+
+            } else {
+                System.out.println("Entered Player");
+                //Display Hand to user
+                System.out.println(p.getHand());
+
+                // Get input from user
+                System.out.println("Enter Your Card Index You want to play");
+                Scanner sc = new Scanner(System.in);
+                int cardIndex = 0;
+
+                if (p.getPosition() == 0) {
+                    leadSuit = p.getHand().getCard(cardIndex);
+                }
+
+                tableHand.addCard(p,p.removeFromHand(p.getHand().getCard(cardIndex)));
+
+
+                // Display Table Hand
+                System.out.println(tableHand.toString());
+            }
+        }
+//        Evaluate the subround and add to scoreboard
+        ArrayList<PlayerCardArray> sortedTableHand = tableHand.sortedTableHand();
+        PlayerCardArray winner = sortedTableHand.get(0);
+//        scoreboard.add
+
+        // Clear tableHand at end of subround
+        tableHand.clearTableHand();
     }
 
 

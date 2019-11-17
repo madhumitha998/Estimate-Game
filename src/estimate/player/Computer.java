@@ -93,8 +93,8 @@ public class Computer extends Player{
         int bid = getBid();
         PlayerHand playerHand = getHand();
         SelectCard selectCard = new SelectCard();
-        //if computer is first player, position should be 1
-        if(getPosition()==1){
+        //if computer is first player, position should be 0
+        if(getPosition()==0){
             if(bid>0){
                 return selectCard.pickLargestCard(playerHand,trumpSuit);
             } else {

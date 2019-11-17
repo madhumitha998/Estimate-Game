@@ -174,5 +174,13 @@ public class TestGameLogic {
 
     }
 
+    @Test
+    public void testStartSubRound(){
+        GameLogic test = new GameLogic();
+        test.startNewGame();
+        System.out.println("Updated Ref" + test.getArrayOfPlayers().getArrayOfPlayers());
+        test.startSubRound(1 );
+    }
+
 
 }

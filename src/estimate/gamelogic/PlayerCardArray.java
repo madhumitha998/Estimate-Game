@@ -23,12 +23,17 @@ public class PlayerCardArray implements Comparable<PlayerCardArray> {
         return this.playerId;
     }
 
-    public Card playerCard(){
+    public Card getPlayerCard(){
         return this.playerCard;
     }
 
     @Override
     public int compareTo(PlayerCardArray o1) {
         return (this.playerCard.compareTo(o1.playerCard));
+    }
+
+    public String toString() {
+        return String.format(" PlayerID: %d, Player's Card: %s %s \n", playerId,
+                playerCard.rankToString(), playerCard.suitToString());
     }
 }

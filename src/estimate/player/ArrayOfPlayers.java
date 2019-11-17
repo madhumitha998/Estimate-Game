@@ -19,20 +19,20 @@ public class ArrayOfPlayers {
     }
 
     public Player getPlayerByIndex(int index) {
-        return players.get(index);
+        return this.players.get(index);
     }
 
     public int getNumberOfPlayers() {
-        return players.size();
+        return this.players.size();
     }
 
     //ID 0 will always be human
     public ArrayList<Player> getArrayOfPlayers() {
-        return players;
+        return this.players;
     }
 
     public void updatePlayerStates(ArrayList<Player> players) {
-        this.players = players;
+        this.players = new ArrayList<>(players);
     }
 
 }

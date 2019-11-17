@@ -18,6 +18,11 @@ import java.util.*;
         sortedTableHand = new ArrayList<PlayerCardArray>();
     }
 
+    public void clearTableHand() {
+        tableHand.clear();
+        sortedTableHand.clear();
+    }
+
     /**
      * Adds a player's id and card to the table
      * @param player
@@ -37,6 +42,10 @@ import java.util.*;
     public ArrayList<PlayerCardArray> sortedTableHand() {
         Collections.sort(sortedTableHand, new PlayerCardComparator() );
         return sortedTableHand;
+    }
+
+    public String toString() {
+        return "Table Hand Cards \n " + Arrays.deepToString(tableHand.toArray(new PlayerCardArray[tableHand.size()]));
     }
 
 
