@@ -128,8 +128,8 @@ public class Scoreboard {
      * @return
      */
     public int[] getWinner(int round) {
-        int highestScoringPlayerId = -1;
-        int highestScoringPlayerScore = -1;
+        int highestScoringPlayerId = -999;
+        int highestScoringPlayerScore = -999;
         for (Map.Entry<Integer,Integer> i : this.totalScore.entrySet()) {
             int playerId = i.getKey();
             int playerTotalScore = i.getValue();
@@ -144,7 +144,7 @@ public class Scoreboard {
                 }
             }
         }
-        if (highestScoringPlayerId != -1) {
+        if (highestScoringPlayerId != -999) {
             return new int[]{highestScoringPlayerId, highestScoringPlayerScore};
         }
         return null;

@@ -49,7 +49,7 @@ public class TestGameLogic {
         assertEquals(0, player1Cards.size());
 
 //        Check the right number of cards in hand in 4th round
-        test.setPlayersHand(new Round(1));
+        test.setPlayersHand(1);
 
         test.setPlayerOrder(1);
 
@@ -88,10 +88,10 @@ public class TestGameLogic {
     @Test
     public void testSetTrump() {
         GameLogic test = new GameLogic();
+        test.setRound(3);
         test.initialisePlayers();
         test.initialiseDeck();
-        test.setRound(1);
-        test.setPlayersHand(new Round(1));
+        test.setPlayersHand(3);
 
         // Ensure no printed line in console
         test.setTrump();
@@ -99,6 +99,10 @@ public class TestGameLogic {
         assertTrue(test.getTrumpSuit() instanceof Card);
 
         System.out.println(test.getTrumpSuit());
+
+        test.initialiseDeck();
+        System.out.println(test.getDeck().getNumberOfCardsRemaining());
+
     }
 
 
@@ -135,7 +139,7 @@ public class TestGameLogic {
         assertEquals(0, player1Cards.size());
 
 //        Check the right number of cards in hand in 4th round
-        test.setPlayersHand(new Round(1));
+        test.setPlayersHand(1);
 
         test.setPlayerOrder(1);
 
@@ -178,8 +182,18 @@ public class TestGameLogic {
     public void testStartSubRound(){
         GameLogic test = new GameLogic();
         test.startNewGame();
-        System.out.println("Updated Ref" + test.getArrayOfPlayers().getArrayOfPlayers());
         test.startSubRound(1 );
+
+        //check Scoreboard
+        test.getScoreboard().printScoreForRound(1);
+    }
+
+    @Test
+    public void testRound(){
+        GameLogic test = new GameLogic();
+        test.startNewGame();
+        test.startRound();
+
     }
 
 

@@ -1,10 +1,12 @@
 package estimate.gamelogic;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import cards.*;
 import estimate.player.*;
@@ -25,8 +27,7 @@ public class GameLogic {
     private Card leadSuit;
     private TableHand tableHand;
     private Card trumpSuit;
-    private Round round;
-    private int roundNumber;
+    private int round = 1;
     private Scoreboard scoreboard;
     private int[] cardsToDealPerRound = {1,2,3,4,5,6,5,4,3,2,1};
 
@@ -37,6 +38,13 @@ public class GameLogic {
         return this.tableHand;
     }
 
+    public Scoreboard getScoreboard() {
+        return this.scoreboard;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+    }
 
 
     /**
@@ -128,27 +136,19 @@ public class GameLogic {
         arrayOfPlayers.addPlayer(player4);
     }
 
-    /**
-     * Sets the round number
-     * @param roundNumber
-     */
-    public void setRound(int roundNumber) {
-        this.round = new Round(roundNumber);
-    }
 
     /**
      * STarts a new game
      */
     public ArrayOfPlayers startNewGame() {
         // Remember to start Round from 1 not 0
-        setRound(1);
         initialisePlayers();
         initialiseDeck(); // Done testing
         setDealer(1); // Done testing
-        setPlayersHand(round); //Done testing
-        setTrump(); //Done testing
-        setPlayerOrder(1);
-        System.out.println("Player Order at start of Game:  " + getArrayOfPlayers().getArrayOfPlayers() + "\n");
+//        setPlayersHand(round); //Done testing
+//        setTrump(); //Done testing
+//        setPlayerOrder(1);
+//        System.out.println("Player Order at start of Game:  " + getArrayOfPlayers().getArrayOfPlayers() + "\n");
         return getArrayOfPlayers();
     }
 
@@ -175,7 +175,7 @@ public class GameLogic {
             }
 
             int theDealerId = tableHand.sortedTableHand().get(0).getPlayerId();
-            System.out.println(theDealerId + " Dealer ID in set Dealer");
+            System.out.println("Dealer ID in set Dealer: " + theDealerId );
             playersArray.get(theDealerId).setIsDealer(true);
 //            this.arrayOfPlayers.updatePlayerStates(playersArray);
         } else {
@@ -330,7 +330,7 @@ public class GameLogic {
      * @param
      */
     public void setTrump() {
-        int roundNumber = this.round.getRound();
+        int roundNumber = this.round;
         int remainingCards = 52 - (cardsToDealPerRound[roundNumber -1] * 4) ;
         System.out.println(deckOfCards.getNumberOfCardsRemaining() + " Number of cards in deck");
 
@@ -345,6 +345,7 @@ public class GameLogic {
             System.out.println(remainingCards - 4 + " number of expected cards in round 1");
         } else {
             System.out.println("Spoilt broskis, not enough cards in the deck");
+            System.out.println("Expected: " + remainingCards  );
         }
    
     }
@@ -354,7 +355,7 @@ public class GameLogic {
      * Takes into account the round (different round deals different cards)
      * @param
      */
-    public void setPlayersHand(Round round){
+    public void setPlayersHand(int round){
         deckOfCards.shuffle();
         
         ArrayList<Player> playersArray = this.arrayOfPlayers.getArrayOfPlayers();
@@ -368,7 +369,6 @@ public class GameLogic {
                 break;
             }
         }
-        System.out.println("Dealer index: " + dealerIndex);
 
         for (int toTheRightOfDealer = (dealerIndex%3) + 1; toTheRightOfDealer < playersArray.size(); toTheRightOfDealer++ ) {
             playerReceivingCardOrder.add(playersArray.get(toTheRightOfDealer));
@@ -377,10 +377,8 @@ public class GameLogic {
         for (int toTheLeftOfDealer = 0; toTheLeftOfDealer <= (dealerIndex%3); toTheLeftOfDealer++ ) {
             playerReceivingCardOrder.add(playersArray.get(toTheLeftOfDealer));
         }
-
-        int[] cardsToDealPerRound = {1,2,3,4,5,6,5,4,3,2,1};
         
-        for (int cardsToDeal = 0; cardsToDeal < cardsToDealPerRound[round.getRound() - 1]; cardsToDeal++) {
+        for (int cardsToDeal = 0; cardsToDeal < cardsToDealPerRound[round - 1]; cardsToDeal++) {
             for (Player p: playerReceivingCardOrder){
                 p.setHand(deckOfCards.dealCard());
             }
@@ -412,27 +410,40 @@ public class GameLogic {
      * Set winning player as the first position and all to the left of him as subsequent players
      */
     public void startSubRound(int roundNumber) {
-        System.out.println("At the start" + this.arrayOfPlayers.getArrayOfPlayers());
-        setPlayerOrder(roundNumber);
+
         tableHand.clearTableHand();
         // Display Table Hand
         System.out.println(tableHand.toString());
 
-        System.out.println("Within sub round methdd "+ arrayOfPlayers.getArrayOfPlayers());
+
         for (Player p : arrayOfPlayers.getArrayOfPlayers()) {
             Card highestPlayedCard;
+            Card leadSuit;
             if (tableHand.sortedTableHand().size() == 0 ) {
                 highestPlayedCard = null;
+                leadSuit = null;
             } else {
                 highestPlayedCard = tableHand.sortedTableHand().get(0).getPlayerCard();
+                leadSuit = this.leadSuit;
             }
 
-            System.out.println("First Player ID: " + p.getPlayerId() + "\n");
+            System.out.println("Player ID: " + p.getPlayerId() + "\n");
 
             if (p instanceof Computer) {
                 System.out.println("Entered Computer");
+                Suit leadSuitReplacer;
+                if (leadSuit != null) {
+                    leadSuitReplacer = leadSuit.getSuit();
+                } else {
+                    leadSuitReplacer = null;
+                }
+
                 Computer pComputer = (Computer) p;
-                Card cardForCompToPlay = pComputer.playCard(trumpSuit.getSuit(), leadSuit.getSuit(), highestPlayedCard);
+                Card cardForCompToPlay = pComputer.playCard(trumpSuit.getSuit(), leadSuitReplacer, highestPlayedCard);
+
+                if (p.getPosition() == 0) {
+                    this.leadSuit = cardForCompToPlay;
+                }
 
                 tableHand.addCard(p, p.removeFromHand(cardForCompToPlay));
 
@@ -450,7 +461,7 @@ public class GameLogic {
                 int cardIndex = 0;
 
                 if (p.getPosition() == 0) {
-                    leadSuit = p.getHand().getCard(cardIndex);
+                    this.leadSuit = p.getHand().getCard(cardIndex);
                 }
 
                 tableHand.addCard(p,p.removeFromHand(p.getHand().getCard(cardIndex)));
@@ -463,11 +474,81 @@ public class GameLogic {
 //        Evaluate the subround and add to scoreboard
         ArrayList<PlayerCardArray> sortedTableHand = tableHand.sortedTableHand();
         PlayerCardArray winner = sortedTableHand.get(0);
-//        scoreboard.add
+
+        // Display winner of the round
+        System.out.println("The winner is player ID: "+winner.getPlayerId());
+        scoreboard.addTricksWon(roundNumber, winner.getPlayerId());
 
         // Clear tableHand at end of subround
         tableHand.clearTableHand();
     }
 
+    public void startRound(){
+        //{1,2,3,4,5,6,5,4,3,2,1}
+        // for loop through 11 rounds
+        // for each 11 rounds, get the number of subrounds with the set
+        // deal cards for the current round //set player hand method
+        // Reinitialise deck
+        // Ste bid
+            //  do a for loop of subround method for the number of subrounds
+        // Tabulate the scores for the round
+        // check for winner
+        // If winner != null, system out print winner ID
+        // break out of for loop
+
+        roundLoop:
+        for (int round = 1 ; round <= 11 ; round ++) {
+            this.round = round;
+            int numberOfSubRounds = cardsToDealPerRound[round - 1];
+            setPlayersHand(round); //Done testing
+            setTrump(); //Done testing
+            setPlayerOrder(round);
+
+
+            // Set the bid for all players
+            for (Player p : arrayOfPlayers.getArrayOfPlayers()) {
+                if (p instanceof  Computer) {
+                    Computer pComputer = (Computer) p;
+                    pComputer.bidWinningTricks(numberOfSubRounds, scoreboard.getTotalBidForRound(round),
+                            this.trumpSuit.getSuit());
+                    int predictedBid = p.getBid();
+                    scoreboard.addPrediction(round,p.getPlayerId(),predictedBid);
+                } else {
+                    // User needs to set the predicted Bids
+                    int totalBidsSoFar = scoreboard.getTotalBidForRound(round);
+                    ArrayList<Integer> availableBids = p.getAvailableBids(numberOfSubRounds, totalBidsSoFar);
+
+                    //Display list of options user can bid for.
+                    int[] availableBidsArray = availableBids.stream().mapToInt(i -> i).toArray();
+                    System.out.println(Arrays.toString(availableBidsArray));
+
+                    // Get User to input a bid
+                    int predictedBid = 1;
+                    scoreboard.addPrediction(round, p.getPlayerId(), predictedBid);
+                }
+            }
+
+            subRoundLoop:
+            for (int subRound = 0; subRound < numberOfSubRounds ; subRound ++) {
+                startSubRound(round);
+            }
+            scoreboard.calculateRoundScore(round);
+
+            // Check for winner
+            scoreboard.calculateTotalScore();
+            System.out.println(scoreboard.getTotalScore());
+            int[] winner = scoreboard.getWinner(round);
+
+            System.out.println("Round: "+ round);
+            if (winner != null ) {
+                System.out.println("CONGRATZZZ THE WINNER IS: " + winner[0] + " with " + winner[1] + " points!!!!");
+                break roundLoop;
+            }
+
+            initialiseDeck();
+
+        }
+
+    }
 
 }

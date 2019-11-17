@@ -65,7 +65,10 @@ public class Computer extends Player{
         } 
         if(isDealer()){
             int excludedValueIndex = totTricksInRound - sumOfBidsInTrick;
-            possibleBids.remove(excludedValueIndex);
+            if ( excludedValueIndex >= 0 ) {
+                possibleBids.remove(excludedValueIndex);
+            }
+
         } 
 
         int numPossibleBids = possibleBids.size();
