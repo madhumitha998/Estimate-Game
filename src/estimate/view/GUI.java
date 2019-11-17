@@ -1,9 +1,9 @@
-package estimate.gamelogic;
+package estimate.view;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
+import estimate.gamelogic.*;
 
 @SuppressWarnings("serial")
 public class GUI{
@@ -22,9 +22,9 @@ public class GUI{
 
 	private void initComponents(){
 		estimationGame = new JFrame();
-		estimationGame.getContentPane().setBackground(SystemColor.desktop);
+		estimationGame.getContentPane().setBackground(new Color(7,99,36));
         estimationGame.setTitle("Estimation Game");
-        estimationGame.setBounds(300, 300, 550, 500);
+        estimationGame.setBounds(100, 100, 450, 300);
         estimationGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         SpringLayout springLayout = new SpringLayout();
         estimationGame.getContentPane().setLayout(springLayout);
@@ -71,13 +71,15 @@ public class GUI{
         btnInfo.setFont(new Font("Segoe Script", Font.PLAIN, 18));
         estimationGame.getContentPane().add(btnInfo);
 
-        // btnNewGame.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         GameUI.main(null);
-        //         btnNewGame.setVisible(false);
-        //     }
-        // });
+        btnNewGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GameUI.main(null);
+                // GameLogic gameLogic = new GameLogic();
+                // gameLogic.startNewGame();
+                btnNewGame.setVisible(false);
+            }
+        });
 
         btnInfo.addActionListener(new ActionListener() {
             @Override
@@ -86,7 +88,7 @@ public class GUI{
             }
         });
     }
-    
+
 	public static void main(String args[]){
 		try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
