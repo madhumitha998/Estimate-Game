@@ -196,6 +196,7 @@ public class TestGameLogic {
         GameLogic test = new GameLogic();
         test.startNewGame();
         test.startRound();
+        test.getScoreboard().printScoreForAllRounds();
 
     }
 

@@ -124,7 +124,7 @@ public class GameLogic {
     // Array Of Players will always be sorted by their position in the arrayList
     public void initialisePlayers() {
 //        Player player0 = new Player(10,10);
-        Player player1 = new Player(0,0);
+        Player player1 = new Computer(0,0);
         Player player2 = new Computer(1,1);
         Player player3 = new Computer(2,2);
         Player player4 = new Computer(3,3);
