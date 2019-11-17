@@ -1,11 +1,16 @@
 package estimate.gamelogic;
 
+import java.awt.*;
 import java.util.*;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+
 import cards.*;
 import estimate.player.*;
 import estimate.scoreboard.Scoreboard;
+
+import javax.swing.*;
 
 /**
  * Main logic of game is here. GameLogic is called by the controller to execute business logic
@@ -236,18 +241,42 @@ public class GameLogic {
         Rank queenCard = Rank.QUEEN;
         Rank kingCard = Rank.KING;
 
-        Suit clubs = Suit.CLUBS;
-        Suit diamonds = Suit.DIAMONDS;
-        Suit hearts = Suit.HEARTS;
-        Suit spades = Suit.SPADES;
+        Suit c = Suit.CLUBS;
+        Suit d = Suit.DIAMONDS;
+        Suit h = Suit.HEARTS;
+        Suit s = Suit.SPADES;
 
         Rank[] rankCards = {aceCard,twoCard,threeCard,fourCard,fiveCard,sixCard,sevenCard,eightCard,nineCard,tenCard,jackCard,queenCard,kingCard};
 
-        Suit[] suits = {clubs,diamonds,hearts,spades};
+        HashMap<Rank, String> rankCardToString = new HashMap<>();
+        rankCardToString.put(aceCard, "a");
+        rankCardToString.put(twoCard, "2");
+        rankCardToString.put(threeCard, "3");
+        rankCardToString.put(fourCard, "4");
+        rankCardToString.put(fiveCard, "5");
+        rankCardToString.put(sixCard, "6");
+        rankCardToString.put(sevenCard, "7");
+        rankCardToString.put(eightCard, "8");
+        rankCardToString.put(nineCard, "9");
+        rankCardToString.put(tenCard, "t");
+        rankCardToString.put(jackCard, "j");
+        rankCardToString.put(queenCard, "q");
+        rankCardToString.put(kingCard, "k");
+
+        HashMap<Suit, String> suitToString = new HashMap<>();
+        suitToString.put(c, "c");
+        suitToString.put(d, "d");
+        suitToString.put(h, "h");
+        suitToString.put(s, "s");
+        Suit[] suits = {c,d,h,s};
 
         for (Suit suit: suits) {
             for (Rank rank: rankCards) {
-                Card aCard = new Card(suit,rank,null);
+                String cardFaceLocation = "/resource/cards/src/"+rankCardToString.get(rank)+suitToString.get(suit)+
+                        ".gif";
+//                System.out.println(cardFaceLocation);
+                ImageIcon cardFace = new ImageIcon(cardFaceLocation);
+                Card aCard = new Card(suit,rank,cardFace);
                 deckOfCards.addCard(aCard);
             }
         }

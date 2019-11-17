@@ -157,7 +157,7 @@ public class Scoreboard {
      */
     public int getTotalBidForRound(int round) {
         Score scoreDeets = scoreboardDetails.get(round);
-        return scoreDeets.totalBids();
+        return scoreDeets.getTotalBids();
     }
 
 }
