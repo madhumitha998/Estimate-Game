@@ -55,12 +55,12 @@ public class GameLogic {
         int cardsInHand = arrayOfPlayers.getPlayerByIndex(0).getHand().getNumberOfCards();
         if ( cardsInHand == cardsDealtThisRound) {
             int dealerId = getDealer();
+            System.out.println("The Set Order DealerID: " + dealerId);
             int firstPosition = clockWiseNext(dealerId);
             int secondPosition = clockWiseNext(firstPosition);
             int thirdPosition = clockWiseNext(secondPosition);
             int fourthPosition = clockWiseNext(thirdPosition);
 
-            List<Player> players = arrayOfPlayers.getArrayOfPlayers();
             int[] positionList = new int[]{firstPosition, secondPosition, thirdPosition,fourthPosition};
 
             arrayOfPlayers.getPlayerByIndex(positionList[0]).setPosition(0);
@@ -124,7 +124,7 @@ public class GameLogic {
     // Array Of Players will always be sorted by their position in the arrayList
     public void initialisePlayers() {
 //        Player player0 = new Player(10,10);
-        Player player1 = new Computer(0,0);
+        Player player1 = new Player(0,0);
         Player player2 = new Computer(1,1);
         Player player3 = new Computer(2,2);
         Player player4 = new Computer(3,3);
@@ -144,7 +144,7 @@ public class GameLogic {
         // Remember to start Round from 1 not 0
         initialisePlayers();
         initialiseDeck(); // Done testing
-        setDealer(1); // Done testing
+//        setDealer(1); // Done testing
 //        setPlayersHand(round); //Done testing
 //        setTrump(); //Done testing
 //        setPlayerOrder(1);
@@ -164,7 +164,7 @@ public class GameLogic {
     }
 
     /**
-     * Sets the dealer at the start of the Game.
+     * Sets the dealer at the start of every round.
      */
     public void setDealer(int round) {
         // If round 0, dealer is the highest card
@@ -178,32 +178,37 @@ public class GameLogic {
             System.out.println("Dealer ID in set Dealer: " + theDealerId );
             playersArray.get(theDealerId).setIsDealer(true);
 //            this.arrayOfPlayers.updatePlayerStates(playersArray);
-        } else {
+        }
+        // any other round, the dealer is to the left of the previous dealer
+        else {
             ArrayList<Player> playersArray = this.arrayOfPlayers.getArrayOfPlayers();
             int idOfDealer = -1;
             for ( Player p : playersArray) {
                 if ( p.isDealer() ){
+                    System.out.println("PlayerID of dealer: " + p.getPlayerId());
                     idOfDealer = p.getPlayerId();
                     p.setIsDealer(false);
-                    break;
+//                    break;
+                } else {
+                    p.setIsDealer(false);
                 }
             }
             System.out.println("Previous Dealer: "+idOfDealer);
             // set the left of dealerId
             int newDealerId =clockWiseNext(idOfDealer);
+            System.out.println("New Dealer: " + newDealerId);
 
             arrayOfPlayers.getPlayerByIndex(newDealerId).setIsDealer(true);
 
         }
 
-        // If round > 0, dealer is the person to the left of the dealer
 
     }
 
     public int clockWiseNext(int id) {
-        int result = id - 1;
-        if (result == -1 ) {
-            result = 3;
+        int result = id + 1;
+        if (result == 4 ) {
+            result = 0;
         }
 
         return result;
@@ -454,12 +459,23 @@ public class GameLogic {
             } else {
                 System.out.println("Entered Player");
                 //Display Hand to user
-                System.out.println(p.getHand());
+                System.out.println("Player's Hand: " + p.getHand());
+
+                ArrayList<Card> playableCards;
+                //Display playableHand to user
+                if (this.leadSuit == null) {
+                    playableCards = p.getPlayableHand(null, this.trumpSuit.getSuit());
+                    System.out.println("Player's playable Cards: " + p.getPlayableHand(null, this.trumpSuit.getSuit()));
+                } else {
+                    playableCards = p.getPlayableHand(this.leadSuit.getSuit(), this.trumpSuit.getSuit());
+                    System.out.println("Player's playable Cards: " + p.getPlayableHand(this.leadSuit.getSuit(),
+                            this.trumpSuit.getSuit()));
+                }
 
                 // Get input from user
                 System.out.println("Enter Your Card Index You want to play");
-                Scanner sc = new Scanner(System.in);
-                int cardIndex = 0;
+                Card c = playableCards.get(0);
+                int cardIndex = p.getHand().findCard(c);
 
                 if (p.getPosition() == 0) {
                     this.leadSuit = p.getHand().getCard(cardIndex);
@@ -517,6 +533,8 @@ public class GameLogic {
             // Display arrayOfPLayers
 
             int numberOfSubRounds = cardsToDealPerRound[round - 1];
+            setDealer(round);
+            System.out.println("Gets the fooking dealer after setting the dealer: "+getDealer());
             setPlayersHand(round); //Done testing
             setTrump(); //Done testing
             setPlayerOrder(round);
@@ -548,6 +566,7 @@ public class GameLogic {
             subRoundLoop:
             for (int subRound = 0; subRound < numberOfSubRounds ; subRound ++) {
                 startSubRound(round);
+                System.out.println("\n <><><><><><><> End of Subround " + (subRound + 1) + "  <><><><><><> \n");
             }
             scoreboard.calculateRoundScore(round);
 
@@ -556,7 +575,7 @@ public class GameLogic {
             System.out.println(scoreboard.getTotalScore());
             int[] winner = scoreboard.getWinner(round);
 
-            System.out.println("Round: "+ round);
+            System.out.println("\n\n****************** End of Round: "+ round + "***************************** \n\n");
             if (winner != null ) {
                 System.out.println("CONGRATZZZ THE WINNER IS: " + winner[0] + " with " + winner[1] + " points!!!!");
                 break roundLoop;

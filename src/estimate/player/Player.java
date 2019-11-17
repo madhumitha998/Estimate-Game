@@ -32,6 +32,10 @@ public class Player {
         this.position = position;
     }
 
+    public ArrayList<Card> getPlayableHand(Suit leadSuit, Suit trumpSuit) {
+        return this.hand.getPlayableHand(leadSuit, trumpSuit);
+    }
+
     /**
      * Get the Player's ID
      * @return
