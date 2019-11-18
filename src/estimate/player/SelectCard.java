@@ -92,12 +92,7 @@ public class SelectCard {
    public Card pickBestCard1(PlayerHand playerhand, Suit trumpSuit, Suit leadSuit, Card highestPlayedCard){
        ArrayList<Card> cardArrayList = playerhand.getHand();
 
-       //get Trump suit for round
-       //dummy value for now
        String trumpSuitName = trumpSuit.getName();
-
-       //get Lead suit for round
-       //dummy value for now
        String leadSuitName = leadSuit.getName();
 
        //arraylist of leadsuit cards higher than that is played
@@ -191,12 +186,7 @@ public class SelectCard {
    public Card pickBestCard2(PlayerHand playerhand, Suit trumpSuit, Suit leadSuit, Card highestPlayedCard){
     ArrayList<Card> cardArrayList = playerhand.getHand();
 
-    //get Trump suit for round
-    //dummy value for now
     String trumpSuitName = trumpSuit.getName();
-
-    //get Lead suit for round
-    //dummy value for now
     String leadSuitName = leadSuit.getName();
 
     //arraylist of leadsuit cards lower than that is played
