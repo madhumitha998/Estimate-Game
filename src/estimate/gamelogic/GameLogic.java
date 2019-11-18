@@ -59,14 +59,13 @@ public class GameLogic {
         int cardsInHand = arrayOfPlayers.getPlayerByIndex(0).getHand().getNumberOfCards();
         if ( cardsInHand == cardsDealtThisRound) {
             int dealerId = getDealer();
-//            System.out.println("The Set Order DealerID: " + dealerId);
 
             ArrayList<Player> players = arrayOfPlayers.getArrayOfPlayers();
             int firstPosition = clockWiseNext(dealerId);
             int secondPosition = clockWiseNext(firstPosition);
             int thirdPosition = clockWiseNext(secondPosition);
             int fourthPosition = clockWiseNext(thirdPosition);
-            // Cant get player by index like this
+
             Collections.sort(players, (a, b ) -> a.getPlayerId() - b.getPlayerId());
 
             int[] positionList = new int[]{firstPosition, secondPosition, thirdPosition,fourthPosition};
@@ -79,9 +78,6 @@ public class GameLogic {
 
             ArrayList<Player> playerArray = arrayOfPlayers.getArrayOfPlayers();
             Collections.sort(playerArray, (a, b ) -> a.getPosition() - b.getPosition());
-
-            // This should be random every time it is run because dealer will always be changing?
-//        System.out.println(playerReceivingCardOrder.get(0).getPlayerId());
 
             this.arrayOfPlayers.updatePlayerStates(playerArray);
 
@@ -114,8 +110,6 @@ public class GameLogic {
 
             Collections.sort(players, (a, b ) -> a.getPosition() - b.getPosition());
 
-            // This should be random every time it is run because dealer will always be changing?
-//        System.out.println(playerReceivingCardOrder.get(0).getPlayerId());
             this.arrayOfPlayers.updatePlayerStates(players);
 
         }
@@ -152,11 +146,7 @@ public class GameLogic {
         // Remember to start Round from 1 not 0
         initialisePlayers();
         initialiseDeck(); // Done testing
-//        setDealer(1); // Done testing
-//        setPlayersHand(round); //Done testing
-//        setTrump(); //Done testing
-//        setPlayerOrder(1);
-//        System.out.println("Player Order at start of Game:  " + getArrayOfPlayers().getArrayOfPlayers() + "\n");
+
         return getArrayOfPlayers();
     }
 
@@ -185,7 +175,7 @@ public class GameLogic {
             int theDealerId = tableHand.sortedTableHand().get(0).getPlayerId();
             System.out.println("Dealer ID : " + theDealerId );
             playersArray.get(theDealerId).setIsDealer(true);
-//            this.arrayOfPlayers.updatePlayerStates(playersArray);
+
         }
         // any other round, the dealer is to the left of the previous dealer
         else {
@@ -209,7 +199,7 @@ public class GameLogic {
             // Set new dealerID
             for ( Player p : playersArray) {
                 if ( p.getPlayerId() == newDealerId ){
-//                    System.out.println("PlayerID of dealer: " + p.getPlayerId());
+
                     p.setIsDealer(true);
                 } else {
                     p.setIsDealer(false);
@@ -407,12 +397,11 @@ public class GameLogic {
             for (Player p: playerReceivingCardOrder){
                 p.setHand(deckOfCards.dealCard());
             }
-//            System.out.println("added once");
+
         }
         Collections.sort(playerReceivingCardOrder, (a, b ) -> a.getPosition() - b.getPosition() );
 
-        // This should be random every time it is run because dealer will always be changing?
-//        System.out.println(playerReceivingCardOrder.get(0).getPlayerId());
+
 
         this.arrayOfPlayers.updatePlayerStates(playerReceivingCardOrder);
 
