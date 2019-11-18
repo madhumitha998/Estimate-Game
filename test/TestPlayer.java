@@ -58,10 +58,11 @@ public class TestPlayer {
 
     @Test
     public void testAvailableBids() {
-        Player player1 = new Player(0,3);
-        ArrayList<Integer> result =  player1.getAvailableBids(3, 2);
+        Player player1 = new Player(0,0);
+        ArrayList<Integer> result =  player1.getAvailableBids(3, 7);
         ArrayList<Integer> expected = new ArrayList<>();
         expected.add(0);
+        expected.add(1);
         expected.add(2);
         expected.add(3);
         assertEquals(expected,result);

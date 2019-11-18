@@ -40,8 +40,8 @@ import java.util.*;
      * Sorts the cards on the table and returns an array list with the winning/highest card and player at index 0
      * @return returns an array list of player and card according to descending order
      */
-    public ArrayList<PlayerCardArray> sortedTableHand(Suit trumpSuit) {
-        Collections.sort(sortedTableHand, new PlayerCardComparator(trumpSuit) );
+    public ArrayList<PlayerCardArray> sortedTableHand(Suit trumpSuit, Suit leadSuit) {
+        Collections.sort(sortedTableHand, new PlayerCardComparator(trumpSuit, leadSuit) );
         return sortedTableHand;
     }
 

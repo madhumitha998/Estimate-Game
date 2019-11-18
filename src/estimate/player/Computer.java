@@ -63,13 +63,15 @@ public class Computer extends Player{
         for (int i=0;i<=totTricksInRound;i++){
                 possibleBids.add(i,i);
         } 
-        if(isDealer()){
+        if(super.getPosition() == 3){
+            System.out.println("\n"+super.getPlayerId()+" is last");
             int excludedValueIndex = totTricksInRound - sumOfBidsInTrick;
             if ( excludedValueIndex >= 0 ) {
                 possibleBids.remove(excludedValueIndex);
             }
 
-        } 
+        }
+        System.out.println("\nComputer " + super.getPlayerId() + " Possible Bids: " +possibleBids + "\n");
 
         int numPossibleBids = possibleBids.size();
         //medianIndex

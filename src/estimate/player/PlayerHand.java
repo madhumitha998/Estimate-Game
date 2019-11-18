@@ -54,7 +54,7 @@ public class PlayerHand extends Hand {
     }
 
     public String toString() {
-        String returnString = String.format("Player's Hand: " );
+        String returnString = String.format(" " );
         for (Card c : hand) {
             returnString += "" + c.getRank().toString() + " " + c.getSuit().toString() + "\n";
         }

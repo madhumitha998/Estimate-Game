@@ -147,16 +147,22 @@ public class Player {
         ArrayList<Integer> returnList = new ArrayList<>();
 
         if (this.position != 3) {
+
             for (int i = 0; i <= tricksToWinForRound ; i ++) {
                 returnList.add(i);
             }
-        }else {
+        } else {
+
             if ((tricksToWinForRound - totalBidsSoFar) >= 0 ) {
                 int forbiddenBid = (tricksToWinForRound - totalBidsSoFar);
                 for (int i = 0; i <= tricksToWinForRound ; i ++) {
                     if (i != forbiddenBid) {
                         returnList.add(i);
                     }
+                }
+            } else if ( (tricksToWinForRound - totalBidsSoFar) < 0 ) {
+                for (int i = 0; i <= tricksToWinForRound ; i ++) {
+                    returnList.add(i);
                 }
             }
         }

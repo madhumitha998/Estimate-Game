@@ -89,4 +89,32 @@ public class TestComputer {
         assertEquals(testCard3,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
 
     }
+
+    @Test
+    public void testFirstPlayer() {
+        Computer com1 = new Computer(0,0);
+        com1.setBid(3);
+        //normal card
+        Card testCard = new Card(Suit.DIAMONDS, Rank.JACK, null );
+        //Trump and high card
+        Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
+        //high card
+        Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
+        //trump card
+        Card testCard4 = new Card(Suit.DIAMONDS, Rank.TEN, null );
+        //highest card played so far
+        Card testCard5 = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
+
+        com1.setHand(testCard);
+        com1.setHand(testCard2);
+        com1.setHand(testCard3);
+        com1.setHand(testCard4);
+
+        Suit trumpSuit = Suit.CLUBS;
+//        Suit leadSuit = Suit.DIAMONDS;
+        Card highestPlayedCard = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
+
+        assertEquals(testCard2,com1.playCard(trumpSuit,null, null));
+
+    }
 }

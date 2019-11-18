@@ -46,6 +46,9 @@ public class GameLogic {
         this.round = round;
     }
 
+    public Card getLeadSuit() {
+        return this.leadSuit;
+    }
 
     /**
      * Sets the order of players at the start of every round / subround
@@ -55,13 +58,18 @@ public class GameLogic {
         int cardsInHand = arrayOfPlayers.getPlayerByIndex(0).getHand().getNumberOfCards();
         if ( cardsInHand == cardsDealtThisRound) {
             int dealerId = getDealer();
-            System.out.println("The Set Order DealerID: " + dealerId);
+//            System.out.println("The Set Order DealerID: " + dealerId);
+
+            ArrayList<Player> players = arrayOfPlayers.getArrayOfPlayers();
             int firstPosition = clockWiseNext(dealerId);
             int secondPosition = clockWiseNext(firstPosition);
             int thirdPosition = clockWiseNext(secondPosition);
             int fourthPosition = clockWiseNext(thirdPosition);
+            // Cant get player by index like this
+            Collections.sort(players, (a, b ) -> a.getPlayerId() - b.getPlayerId());
 
             int[] positionList = new int[]{firstPosition, secondPosition, thirdPosition,fourthPosition};
+
 
             arrayOfPlayers.getPlayerByIndex(positionList[0]).setPosition(0);
             arrayOfPlayers.getPlayerByIndex(positionList[1]).setPosition(1);
@@ -77,7 +85,7 @@ public class GameLogic {
             this.arrayOfPlayers.updatePlayerStates(playerArray);
 
         } else {
-            System.out.println("Entered Else");
+
             // if not the same cards, then check for isWinner
             // player that isWinner is starts the nextRound
             // everyone to the left is the next subsequent person
@@ -85,7 +93,6 @@ public class GameLogic {
             for(Player p : arrayOfPlayers.getArrayOfPlayers() ) {
                 if (p.getTrickWinner() == true) {
                     winnerId = p.getPlayerId();
-                    System.out.println("Winner ID Found Else Statement " + winnerId);
                     p.setTrickWinner(false);
                     break;
                 }
@@ -175,7 +182,7 @@ public class GameLogic {
             }
 
             int theDealerId = tableHand.sortedTableHand().get(0).getPlayerId();
-            System.out.println("Dealer ID in set Dealer: " + theDealerId );
+            System.out.println("Dealer ID : " + theDealerId );
             playersArray.get(theDealerId).setIsDealer(true);
 //            this.arrayOfPlayers.updatePlayerStates(playersArray);
         }
@@ -198,7 +205,17 @@ public class GameLogic {
             int newDealerId =clockWiseNext(idOfDealer);
             System.out.println("New Dealer: " + newDealerId);
 
-            arrayOfPlayers.getPlayerByIndex(newDealerId).setIsDealer(true);
+            // Set new dealerID
+            for ( Player p : playersArray) {
+                if ( p.getPlayerId() == newDealerId ){
+//                    System.out.println("PlayerID of dealer: " + p.getPlayerId());
+                    p.setIsDealer(true);
+                } else {
+                    p.setIsDealer(false);
+                }
+            }
+
+            arrayOfPlayers.updatePlayerStates(playersArray);
 
         }
 
@@ -319,7 +336,8 @@ public class GameLogic {
      * @return returns playerId of winner
      */
     public int getTrickWinner(ArrayList<Player> players) {
-        PlayerCardArray winnerAtIndexZero = (tableHand.sortedTableHand(this.trumpSuit.getSuit())).get(0);
+        PlayerCardArray winnerAtIndexZero =
+                (tableHand.sortedTableHand(this.trumpSuit.getSuit(), this.leadSuit.getSuit())).get(0);
         int winner = winnerAtIndexZero.getPlayerId();
         for (Player p: players){
             if (p.getPlayerId() == winner) {
@@ -338,17 +356,17 @@ public class GameLogic {
     public void setTrump() {
         int roundNumber = this.round;
         int remainingCards = 52 - (cardsToDealPerRound[roundNumber -1] * 4) ;
-        System.out.println(deckOfCards.getNumberOfCardsRemaining() + " Number of cards in deck");
+//        System.out.println(deckOfCards.getNumberOfCardsRemaining() + " Number of cards in deck");
 
         //For other rounds
         if (deckOfCards.getNumberOfCardsRemaining() == remainingCards) {
             this.trumpSuit = deckOfCards.dealCard();
-            System.out.println(remainingCards + " number of expected cards");
+//            System.out.println(remainingCards + " number of expected cards");
         }
             // For first round
         else if ( roundNumber == 1 &&(deckOfCards.getNumberOfCardsRemaining() == remainingCards - 4)) {
             this.trumpSuit = deckOfCards.dealCard();
-            System.out.println(remainingCards - 4 + " number of expected cards in round 1");
+//            System.out.println(remainingCards - 4 + " number of expected cards in round 1");
         } else {
             System.out.println("Spoilt broskis, not enough cards in the deck");
             System.out.println("Expected: " + remainingCards  );
@@ -422,35 +440,40 @@ public class GameLogic {
         System.out.println(tableHand.toString());
         System.out.println("Trump suit: " + this.getTrumpSuit().getSuit());
 
+
         for (Player p : arrayOfPlayers.getArrayOfPlayers()) {
             Card highestPlayedCard;
-            Card leadSuit;
-            if (tableHand.sortedTableHand( this.trumpSuit.getSuit() ).size() == 0 ) {
-                highestPlayedCard = null;
-                leadSuit = null;
+//            Card leadSuit;
+            Suit leadSuit2;
+
+            if (this.leadSuit == null) {
+                leadSuit2 = null;
             } else {
-                highestPlayedCard = tableHand.sortedTableHand(this.trumpSuit.getSuit()).get(0).getPlayerCard();
-                leadSuit = this.leadSuit;
+                leadSuit2 = this.leadSuit.getSuit();
             }
 
-            System.out.println("Player ID: " + p.getPlayerId() + "\n");
+            if (tableHand.sortedTableHand( this.trumpSuit.getSuit(), leadSuit2 ).size() == 0 ) {
+                highestPlayedCard = null;
+//                leadSuit = null;
+            } else {
+//                leadSuit = this.leadSuit;
+                highestPlayedCard = tableHand.sortedTableHand(this.trumpSuit.getSuit(), this.leadSuit.getSuit()).get(0).getPlayerCard();
+            }
+
+            System.out.println("\n Player ID: " + p.getPlayerId() );
 
             if (p instanceof Computer) {
                 System.out.println("Entered Computer");
-                Suit leadSuitReplacer;
-                if (leadSuit != null) {
-                    leadSuitReplacer = leadSuit.getSuit();
-                } else {
-                    leadSuitReplacer = null;
-                }
 
                 Computer pComputer = (Computer) p;
-                Card cardForCompToPlay = pComputer.playCard(trumpSuit.getSuit(), leadSuitReplacer, highestPlayedCard);
+                Card cardForCompToPlay = pComputer.playCard(trumpSuit.getSuit(), leadSuit2, highestPlayedCard);
+                System.out.println("Computer's Hand" + p.getHand() + "\n");
 
                 if (p.getPosition() == 0) {
                     this.leadSuit = cardForCompToPlay;
-                }
 
+                }
+                System.out.println("Lead SUit: " + this.leadSuit.getSuit());
                 tableHand.addCard(p, p.removeFromHand(cardForCompToPlay));
 
                 // Display Table Hand
@@ -473,14 +496,14 @@ public class GameLogic {
                 }
 
                 // Get input from user
-                System.out.println("Enter Your Card Index You want to play");
+                System.out.println("Enter Your Card Index You want to play \n");
                 Card c = playableCards.get(0);
                 int cardIndex = p.getHand().findCard(c);
 
                 if (p.getPosition() == 0) {
                     this.leadSuit = p.getHand().getCard(cardIndex);
                 }
-
+                System.out.println("Lead SUit: " + this.leadSuit.getSuit());
                 tableHand.addCard(p,p.removeFromHand(p.getHand().getCard(cardIndex)));
 
 
@@ -489,7 +512,12 @@ public class GameLogic {
             }
         }
 //        Evaluate the subround and add to scoreboard
-        ArrayList<PlayerCardArray> sortedTableHand = tableHand.sortedTableHand(this.trumpSuit.getSuit());
+        System.out.println("Lead SUit : " + this.leadSuit.getSuit());
+        ArrayList<PlayerCardArray> sortedTableHand = tableHand.sortedTableHand(this.trumpSuit.getSuit(),
+                this.leadSuit.getSuit());
+
+        System.out.println(sortedTableHand);
+
         PlayerCardArray winner = sortedTableHand.get(0);
 
         // Display winner of the round
@@ -534,7 +562,6 @@ public class GameLogic {
 
             int numberOfSubRounds = cardsToDealPerRound[round - 1];
             setDealer(round);
-            System.out.println("Gets the fooking dealer after setting the dealer: "+getDealer());
             setPlayersHand(round); //Done testing
             setTrump(); //Done testing
             setPlayerOrder(round);
@@ -551,14 +578,18 @@ public class GameLogic {
                 } else {
                     // User needs to set the predicted Bids
                     int totalBidsSoFar = scoreboard.getTotalBidForRound(round);
+
                     ArrayList<Integer> availableBids = p.getAvailableBids(numberOfSubRounds, totalBidsSoFar);
+                    System.out.println("Available Bids " + availableBids);
 
                     //Display list of options user can bid for.
-                    int[] availableBidsArray = availableBids.stream().mapToInt(i -> i).toArray();
-                    System.out.println(Arrays.toString(availableBidsArray));
+//                    int[] availableBidsArray = availableBids.stream().mapToInt(i -> i).toArray();
+//                    System.out.println("Available Bids " + Arrays.toString(availableBidsArray));
 
                     // Get User to input a bid
-                    int predictedBid = 1;
+                    int predictedBid = availableBids.get(0);
+//                    int predictedBid = availableBidsArray[availableBidsArray.length - 1];
+                    p.setBid(predictedBid);
                     scoreboard.addPrediction(round, p.getPlayerId(), predictedBid);
                 }
             }

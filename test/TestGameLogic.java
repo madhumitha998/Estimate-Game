@@ -161,7 +161,7 @@ public class TestGameLogic {
         for (Player p : arrayPlayersTest.getArrayOfPlayers()){
             tableHand.addCard(p, p.removeFromHand(0)); ;
         }
-        PlayerCardArray winner = tableHand.sortedTableHand(test.getTrumpSuit().getSuit()).get(0);
+        PlayerCardArray winner = tableHand.sortedTableHand(test.getTrumpSuit().getSuit(), test.getLeadSuit().getSuit()).get(0);
 
         System.out.println("Winner of first Trick: " + winner.getPlayerId());
 
