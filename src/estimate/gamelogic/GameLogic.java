@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 import cards.*;
 import estimate.player.*;
 import estimate.scoreboard.Scoreboard;
+import estimate.view.*;
 
 import javax.swing.*;
 
@@ -434,6 +435,7 @@ public class GameLogic {
      * Set winning player as the first position and all to the left of him as subsequent players
      */
     public void startSubRound(int roundNumber) {
+        GameUI gameUi = new GameUI(); 
 
         tableHand.clearTableHand();
         // Display Table Hand

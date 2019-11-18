@@ -3,13 +3,22 @@ package estimate.view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.border.LineBorder;
 import java.util.ArrayList;
 import java.util.List;
 
+import cards.*;
+import estimate.gamelogic.*;
+import estimate.player.*;
+import estimate.scoreboard.*;
+
 public class GameUI {
 	private int card_width = 75;
     private int card_height = 108;
+
+    private List<JButton> listButton = new ArrayList<JButton>();
+    private List<JButton> tableHandCardList = new ArrayList<JButton>();
 
     private SpringLayout springLayout;
 	private JFrame estimationGame;
@@ -30,18 +39,42 @@ public class GameUI {
     private JButton btnCardD;
     private JLabel lblNoti;
 
+    private GameLogic gameLogic;
+
+
+	public static void main(String[] args){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    GameUI window = new GameUI();
+                    window.initalizeGame();
+
+                    window.estimationGame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+	}
+
+
 	public GameUI(){
-		initalizeGame();
+		// initalizeGame();
 	}
 
 	private void initalizeGame(){
 		estimationGame = new JFrame();
 		estimationGame.setTitle("Estimation Game");
         estimationGame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 15));
-        estimationGame.getContentPane().setBackground(Color.white);
+        estimationGame.getContentPane().setBackground(new Color(7,99,36));
         estimationGame.setBackground(SystemColor.desktop);
         estimationGame.setResizable(false);
-        estimationGame.setBounds(50, 50, 800, 650);
+        estimationGame.setBounds(50, 50, 950, 850);
         estimationGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         springLayout = new SpringLayout();
         estimationGame.getContentPane().setLayout(springLayout);
@@ -54,13 +87,346 @@ public class GameUI {
         initD();
 
         initNoti();
+
+        GameLogic gameLogic = new GameLogic();
+        ArrayOfPlayers players = gameLogic.startNewGame();
+        ArrayList<Player> playerArray = players.getArrayOfPlayers();
+
+        gameLogic.startRound();
+        // ArrayList<PlayerCardArray> test = new ArrayList<PlayerCardArray>();
+
+
 	}
+
+	public void displayAvailableBids(int[] availableBidsArray){
+		for (int bid: availableBidsArray){
+			JButton btnBid = new JButton("" + bid);
+	        btnBid.setFocusable(false);
+	        springLayout.putConstraint(SpringLayout.NORTH, btnBid, 30, SpringLayout.SOUTH, estimationGame.getContentPane());
+	        springLayout.putConstraint(SpringLayout.WEST, btnBid, 80, SpringLayout.WEST,
+	                estimationGame.getContentPane());
+	        springLayout.putConstraint(SpringLayout.EAST, btnBid, -80, SpringLayout.EAST,
+	                estimationGame.getContentPane());
+	        btnBid.setForeground(new Color(224, 255, 255));
+	        btnBid.setOpaque(false);
+	        btnBid.setContentAreaFilled(false);
+	        btnBid.setBorderPainted(false);
+	        btnBid.setAlignmentX(Component.CENTER_ALIGNMENT);
+	        btnBid.setFont(new Font("Segoe Script", Font.PLAIN, 18));
+	        estimationGame.getContentPane().add(btnBid); 
+		}
+	}
+
+
+	public void displayTrump(String trumpSuit){
+		JLabel lblTrump = new JLabel("The trump suit is: " + trumpSuit);
+        springLayout.putConstraint(SpringLayout.WEST, lblTrump, 80, SpringLayout.WEST,
+                estimationGame.getContentPane());
+        springLayout.putConstraint(SpringLayout.EAST, lblTrump, -80, SpringLayout.EAST,
+                estimationGame.getContentPane());
+        lblTrump.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTrump.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblTrump.setForeground(Color.WHITE);
+        springLayout.putConstraint(SpringLayout.NORTH, lblTrump, 10, SpringLayout.NORTH,
+                estimationGame.getContentPane());
+        lblTrump.setFont(new Font("Segoe Script", Font.PLAIN, 10));
+        estimationGame.getContentPane().add(lblTrump);
+	}
+
+
+	public void clearTableHand(List<JButton> tableHandCardList){
+		for (JButton item: tableHandCardList){
+			estimationGame.getContentPane().remove(item);
+		}
+		tableHandCardList.clear();
+	}
+
+
+	public void displayTableHand(ArrayList<PlayerCardArray> tableHand){
+		for (PlayerCardArray playerCard: tableHand){
+			if (playerCard.getPlayerId() == 0){
+				int cardLeft = 300;
+				int cardTop = 625;
+
+				Card playedCard = playerCard.getPlayerCard();
+
+				JButton btnCard = new JButton();
+
+		        springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.EAST, btnCard, (int) (cardLeft + card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.NORTH, btnCard, cardTop, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.SOUTH, btnCard, cardTop + card_height, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+
+		        try {
+		        	ImageIcon cardImg = playedCard.getCardImage();
+		        	btnCard.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+		        } catch (NullPointerException e){
+		        	System.out.println("Image not found");
+		        	btnCard.setText("Not found");
+		        }
+
+		        tableHandCardList.add(btnCard);
+		        estimationGame.getContentPane().add(btnCard);
+			}
+
+			if (playerCard.getPlayerId() == 1){
+				int cardLeft = 300;
+				int cardTop = 625;
+
+				Card playedCard = playerCard.getPlayerCard();
+
+				JButton btnCard = new JButton();
+
+		        springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.EAST, btnCard, (int) (cardLeft + card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.NORTH, btnCard, cardTop, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.SOUTH, btnCard, cardTop + card_height, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+
+		        try {
+		        	ImageIcon cardImg = playedCard.getCardImage();
+		        	btnCard.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+		        } catch (NullPointerException e){
+		        	System.out.println("Image not found");
+		        	btnCard.setText("Not found");
+		        }
+
+		        tableHandCardList.add(btnCard);
+		        estimationGame.getContentPane().add(btnCard);
+			}
+
+			if (playerCard.getPlayerId() == 2){
+				int cardLeft = 300;
+				int cardTop = 625;
+
+				Card playedCard = playerCard.getPlayerCard();
+
+				JButton btnCard = new JButton();
+
+		        springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.EAST, btnCard, (int) (cardLeft + card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.NORTH, btnCard, cardTop, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.SOUTH, btnCard, cardTop + card_height, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+
+		        try {
+		        	ImageIcon cardImg = playedCard.getCardImage();
+		        	btnCard.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+		        } catch (NullPointerException e){
+		        	System.out.println("Image not found");
+		        	btnCard.setText("Not found");
+		        }
+
+		        tableHandCardList.add(btnCard);
+		        estimationGame.getContentPane().add(btnCard);
+			}
+
+			if (playerCard.getPlayerId() == 3){
+				int cardLeft = 300;
+				int cardTop = 625;
+
+				Card playedCard = playerCard.getPlayerCard();
+
+				JButton btnCard = new JButton();
+
+		        springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.EAST, btnCard, (int) (cardLeft + card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.NORTH, btnCard, cardTop, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.SOUTH, btnCard, cardTop + card_height, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+
+		        try {
+		        	ImageIcon cardImg = playedCard.getCardImage();
+		        	btnCard.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+		        } catch (NullPointerException e){
+		        	System.out.println("Image not found");
+		        	btnCard.setText("Not found");
+		        }
+
+		        tableHandCardList.add(btnCard);
+		        estimationGame.getContentPane().add(btnCard);
+			}
+		}
+	}
+
+
+	public void displayCards(ArrayList<Player> playerArray){
+		for (Player player: playerArray){
+			PlayerHand playerHand = player.getHand();
+			ArrayList<Card> playerHandCards = playerHand.getHand();
+			if (player instanceof Computer){
+				int playerID = player.getPlayerId();
+				displayComputerCards(playerID, playerHandCards.size());
+			}else{
+				displayPlayerCards(playerHandCards);
+			}
+		}
+	}
+
+
+	public void displayPlayerCards(ArrayList<Card> playerHandCards){
+		int cardLeft = 300;
+		int cardTop = 625;
+
+		float cardIndex = -1;
+
+		for (int i = 0; i < playerHandCards.size(); i++) {
+            cardIndex++;
+            // if (i == 7) {
+            //     card_top = card_top + card_height;
+            //     cardIndex = 0.5f;
+            // }
+
+            Card card = playerHandCards.get(i);
+	        JButton btnCard = new JButton();
+
+	        springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + cardIndex * card_width),
+	            SpringLayout.WEST, estimationGame.getContentPane());
+	        springLayout.putConstraint(SpringLayout.EAST, btnCard, (int) (cardLeft + (cardIndex + 1) * card_width),
+	            SpringLayout.WEST, estimationGame.getContentPane());
+	        springLayout.putConstraint(SpringLayout.NORTH, btnCard, cardTop, SpringLayout.NORTH,
+	            estimationGame.getContentPane());
+	        springLayout.putConstraint(SpringLayout.SOUTH, btnCard, cardTop + card_height, SpringLayout.NORTH,
+	            estimationGame.getContentPane());
+
+	        try {
+	        	// ImageIcon cardImg = card.getCardImage();
+	        	ImageIcon cardImg = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+	        	btnCard.setIcon(new ImageIcon(cardImg.getImage()));
+	        } catch (NullPointerException e){
+	        	System.out.println("Image not found");
+	        	btnCard.setText("Not found");
+	        }
+
+	        btnCard.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e){
+
+	        	}
+	        });
+
+	        listButton.add(btnCard);
+	        estimationGame.getContentPane().add(btnCard);
+	    }
+	}
+
+
+	public void displayComputerCards(int playerID, int numCards){
+		if (playerID == 1){
+			float cardIndex = -1;
+			int cardLeft = 120;
+			int cardTop = 400;
+
+			for (int i = 0; i < numCards; i++) {
+	            cardIndex++;
+				JButton btnCard = new JButton();
+
+				springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + cardIndex * card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.EAST, btnCard, (int) (cardLeft + (cardIndex + 1) * card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.NORTH, btnCard, cardTop, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.SOUTH, btnCard, cardTop + card_height, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+
+		        try {
+	                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+	                btnCard.setIcon(new ImageIcon(
+	                        img.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+	            } catch (NullPointerException e) {
+	                System.out.println("Image not found");
+	                btnCard.setText("Not found");
+	            }
+
+	            listButton.add(btnCard);
+		        estimationGame.getContentPane().add(btnCard);
+		    }
+		}
+		
+		if (playerID == 2){
+			float cardIndex = -1;
+			int cardLeft = 300;
+			int cardTop = 80;
+
+			for (int i = 0; i < numCards; i++) {
+	            cardIndex++;
+				JButton btnCard = new JButton();
+
+				springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + cardIndex * card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.EAST, btnCard, (int) (cardLeft + (cardIndex + 1) * card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.NORTH, btnCard, cardTop, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.SOUTH, btnCard, cardTop + card_height, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+
+		        try {
+	                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+	                btnCard.setIcon(new ImageIcon(
+	                        img.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+	            } catch (NullPointerException e) {
+	                System.out.println("Image not found");
+	                btnCard.setText("Not found");
+	            }
+
+	            listButton.add(btnCard);
+		        estimationGame.getContentPane().add(btnCard);
+	    	}
+		}
+
+		if (playerID == 3){
+			float cardIndex = -1;
+			int cardLeft = 700;
+			int cardTop = 400;
+
+			for (int i = 0; i < numCards; i++) {
+	            cardIndex++;
+				JButton btnCard = new JButton();
+
+				springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + cardIndex * card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.EAST, btnCard, (int) (cardLeft + (cardIndex + 1) * card_width),
+		            SpringLayout.WEST, estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.NORTH, btnCard, cardTop, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+		        springLayout.putConstraint(SpringLayout.SOUTH, btnCard, cardTop + card_height, SpringLayout.NORTH,
+		            estimationGame.getContentPane());
+
+		        try {
+	                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+	                btnCard.setIcon(new ImageIcon(
+	                        img.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+	            } catch (NullPointerException e) {
+	                System.out.println("Image not found");
+	                btnCard.setText("Not found");
+	            }
+
+	            listButton.add(btnCard);
+		        estimationGame.getContentPane().add(btnCard);
+	    	}
+		}
+	}
+
 
 	private void initA(){
         btnAvatarA = new JButton();
-        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarA, 400, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarA, 500, SpringLayout.NORTH,
                 estimationGame.getContentPane());
-        springLayout.putConstraint(SpringLayout.WEST, btnAvatarA, 10, SpringLayout.WEST,
+        springLayout.putConstraint(SpringLayout.WEST, btnAvatarA, 425, SpringLayout.WEST,
                 estimationGame.getContentPane());
         btnAvatarA.setFocusPainted(false);
         try {
@@ -116,11 +482,10 @@ public class GameUI {
 
 
     private void initB() {
-
         JButton btnAvatarB = new JButton();
-        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarB, 170, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarB, 315, SpringLayout.NORTH,
                 estimationGame.getContentPane());
-        springLayout.putConstraint(SpringLayout.WEST, btnAvatarB, 150, SpringLayout.WEST,
+        springLayout.putConstraint(SpringLayout.WEST, btnAvatarB, 250, SpringLayout.WEST,
                 estimationGame.getContentPane());
         btnAvatarB.setFocusPainted(false);
         try {
@@ -171,12 +536,12 @@ public class GameUI {
         estimationGame.getContentPane().add(btnCardB);
     }
 
-    private void initC() {
 
+    private void initC() {
         JButton btnAvatarC = new JButton();
-        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarC, 10, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarC, 190, SpringLayout.NORTH,
                 estimationGame.getContentPane());
-        springLayout.putConstraint(SpringLayout.WEST, btnAvatarC, 300, SpringLayout.WEST,
+        springLayout.putConstraint(SpringLayout.WEST, btnAvatarC, 400, SpringLayout.WEST,
                 estimationGame.getContentPane());
         btnAvatarC.setFocusPainted(false);
         try {
@@ -227,7 +592,6 @@ public class GameUI {
     }
 
     private void initD() {
-
         btnCardD = new JButton();
 
         int cardD_top = 175;
@@ -248,8 +612,8 @@ public class GameUI {
         estimationGame.getContentPane().add(btnCardD);
 
         JButton btnAvatarD = new JButton();
-        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarD, -5, SpringLayout.NORTH, btnCardD);
-        springLayout.putConstraint(SpringLayout.WEST, btnAvatarD, 20, SpringLayout.EAST, btnCardD);
+        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarD, 140, SpringLayout.NORTH, btnCardD);
+        springLayout.putConstraint(SpringLayout.WEST, btnAvatarD, 100, SpringLayout.EAST, btnCardD);
         btnAvatarD.setFocusPainted(false);
         try {
             ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/bot_avatar.jpg"));
@@ -291,23 +655,5 @@ public class GameUI {
         lblNoti.setForeground(new Color(224, 255, 255));
         lblNoti.setFont(new Font("Tahoma", Font.PLAIN, 15));
         estimationGame.getContentPane().add(lblNoti);
-	}
-
-	public static void main(String[] args){
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    GameUI window = new GameUI();
-                    window.estimationGame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 	}
 }
