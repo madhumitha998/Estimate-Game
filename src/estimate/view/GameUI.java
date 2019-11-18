@@ -14,6 +14,13 @@ import estimate.player.*;
 import estimate.scoreboard.*;
 
 public class GameUI {
+	private GameLogic gameLogic;
+	private Scoreboard scoreboard;
+	private ArrayOfPlayers players;
+	private Card trumpSuit;
+	private int round = 1;
+	private int[] cardsToDealPerRound = {1,2,3,4,5,6,5,4,3,2,1};
+
 	private int card_width = 75;
     private int card_height = 108;
 
@@ -22,6 +29,8 @@ public class GameUI {
 
     private SpringLayout springLayout;
 	private JFrame estimationGame;
+
+	private int selectedBid;
 
 	private String notification;
 	private JButton btnAvatarA;
@@ -38,8 +47,6 @@ public class GameUI {
     private JLabel lblTrickD;
     private JButton btnCardD;
     private JLabel lblNoti;
-
-    private GameLogic gameLogic;
 
 
 	public static void main(String[] args){
@@ -67,6 +74,7 @@ public class GameUI {
 		// initalizeGame();
 	}
 
+
 	private void initalizeGame(){
 		estimationGame = new JFrame();
 		estimationGame.setTitle("Estimation Game");
@@ -81,39 +89,90 @@ public class GameUI {
 
         notification = "Click icon below to start game";
 
-        initA();
+		initA();
         initB();
         initC();
         initD();
 
         initNoti();
+        drawNoti(null);
 
-        GameLogic gameLogic = new GameLogic();
-        ArrayOfPlayers players = gameLogic.startNewGame();
-        ArrayList<Player> playerArray = players.getArrayOfPlayers();
+        // gameLogic = new GameLogic();
+        // players = gameLogic.startNewGame();
+        // ArrayList<Player> playerArray = players.getArrayOfPlayers();
 
-        gameLogic.startRound();
-        // ArrayList<PlayerCardArray> test = new ArrayList<PlayerCardArray>();
-
+        btnAvatarA.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                notification = "";
+                newGame();
+            }
+        });
 
 	}
 
-	public void displayAvailableBids(int[] availableBidsArray){
-		for (int bid: availableBidsArray){
-			JButton btnBid = new JButton("" + bid);
-	        btnBid.setFocusable(false);
-	        springLayout.putConstraint(SpringLayout.NORTH, btnBid, 30, SpringLayout.SOUTH, estimationGame.getContentPane());
-	        springLayout.putConstraint(SpringLayout.WEST, btnBid, 80, SpringLayout.WEST,
-	                estimationGame.getContentPane());
-	        springLayout.putConstraint(SpringLayout.EAST, btnBid, -80, SpringLayout.EAST,
-	                estimationGame.getContentPane());
-	        btnBid.setForeground(new Color(224, 255, 255));
-	        btnBid.setOpaque(false);
-	        btnBid.setContentAreaFilled(false);
-	        btnBid.setBorderPainted(false);
-	        btnBid.setAlignmentX(Component.CENTER_ALIGNMENT);
-	        btnBid.setFont(new Font("Segoe Script", Font.PLAIN, 18));
-	        estimationGame.getContentPane().add(btnBid); 
+
+	private void newGame(){
+		gameLogic = new GameLogic();
+		players = gameLogic.startNewGame();
+
+		// for (int round = 1; round <= 11; round++){
+			// this.round = round;
+		int round = 1;
+		int numberOfSubRounds = cardsToDealPerRound[round - 1];
+
+		gameLogic.setDealer(round);
+		gameLogic.setPlayersHand(round);
+		gameLogic.setTrump();
+		gameLogic.setPlayerOrder(round);
+
+		ArrayList<Player> playerArray = gameLogic.getArrayOfPlayers().getArrayOfPlayers();
+
+		displayCards(playerArray);
+		// }
+	}
+
+
+	public void displayAvailableBids(ArrayList<Player> playerArray, int numberOfSubRounds){
+		for (Player p: playerArray){
+			if (p instanceof Computer){
+				Computer pComputer = (Computer) p;
+				pComputer.bidWinningTricks(numberOfSubRounds, scoreboard.getTotalBidForRound(round),
+                            this.trumpSuit.getSuit());
+				int predictedBid = p.getBid();
+				scoreboard.addPrediction(round,p.getPlayerId(),predictedBid);
+			}else{
+				// User needs to set the predicted Bids
+                int totalBidsSoFar = scoreboard.getTotalBidForRound(round);
+                ArrayList<Integer> availableBids = p.getAvailableBids(numberOfSubRounds, totalBidsSoFar);
+			
+				int buttonIndex = 1;
+				for (int bid: availableBids){
+					JButton btnBid = new JButton("" + bid);
+			        btnBid.setFocusable(false);
+			        springLayout.putConstraint(SpringLayout.NORTH, btnBid, 30, SpringLayout.SOUTH, estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.WEST, btnBid, 80, SpringLayout.WEST,
+			                estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.EAST, btnBid, -80, SpringLayout.EAST,
+			                estimationGame.getContentPane());
+			        btnBid.setForeground(new Color(224, 255, 255));
+			        btnBid.setOpaque(false);
+			        btnBid.setContentAreaFilled(false);
+			        btnBid.setBorderPainted(false);
+			        btnBid.setAlignmentX(Component.CENTER_ALIGNMENT);
+			        btnBid.setFont(new Font("Segoe Script", Font.PLAIN, 18));
+			        estimationGame.getContentPane().add(btnBid); 
+					
+					btnBid.addActionListener(new ActionListener() {
+			        	@Override
+			            public void actionPerformed(ActionEvent e) {
+			            	selectedBid = bid;
+			                btnBid.setVisible(false);
+			                System.exit(0);
+			            }
+			        });
+				}
+			}
 		}
 	}
 
@@ -285,10 +344,6 @@ public class GameUI {
 
 		for (int i = 0; i < playerHandCards.size(); i++) {
             cardIndex++;
-            // if (i == 7) {
-            //     card_top = card_top + card_height;
-            //     cardIndex = 0.5f;
-            // }
 
             Card card = playerHandCards.get(i);
 	        JButton btnCard = new JButton();
@@ -303,20 +358,21 @@ public class GameUI {
 	            estimationGame.getContentPane());
 
 	        try {
-	        	// ImageIcon cardImg = card.getCardImage();
-	        	ImageIcon cardImg = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
-	        	btnCard.setIcon(new ImageIcon(cardImg.getImage()));
+	        	ImageIcon cardImg = card.getCardImage();
+	        	btnCard.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+	        	System.out.println(cardImg);
 	        } catch (NullPointerException e){
 	        	System.out.println("Image not found");
 	        	btnCard.setText("Not found");
 	        }
 
-	        btnCard.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e){
+	        // btnCard.addActionListener(new ActionListener() {
+	        // 	public void actionPerformed(ActionEvent e){
 
-	        	}
-	        });
+	        // 	}
+	        // });
 
+        	System.out.println(btnCard);
 	        listButton.add(btnCard);
 	        estimationGame.getContentPane().add(btnCard);
 	    }
@@ -424,7 +480,7 @@ public class GameUI {
 
 	private void initA(){
         btnAvatarA = new JButton();
-        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarA, 500, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarA, 520, SpringLayout.NORTH,
                 estimationGame.getContentPane());
         springLayout.putConstraint(SpringLayout.WEST, btnAvatarA, 425, SpringLayout.WEST,
                 estimationGame.getContentPane());
@@ -476,7 +532,6 @@ public class GameUI {
                 estimationGame.getContentPane());
 
         btnCardA.setVisible(false);
-
         estimationGame.getContentPane().add(btnCardA);
 	}
 
@@ -650,10 +705,17 @@ public class GameUI {
 
     private void initNoti() {
         lblNoti = new JLabel("");
-        springLayout.putConstraint(SpringLayout.WEST, lblNoti, 15, SpringLayout.WEST, estimationGame.getContentPane());
+        springLayout.putConstraint(SpringLayout.WEST, lblNoti, 370, SpringLayout.WEST, estimationGame.getContentPane());
         springLayout.putConstraint(SpringLayout.SOUTH, lblNoti, -10, SpringLayout.NORTH, btnAvatarA);
         lblNoti.setForeground(new Color(224, 255, 255));
         lblNoti.setFont(new Font("Tahoma", Font.PLAIN, 15));
         estimationGame.getContentPane().add(lblNoti);
 	}
+
+	private void drawNoti(String noti) {
+        if (noti != null) {
+            notification = noti;
+        }
+        lblNoti.setText(notification);
+    }
 }
