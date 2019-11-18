@@ -117,4 +117,32 @@ public class TestComputer {
         assertEquals(testCard2,com1.playCard(trumpSuit,null, null));
 
     }
+
+    // Test available bid for round 3, when position 0 ; possible bids are 0 - total tricks 
+    // Test available bid for round 3, when position 1 ; possible bids are 0 - total tricks 
+    // Test available bid for round 3 when position 3 ; possible bids follow the rules. i + ii + iii 
+    
+
+
+    // test computer first player of round + bid positive + hand has trump and other cards
+    // test computer first player of round + bid positive + hand has only trump :
+
+    // test computer first player of round + bid == 0  + random cards : returns the smallest ranking card of the smallest suit. Largest suit in descending == trump, lead, normal order
+    
+    // test computer second player + bid positive + hand has lead suit only : choose the lead suit that is larger than highest on the table , but lowest in your hand
+    // test computer second player + bid positive + hand has NO lead suit and only trump and other cards : choose the trump suit that is larger than highest on the table , but lowest in your hand
+    // test computer second player + bid positive + hand has lead suit that is lower than the table and trump and other cards : choose the trump suit that is larger than highest on the table , but lowest in your hand. Should not choose lead suit because it does not fulfil the first condition
+    // test computer second player + bid positive + hand has lead suit only but all lower than the table hand : choose the lowest rank card of the lead suit
+    // test computer second player + bid positive + hand has trump suit only but all lower than the table hand : choose the lowest rank card of the trump suit
+    // test computer second player + bid positive + hand has trump suit and other cards but all lower than the table hand : choose the lowest rank card of the trump suit
+    // test computer second play + bid positive + hand has no trump or lead suit and lower than the table hand : choose the lowest of the ranked cards of the ranked suits (meaning diamond is the lowest, trump is the highest, lead is the second highest)
+
+    // test computer second player + bid == 0 + lead suit only : throws the card that is smaller than the table card but largest in hand
+    // test computer second player + bid == 0 + lead suit only but larger than table hand  : throws the largest of lead suit in hand
+    // test computer second player + bid == 0 + lead suit and trump suit. Table hand is a trump.  : throws the largest of trump suit in hand that is smaller than the table
+     // test computer second player + bid == 0 + both lead suit and trump suit larger than table hand : throw the largest trump card of trump suit in hand
+    // test computer second player + bid == 0 +  lead suit only + larger than table hand : throw the largest lead card of lead suit in hand
+    // test computer second player + bid == 0 + no lead + no trump cards in hand : throws the largest of suit in ascending order of rank
+
+
 }
