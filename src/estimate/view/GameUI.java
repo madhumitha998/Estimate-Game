@@ -17,6 +17,7 @@ public class GameUI {
 	private GameLogic gameLogic;
 	private Scoreboard scoreboard;
 	private ArrayOfPlayers players;
+	private ArrayList<Player> playerArray;
 	private TableHand tableHand;
 	private Card trumpSuit;
 	private Card leadSuit;
@@ -24,7 +25,7 @@ public class GameUI {
 	private String leadSuitString;
 	private int round = 1;
 	private int[] cardsToDealPerRound = {1,2,3,4,5,6,5,4,3,2,1};
-	private Player whoNext;
+	private int whoNext;
 	private Boolean waitingUser;
 
 	private int card_width = 75;
@@ -123,7 +124,7 @@ public class GameUI {
 
 	private void newGame(){
 		players = gameLogic.startNewGame();
-		ArrayList<Player> playerArray = gameLogic.getArrayOfPlayers().getArrayOfPlayers();
+		playerArray = gameLogic.getArrayOfPlayers().getArrayOfPlayers();
 
 		int round = 1;
 		int numberOfSubRounds = cardsToDealPerRound[round - 1];
@@ -134,19 +135,19 @@ public class GameUI {
 		gameLogic.setPlayerOrder(round);
 
 		displayTrump();
-		displayCards(playerArray);
-		displayAvailableBids(playerArray, numberOfSubRounds);
+		displayCards();
+		displayAvailableBids(numberOfSubRounds);
 
 		waitingUser = false;
 		if (waitingUser()){
 			waitingUser = true;
 		}
 
-		todoThread(playerArray);
+		todoThread();
 	}
 
 
-	public void todoThread(ArrayList<Player> playerArray){
+	public void todoThread(){
 		while (true){
 			// if complete sub round
 			// 	if complete round
@@ -157,20 +158,24 @@ public class GameUI {
 				break;
 			} else {
 				drawNoti("...");
-				playSubRound(playerArray);
+				playSubRound(null);
 
+				if (waitingUser()){
+					displayTableHand();
+					displayCards();
+					waitingUser = true;
+				}
 			}
 		}
 	}
 
-	public void playSubRound(ArrayList<Player> playerArray){
+	public void playSubRound(Card selectedCard){
 		tableHand.clearTableHand();
 
-		for (Player p: playerArray){
+		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()){
 
-			Player p = playerArray.get(0);
+
 	        Card highestPlayedCard;
-	        leadSuit = gameLogic.getLeadSuit();
 	//           Card leadSuit;
 	        Suit leadSuit2;
 
@@ -180,29 +185,38 @@ public class GameUI {
 	            leadSuit2 = this.leadSuit.getSuit();
 	        }
 
-	        if (tableHand.sortedTableHand( this.trumpSuit.getSuit(), leadSuit2 ).size() == 0 ) {
+	        if (tableHand.sortedTableHand( gameLogic.getTrumpSuit().getSuit(), leadSuit2 ).size() == 0 ) {
 	            highestPlayedCard = null;
 	//                leadSuit = null;
 	        } else {
 	//                leadSuit = this.leadSuit;
-	            highestPlayedCard = tableHand.sortedTableHand(this.trumpSuit.getSuit(), this.leadSuit.getSuit()).get(0).getPlayerCard();
+	            // System.out.println("gameLogic.getTrumpSuit().getSuit()");
+	            // System.out.println(gameLogic.getTrumpSuit().getSuit());
+	            // System.out.println("this.leadSuit.getSuit()");
+	            // System.out.println(gameLogic.getLeadSuit().getSuit());
+	            highestPlayedCard = tableHand.sortedTableHand(gameLogic.getTrumpSuit().getSuit(), leadSuit.getSuit()).get(0).getPlayerCard();
 	        }
 	        System.out.println("\n Player ID: " + p.getPlayerId() );
+	        System.out.println("PLAYER POSITION: " + p.getPosition());
 
 	        if (p instanceof Computer) {
                 System.out.println("Entered Computer");
 
                 Computer pComputer = (Computer) p;
-                Card cardForCompToPlay = pComputer.playCard(trumpSuit.getSuit(), leadSuit2, highestPlayedCard);
+                Card cardForCompToPlay = pComputer.playCard(gameLogic.getTrumpSuit().getSuit(), leadSuit2, highestPlayedCard);
                 System.out.println("Computer's Hand" + p.getHand() + "\n");
 
+
                 if (p.getPosition() == 0) {
-                    this.leadSuit = cardForCompToPlay;
+                    leadSuit = cardForCompToPlay;
+                	String leadSuitString = "" + leadSuit.getSuit();
+                    displayLead(leadSuitString);
 
                 }
-                System.out.println("Lead SUit: " + this.leadSuit.getSuit());
-                tableHand.addCard(p, p.removeFromHand(cardForCompToPlay));
 
+                // System.out.println("Lead SUit: " + this.leadSuit.getSuit());
+                tableHand.addCard(p, p.removeFromHand(cardForCompToPlay));
+                displayTableHand();
                 // Display Table Hand
                 System.out.println(tableHand.toString());
 
@@ -224,15 +238,18 @@ public class GameUI {
 
                 // Get input from user
                 System.out.println("Enter Your Card Index You want to play \n");
-                Card c = playableCards.get(0);
-                int cardIndex = p.getHand().findCard(c);
+
+                int cardIndex = p.getHand().findCard(selectedCard);
+
 
                 if (p.getPosition() == 0) {
-                    this.leadSuit = p.getHand().getCard(cardIndex);
+                    leadSuit = p.getHand().getCard(cardIndex);
+                	String leadSuitString = "" + leadSuit.getSuit();
+                    displayLead(leadSuitString);
                 }
-                System.out.println("Lead SUit: " + this.leadSuit.getSuit());
+                // System.out.println("Lead SUit: " + this.leadSuit.getSuit());
                 tableHand.addCard(p,p.removeFromHand(p.getHand().getCard(cardIndex)));
-
+                displayTableHand();
                 // Display Table Hand
                 System.out.println(tableHand.toString());
             }
@@ -259,13 +276,14 @@ public class GameUI {
 	public ArrayList<Card> getPlayableCards(Player p){
         ArrayList<Card> playableCards;
 	    //Display playableHand to user
-	    if (this.leadSuit == null) {
-	        playableCards = p.getPlayableHand(null, this.trumpSuit.getSuit());
-	        System.out.println("Player's playable Cards: " + p.getPlayableHand(null, this.trumpSuit.getSuit()));
+	    if (leadSuit == null) {
+	        playableCards = p.getPlayableHand(null, gameLogic.getTrumpSuit().getSuit());
+	        System.out.println(playableCards);
+	        System.out.println("Player's playable Cards: " + p.getPlayableHand(null, gameLogic.getTrumpSuit().getSuit()));
 	    } else {
-	        playableCards = p.getPlayableHand(this.leadSuit.getSuit(), this.trumpSuit.getSuit());
-	        System.out.println("Player's playable Cards: " + p.getPlayableHand(this.leadSuit.getSuit(),
-	                this.trumpSuit.getSuit()));
+	        playableCards = p.getPlayableHand(leadSuit.getSuit(), gameLogic.getTrumpSuit().getSuit());
+	        System.out.println("Player's playable Cards: " + p.getPlayableHand(leadSuit.getSuit(),
+	                gameLogic.getTrumpSuit().getSuit()));
 	    }
 
 	    return playableCards;
@@ -280,17 +298,8 @@ public class GameUI {
 		}
 	}
 
-	public void startFirst(ArrayList<Player> playerArray){
-		whoNext = playerArray.get(0);
-		// for (Player p: playerArray){
-		// 	if (p.getPosition() == 0){
-		// 		whoNext = p.getPlayerId();
-		// 	}
-		// }
-	}
 
-
-	public void displayAvailableBids(ArrayList<Player> playerArray, int numberOfSubRounds){
+	public void displayAvailableBids(int numberOfSubRounds){
 		// JButton selectBidButton = new JButton("Select Bid");
 
   //       springLayout.putConstraint(SpringLayout.WEST, selectBidButton, 300, SpringLayout.WEST,
@@ -304,7 +313,7 @@ public class GameUI {
 
         ArrayList<Integer> availableBids = new ArrayList<Integer>();
 
-		for (Player p: playerArray){
+		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()){
 			if (p instanceof Computer){
 				waitingUser = false;
 				Computer pComputer = (Computer) p;
@@ -337,7 +346,7 @@ public class GameUI {
     	int bidSelected = JOptionPane.showOptionDialog(null,
                         "Select from available bids", "input", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, availableBidsString, availableBidsString[0]);
 		
-		for (Player p: playerArray){
+		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()){
 			if (!(p instanceof Computer)){
 				p.setBid(bidSelected);
 			    scoreboard.addPrediction(round, p.getPlayerId(), bidSelected);
@@ -366,15 +375,15 @@ public class GameUI {
 	}
 
 
-	public void displayLead(){
-		leadSuitString = gameLogic.getLeadSuit().getSuit().getName();
+	public void displayLead(String leadSuitString){
+		// leadSuitString = gameLogic.getLeadSuit().getSuit().getName();
 		System.out.println(leadSuitString);
 
 		JLabel lblLead = new JLabel("The lead suit is: " + leadSuitString);
         springLayout.putConstraint(SpringLayout.WEST, lblLead, 10, SpringLayout.WEST,
                 estimationGame.getContentPane());
         lblLead.setForeground(Color.WHITE);
-        springLayout.putConstraint(SpringLayout.NORTH, lblLead, 20, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.NORTH, lblLead, 30, SpringLayout.NORTH,
                 estimationGame.getContentPane());
         lblLead.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
@@ -393,13 +402,15 @@ public class GameUI {
 
 
 	public void displayTableHand(){
+		ArrayList<PlayerCardArray> tableHandCards = tableHand.getTableHand();
+		System.out.println("PRINTING TABLE HAND CARDS " + tableHandCards);
 		drawNoti(null);
 		btnCardA.setVisible(false);
         btnCardB.setVisible(false);
         btnCardC.setVisible(false);
         btnCardD.setVisible(false);
 
-		for (PlayerCardArray playerCard: tableHand){
+		for (PlayerCardArray playerCard: tableHandCards){
 			Card playedCard = playerCard.getPlayerCard();
 			
 			if (playerCard.getPlayerId() == 0){
@@ -452,8 +463,8 @@ public class GameUI {
 	}
 
 
-	public void displayCards(ArrayList<Player> playerArray){
-		for (Player player: playerArray){
+	public void displayCards(){
+		for (Player player: gameLogic.getArrayOfPlayers().getArrayOfPlayers()){
 			PlayerHand playerHand = player.getHand();
 			ArrayList<Card> playerHandCards = playerHand.getHand();
 			if (player instanceof Computer){
@@ -506,6 +517,11 @@ public class GameUI {
 	        	@Override
 	        	public void actionPerformed(ActionEvent e){
 	        		if (waitingUser){
+	        			System.out.println("CLICKING BUTTON");
+	        			System.out.println(card);
+	        			Card selectedCard = card;
+	        			passSelectedCard(selectedCard);
+	        			btnCard.setVisible(false);
 
 	        		}
 	        	}
@@ -513,9 +529,14 @@ public class GameUI {
 
 	        listButton.add(btnCard);
 	        estimationGame.getContentPane().add(btnCard);
-	     //    estimationGame.validate();
-	    	// estimationGame.repaint();
 	    }
+	}
+
+
+	public void passSelectedCard(Card selectedCard){
+		waitingUser = false;
+		playSubRound(selectedCard);
+		todoThread();
 	}
 
 
@@ -620,7 +641,7 @@ public class GameUI {
 
 	private void initA(){
         btnAvatarA = new JButton();
-        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarA, 520, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarA, 550, SpringLayout.NORTH,
                 estimationGame.getContentPane());
         springLayout.putConstraint(SpringLayout.WEST, btnAvatarA, 425, SpringLayout.WEST,
                 estimationGame.getContentPane());
@@ -659,8 +680,8 @@ public class GameUI {
 
         btnCardA = new JButton();
 
-        int cardA_top = 280;
-        int cardA_left = 350;
+        int cardA_top = 435;
+        int cardA_left = 425;
 
         springLayout.putConstraint(SpringLayout.WEST, btnCardA, cardA_left, SpringLayout.WEST,
                 estimationGame.getContentPane());
@@ -680,7 +701,7 @@ public class GameUI {
         JButton btnAvatarB = new JButton();
         springLayout.putConstraint(SpringLayout.NORTH, btnAvatarB, 315, SpringLayout.NORTH,
                 estimationGame.getContentPane());
-        springLayout.putConstraint(SpringLayout.WEST, btnAvatarB, 250, SpringLayout.WEST,
+        springLayout.putConstraint(SpringLayout.WEST, btnAvatarB, 200, SpringLayout.WEST,
                 estimationGame.getContentPane());
         btnAvatarB.setFocusPainted(false);
         try {
@@ -717,8 +738,8 @@ public class GameUI {
 
         btnCardB = new JButton();
 
-        int cardB_top = 5;
-        int cardB_left = 20;
+        int cardB_top = 25;
+        int cardB_left = 50;
 
         springLayout.putConstraint(SpringLayout.WEST, btnCardB, cardB_left, SpringLayout.EAST, btnAvatarB);
         springLayout.putConstraint(SpringLayout.EAST, btnCardB, cardB_left + card_width, SpringLayout.EAST, btnAvatarB);
@@ -734,7 +755,7 @@ public class GameUI {
 
     private void initC() {
         JButton btnAvatarC = new JButton();
-        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarC, 190, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarC, 150, SpringLayout.NORTH,
                 estimationGame.getContentPane());
         springLayout.putConstraint(SpringLayout.WEST, btnAvatarC, 400, SpringLayout.WEST,
                 estimationGame.getContentPane());
@@ -773,8 +794,8 @@ public class GameUI {
 
         btnCardC = new JButton();
 
-        int cardC_top = 10;
-        int cardC_left = 50;
+        int cardC_top = 5;
+        int cardC_left = 20;
 
         springLayout.putConstraint(SpringLayout.WEST, btnCardC, cardC_left, SpringLayout.WEST, btnAvatarC);
         springLayout.putConstraint(SpringLayout.EAST, btnCardC, cardC_left + card_width, SpringLayout.WEST, btnAvatarC);
@@ -789,8 +810,8 @@ public class GameUI {
     private void initD() {
         btnCardD = new JButton();
 
-        int cardD_top = 175;
-        int cardD_left = 450;
+        int cardD_top = 315;
+        int cardD_left = 530;
 
         springLayout.putConstraint(SpringLayout.NORTH, btnCardD, cardD_top, SpringLayout.NORTH,
                 estimationGame.getContentPane());
@@ -807,8 +828,8 @@ public class GameUI {
         estimationGame.getContentPane().add(btnCardD);
 
         JButton btnAvatarD = new JButton();
-        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarD, 140, SpringLayout.NORTH, btnCardD);
-        springLayout.putConstraint(SpringLayout.WEST, btnAvatarD, 100, SpringLayout.EAST, btnCardD);
+        springLayout.putConstraint(SpringLayout.NORTH, btnAvatarD, -5, SpringLayout.NORTH, btnCardD);
+        springLayout.putConstraint(SpringLayout.WEST, btnAvatarD, 20, SpringLayout.EAST, btnCardD);
         btnAvatarD.setFocusPainted(false);
         try {
             ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/bot_avatar.jpg"));
