@@ -41,7 +41,39 @@ public class TestComputer {
         assertEquals(2, com1.indexOfBid(0.65, 4, 1));
     }
     @Test
+    //3 tricks in round, dealer, num >= 75%
     public void bidWinningTricksTest() {
+        Computer com1 = new Computer(0,3);
+        //normal card
+        Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
+        //Trump and high card
+        Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
+        //high card
+        Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
+        //trump card
+        Card testCard4 = new Card(Suit.HEARTS, Rank.TWO, null );
+        com1.setHand(testCard);
+        com1.setHand(testCard2);
+        com1.setHand(testCard3);
+        com1.setHand(testCard4);
+        com1.setIsDealer(true);
+
+        int totTricksInRound = 3;
+        int sumOfBidsInTrick = 2;
+        Suit trumpSuit = Suit.HEARTS;
+        //[0, 1, 2, 3]
+        com1.bidWinningTricks(totTricksInRound, sumOfBidsInTrick, trumpSuit);
+        //[0,2,3]
+        //median: 2
+        //num 75% Pick the possible bid 2 places to the right (or max possible)
+        //3
+        assertEquals(3,com1.getBid());
+
+    }
+
+    // Test available bid for 3 tricks in round, non-dealer, num <= 25%
+    @Test
+    public void bidWinningTricksTest2() {
         Computer com1 = new Computer(0,3);
         //normal card
         Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
@@ -66,9 +98,85 @@ public class TestComputer {
 
     }
 
-    // Test available bid for round 3, when position 0 ; possible bids are 0 - total tricks 
-    // Test available bid for round 3, when position 1 ; possible bids are 0 - total tricks 
-    // Test available bid for round 3 when position 3 ; possible bids follow the rules. i + ii + iii 
+    // Test available bid for 3 tricks in round, non-dealer, 25 < num <= 50%
+    @Test
+    public void bidWinningTricksTest3() {
+        Computer com1 = new Computer(0,3);
+        //normal card
+        Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
+        //Trump and high card
+        Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
+        //high card
+        Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
+        //trump card
+        Card testCard4 = new Card(Suit.HEARTS, Rank.TWO, null );
+        com1.setHand(testCard);
+        com1.setHand(testCard2);
+        com1.setHand(testCard3);
+        com1.setHand(testCard4);
+        assertEquals(4,com1.getHand().getNumberOfCards());
+        com1.setIsDealer(true);
+
+        int totTricksInRound = 5;
+        int sumOfBidsInTrick = 4;
+        Suit trumpSuit = Suit.HEARTS;
+        com1.bidWinningTricks(totTricksInRound, sumOfBidsInTrick, trumpSuit);
+        assertEquals(4,com1.getBid());
+
+    }
+    // Test available bid for 3 tricks in round, non-dealer, 50 < num <= 75%:
+    @Test
+    public void bidWinningTricksTest4() {
+        Computer com1 = new Computer(0,3);
+        //normal card
+        Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
+        //Trump and high card
+        Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
+        //high card
+        Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
+        //trump card
+        Card testCard4 = new Card(Suit.HEARTS, Rank.TWO, null );
+        com1.setHand(testCard);
+        com1.setHand(testCard2);
+        com1.setHand(testCard3);
+        com1.setHand(testCard4);
+        assertEquals(4,com1.getHand().getNumberOfCards());
+        com1.setIsDealer(true);
+
+        int totTricksInRound = 5;
+        int sumOfBidsInTrick = 4;
+        Suit trumpSuit = Suit.HEARTS;
+        com1.bidWinningTricks(totTricksInRound, sumOfBidsInTrick, trumpSuit);
+        assertEquals(4,com1.getBid());
+
+    }
+
+    // Test available bid for 3 tricks in round, non-dealer, 75 < num <= 100%:
+    @Test
+    public void bidWinningTricksTest5() {
+        Computer com1 = new Computer(0,3);
+        //normal card
+        Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
+        //Trump and high card
+        Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
+        //high card
+        Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
+        //trump card
+        Card testCard4 = new Card(Suit.HEARTS, Rank.TWO, null );
+        com1.setHand(testCard);
+        com1.setHand(testCard2);
+        com1.setHand(testCard3);
+        com1.setHand(testCard4);
+        assertEquals(4,com1.getHand().getNumberOfCards());
+        com1.setIsDealer(true);
+
+        int totTricksInRound = 5;
+        int sumOfBidsInTrick = 4;
+        Suit trumpSuit = Suit.HEARTS;
+        com1.bidWinningTricks(totTricksInRound, sumOfBidsInTrick, trumpSuit);
+        assertEquals(4,com1.getBid());
+
+    }
     
 
     @Test
