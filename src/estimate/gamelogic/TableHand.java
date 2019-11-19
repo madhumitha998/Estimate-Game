@@ -19,6 +19,10 @@ import java.util.*;
         sortedTableHand = new ArrayList<PlayerCardArray>();
     }
 
+    public ArrayList<PlayerCardArray> getTableHand(){
+        return this.tableHand;
+    }
+
     public void clearTableHand() {
         tableHand.clear();
         sortedTableHand.clear();
