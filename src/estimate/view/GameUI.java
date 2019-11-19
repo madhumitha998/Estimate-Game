@@ -18,6 +18,8 @@ public class GameUI {
 	private Scoreboard scoreboard;
 	private ArrayOfPlayers players;
 	private Card trumpSuit;
+	private String trumpSuitString;
+	private String leadSuitString;
 	private int round = 1;
 	private int[] cardsToDealPerRound = {1,2,3,4,5,6,5,4,3,2,1};
 
@@ -97,7 +99,9 @@ public class GameUI {
         initNoti();
         drawNoti(null);
 
-        // gameLogic = new GameLogic();
+        gameLogic = new GameLogic();
+        scoreboard = gameLogic.getScoreboard();
+
         // players = gameLogic.startNewGame();
         // ArrayList<Player> playerArray = players.getArrayOfPlayers();
 
@@ -113,7 +117,6 @@ public class GameUI {
 
 
 	private void newGame(){
-		gameLogic = new GameLogic();
 		players = gameLogic.startNewGame();
 
 		// for (int round = 1; round <= 11; round++){
@@ -129,67 +132,102 @@ public class GameUI {
 		ArrayList<Player> playerArray = gameLogic.getArrayOfPlayers().getArrayOfPlayers();
 
 		displayCards(playerArray);
+		displayTrump();
+		// displayLead();
+		displayAvailableBids(playerArray, numberOfSubRounds);
 		// }
 	}
 
 
 	public void displayAvailableBids(ArrayList<Player> playerArray, int numberOfSubRounds){
+		// JButton selectBidButton = new JButton("Select Bid");
+
+  //       springLayout.putConstraint(SpringLayout.WEST, selectBidButton, 300, SpringLayout.WEST,
+  //               estimationGame.getContentPane());
+  //       springLayout.putConstraint(SpringLayout.NORTH, selectBidButton, 540, SpringLayout.NORTH,
+  //               estimationGame.getContentPane());
+
+		// selectBidButton.setFocusPainted(false);
+		// estimationGame.getContentPane().add(selectBidButton);
+  //       estimationGame.setVisible(true);
+
+        ArrayList<Integer> availableBids = new ArrayList<Integer>();
+
 		for (Player p: playerArray){
 			if (p instanceof Computer){
 				Computer pComputer = (Computer) p;
+
 				pComputer.bidWinningTricks(numberOfSubRounds, scoreboard.getTotalBidForRound(round),
-                            this.trumpSuit.getSuit());
+                            gameLogic.getTrumpSuit().getSuit());
 				int predictedBid = p.getBid();
 				scoreboard.addPrediction(round,p.getPlayerId(),predictedBid);
-			}else{
+			} else {
 				// User needs to set the predicted Bids
                 int totalBidsSoFar = scoreboard.getTotalBidForRound(round);
-                ArrayList<Integer> availableBids = p.getAvailableBids(numberOfSubRounds, totalBidsSoFar);
-			
-				int buttonIndex = 1;
-				for (int bid: availableBids){
-					JButton btnBid = new JButton("" + bid);
-			        btnBid.setFocusable(false);
-			        springLayout.putConstraint(SpringLayout.NORTH, btnBid, 30, SpringLayout.SOUTH, estimationGame.getContentPane());
-			        springLayout.putConstraint(SpringLayout.WEST, btnBid, 80, SpringLayout.WEST,
-			                estimationGame.getContentPane());
-			        springLayout.putConstraint(SpringLayout.EAST, btnBid, -80, SpringLayout.EAST,
-			                estimationGame.getContentPane());
-			        btnBid.setForeground(new Color(224, 255, 255));
-			        btnBid.setOpaque(false);
-			        btnBid.setContentAreaFilled(false);
-			        btnBid.setBorderPainted(false);
-			        btnBid.setAlignmentX(Component.CENTER_ALIGNMENT);
-			        btnBid.setFont(new Font("Segoe Script", Font.PLAIN, 18));
-			        estimationGame.getContentPane().add(btnBid); 
-					
-					btnBid.addActionListener(new ActionListener() {
-			        	@Override
-			            public void actionPerformed(ActionEvent e) {
-			            	selectedBid = bid;
-			                btnBid.setVisible(false);
-			                System.exit(0);
-			            }
-			        });
-				}
+                availableBids = p.getAvailableBids(numberOfSubRounds, totalBidsSoFar);
+		    } 
+		}
+
+		String[] availableBidsString = new String[availableBids.size()];
+		for (int i = 0; i < availableBids.size(); i++){
+			availableBidsString[i] = Integer.toString(availableBids.get(i));
+		}
+
+		// selectBidButton.addActionListener(new java.awt.event.ActionListener() {
+  //           @Override
+  //           public void actionPerformed(java.awt.event.ActionEvent evt) {
+  //               int bidSelected = JOptionPane.showOptionDialog(null,
+  //                       "Select from available bids", "input", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, availableBidsString, availableBidsString[0]);
+  //           }
+    	// });
+
+    	int bidSelected = JOptionPane.showOptionDialog(null,
+                        "Select from available bids", "input", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, availableBidsString, availableBidsString[0]);
+		
+		for (Player p: playerArray){
+			if (!(p instanceof Computer)){
+				p.setBid(bidSelected);
+			    scoreboard.addPrediction(round, p.getPlayerId(), bidSelected);
 			}
 		}
+
+    	estimationGame.validate();
+		estimationGame.repaint();
 	}
 
 
-	public void displayTrump(String trumpSuit){
-		JLabel lblTrump = new JLabel("The trump suit is: " + trumpSuit);
-        springLayout.putConstraint(SpringLayout.WEST, lblTrump, 80, SpringLayout.WEST,
+	public void displayTrump(){
+		trumpSuitString = gameLogic.getTrumpSuit().getSuit().getName();
+
+		JLabel lblTrump = new JLabel("The trump suit is: " + trumpSuitString);
+        springLayout.putConstraint(SpringLayout.WEST, lblTrump, 10, SpringLayout.WEST,
                 estimationGame.getContentPane());
-        springLayout.putConstraint(SpringLayout.EAST, lblTrump, -80, SpringLayout.EAST,
-                estimationGame.getContentPane());
-        lblTrump.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTrump.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblTrump.setForeground(Color.WHITE);
         springLayout.putConstraint(SpringLayout.NORTH, lblTrump, 10, SpringLayout.NORTH,
                 estimationGame.getContentPane());
-        lblTrump.setFont(new Font("Segoe Script", Font.PLAIN, 10));
+        lblTrump.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
         estimationGame.getContentPane().add(lblTrump);
+        estimationGame.validate();
+	    estimationGame.repaint();
+	}
+
+
+	public void displayLead(){
+		leadSuitString = gameLogic.getLeadSuit().getSuit().getName();
+		System.out.println(leadSuitString);
+
+		JLabel lblLead = new JLabel("The lead suit is: " + leadSuitString);
+        springLayout.putConstraint(SpringLayout.WEST, lblLead, 10, SpringLayout.WEST,
+                estimationGame.getContentPane());
+        lblLead.setForeground(Color.WHITE);
+        springLayout.putConstraint(SpringLayout.NORTH, lblLead, 20, SpringLayout.NORTH,
+                estimationGame.getContentPane());
+        lblLead.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+        estimationGame.getContentPane().add(lblLead);
+        estimationGame.validate();
+	    estimationGame.repaint();
 	}
 
 
@@ -333,12 +371,14 @@ public class GameUI {
 				displayPlayerCards(playerHandCards);
 			}
 		}
+		estimationGame.validate();
+	    estimationGame.repaint();
 	}
 
 
 	public void displayPlayerCards(ArrayList<Card> playerHandCards){
 		int cardLeft = 300;
-		int cardTop = 625;
+		int cardTop = 645;
 
 		float cardIndex = -1;
 
@@ -360,7 +400,6 @@ public class GameUI {
 	        try {
 	        	ImageIcon cardImg = card.getCardImage();
 	        	btnCard.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
-	        	System.out.println(cardImg);
 	        } catch (NullPointerException e){
 	        	System.out.println("Image not found");
 	        	btnCard.setText("Not found");
@@ -372,7 +411,6 @@ public class GameUI {
 	        // 	}
 	        // });
 
-        	System.out.println(btnCard);
 	        listButton.add(btnCard);
 	        estimationGame.getContentPane().add(btnCard);
 	    }
@@ -494,7 +532,7 @@ public class GameUI {
 
         estimationGame.getContentPane().add(btnAvatarA);
 
-                lblNameA = new JLabel("You");
+        lblNameA = new JLabel("You");
         springLayout.putConstraint(SpringLayout.NORTH, lblNameA, 5, SpringLayout.SOUTH, btnAvatarA);
         springLayout.putConstraint(SpringLayout.WEST, lblNameA, 0, SpringLayout.WEST, btnAvatarA);
         springLayout.putConstraint(SpringLayout.EAST, lblNameA, 0, SpringLayout.EAST, btnAvatarA);
