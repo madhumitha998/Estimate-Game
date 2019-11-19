@@ -1,14 +1,14 @@
 package estimate.player;
 import cards.*;
 import java.util.*;
-import java.lang.Math;
-import estimate.player.SelectCard;
 import java.util.Comparator;
+
 /**
  *
  * @author madhumitha
  * @version 1.0
- */ 
+ */
+
 public class BidPosFirstCardComparator implements Comparator<Card> {
     private Suit trumpSuit;
 

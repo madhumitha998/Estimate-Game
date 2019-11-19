@@ -3,6 +3,12 @@ import cards.*;
 import java.util.*;
 import java.lang.Math;
 
+/**
+ *
+ * @author madhumitha
+ * @version 1.0
+ */
+
 public class SelectCard {
 
     public SelectCard(){
