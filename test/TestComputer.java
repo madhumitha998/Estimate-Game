@@ -63,9 +63,69 @@ public class TestComputer {
 
     }
 
+    // Test available bid for round 3, when position 0 ; possible bids are 0 - total tricks 
+    // Test available bid for round 3, when position 1 ; possible bids are 0 - total tricks 
+    // Test available bid for round 3 when position 3 ; possible bids follow the rules. i + ii + iii 
+    
+
+
+
+
     @Test
     public void playCardTest() {
         Computer com1 = new Computer(0,3);
+        //normal card
+        Card testCard = new Card(Suit.DIAMONDS, Rank.JACK, null );
+        //Trump and high card
+        Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
+        //high card
+        Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
+        //trump card
+        Card testCard4 = new Card(Suit.DIAMONDS, Rank.TEN, null );
+
+        com1.setHand(testCard);
+        com1.setHand(testCard2);
+        com1.setHand(testCard3);
+        com1.setHand(testCard4);
+
+        Suit trumpSuit = Suit.CLUBS;
+        Suit leadSuit = Suit.DIAMONDS;
+        Card highestPlayedCard = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
+
+        assertEquals(testCard3,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
+
+    }
+
+    @Test
+    // test computer first player of round + bid positive + hand has trump and other cards
+    public void testFirstPlayer1() {
+        Computer com1 = new Computer(1,0);
+        //positive bid 1
+        com1.setBid(1);
+        Card testCard = new Card(Suit.DIAMONDS, Rank.JACK, null );
+        Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
+        Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
+        Card testCard4 = new Card(Suit.DIAMONDS, Rank.TEN, null );
+        com1.setHand(testCard);
+        com1.setHand(testCard2);
+        com1.setHand(testCard3);
+        com1.setHand(testCard4);
+
+        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
+        //pass in null values for these
+        Suit trumpSuit = Suit.CLUBS;
+        Card highestPlayedCard = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
+
+        assertEquals(testCard4,com1.playCard(trumpSuit,null, null));
+
+    }
+
+    
+    // test computer first player of round + bid positive + hand has trump and other cards
+    @Test
+    public void testFirstPlayer2() {
+        Computer com1 = new Computer(2,0);
+        com1.setBid(2);
         //normal card
         Card testCard = new Card(Suit.DIAMONDS, Rank.JACK, null );
         //Trump and high card
@@ -82,17 +142,19 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
+        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
+        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
-        Suit leadSuit = Suit.DIAMONDS;
         Card highestPlayedCard = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
 
-        assertEquals(testCard3,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
+        assertEquals(testCard4,com1.playCard(trumpSuit,null, null));
 
     }
 
+    // test computer first player of round + bid positive + hand has only trump :
     @Test
-    public void testFirstPlayer() {
-        Computer com1 = new Computer(0,0);
+    public void testFirstPlayer3() {
+        Computer com1 = new Computer(3,0);
         com1.setBid(3);
         //normal card
         Card testCard = new Card(Suit.DIAMONDS, Rank.JACK, null );
@@ -110,25 +172,50 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
+        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
+        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
-//        Suit leadSuit = Suit.DIAMONDS;
         Card highestPlayedCard = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
 
-        assertEquals(testCard2,com1.playCard(trumpSuit,null, null));
+        assertEquals(testCard4,com1.playCard(trumpSuit,null, null));
 
     }
 
-    // Test available bid for round 3, when position 0 ; possible bids are 0 - total tricks 
-    // Test available bid for round 3, when position 1 ; possible bids are 0 - total tricks 
-    // Test available bid for round 3 when position 3 ; possible bids follow the rules. i + ii + iii 
-    
-
-
-    // test computer first player of round + bid positive + hand has trump and other cards
-    // test computer first player of round + bid positive + hand has only trump :
-
     // test computer first player of round + bid == 0  + random cards : returns the smallest ranking card of the smallest suit. Largest suit in descending == trump, lead, normal order
+    @Test
+    public void testFirstPlayer4() {
+        Computer com1 = new Computer(4,0);
+        com1.setBid(4);
+        //normal card
+        Card testCard = new Card(Suit.DIAMONDS, Rank.JACK, null );
+        //Trump and high card
+        Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
+        //high card
+        Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
+        //trump card
+        Card testCard4 = new Card(Suit.DIAMONDS, Rank.TEN, null );
+        //highest card played so far
+        Card testCard5 = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
+
+        com1.setHand(testCard);
+        com1.setHand(testCard2);
+        com1.setHand(testCard3);
+        com1.setHand(testCard4);
+
+        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
+        //pass in null values for these
+        Suit trumpSuit = Suit.CLUBS;
+        Card highestPlayedCard = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
+
+        assertEquals(testCard4,com1.playCard(trumpSuit,null, null));
+    }
     
+
+
+
+
+
+
     // test computer second player + bid positive + hand has lead suit only : choose the lead suit that is larger than highest on the table , but lowest in your hand
     // test computer second player + bid positive + hand has NO lead suit and only trump and other cards : choose the trump suit that is larger than highest on the table , but lowest in your hand
     // test computer second player + bid positive + hand has lead suit that is lower than the table and trump and other cards : choose the trump suit that is larger than highest on the table , but lowest in your hand. Should not choose lead suit because it does not fulfil the first condition

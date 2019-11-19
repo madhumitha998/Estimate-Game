@@ -50,8 +50,8 @@ public class TestSelectCard {
         computerHand.addCard(testCard3);
         computerHand.addCard(testCard4);
 
-        assertEquals(testCard2, selectCard.pickLargestCard(computerHand, Suit.SPADES));
-        assertEquals(testCard3, selectCard.pickLargestCard(computerHand, Suit.HEARTS));
+        assertEquals(testCard3, selectCard.pickLargestCard(computerHand, Suit.SPADES));
+        assertEquals(testCard2, selectCard.pickLargestCard(computerHand, Suit.CLUBS));
     }
 
     @Test

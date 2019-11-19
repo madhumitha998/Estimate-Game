@@ -54,39 +54,9 @@ public class SelectCard {
     public Card pickLargestCard(PlayerHand playerhand, Suit trumpSuit){
         ArrayList<Card> cardArrayList = playerhand.getHand();
         
-        //List for suit
-        List<String> suitList = Arrays.asList( "Clubs", "Diamonds", "Hearts","Spades");
-        ArrayList<String> suitArrayList = new ArrayList<>();
-        suitArrayList.addAll(suitList);
+        cardArrayList.sort(new BidPosFirstCardComparator(trumpSuit));
 
-        //get Trump suit for round
-        //dummy value for now
-        String trumpSuitName = trumpSuit.getName();
-        suitArrayList.remove(trumpSuitName);
-        suitArrayList.add(0,trumpSuitName);
-
-        //List for ranking
-        List<String> rankList = Arrays.asList( "Two", "Three", "Four","Five","Six","Seven",
-                "Eight","Nine","Ten","Jack","Queen","King","Ace");
-
-        Card largestCard = null;
-        int largestValue = 0;
-        for (Card c : cardArrayList) {
-            String cardRankName = c.getRank().getName();
-            int rankValue = rankList.indexOf( cardRankName ) + 1;
-            int suitValue = suitArrayList.indexOf(c.getSuit().getName())*13;
-            int cardValue = rankValue + suitValue;
-            if(largestValue==0){
-                largestValue = cardValue;
-                largestCard = c;
-            } else {
-                if(cardValue > largestValue){
-                    largestValue = cardValue;
-                    largestCard = c;
-                }
-            }
-        }
-        return largestCard;
+        return cardArrayList.get(0);
     }
 
    public Card pickBestCard1(PlayerHand playerhand, Suit trumpSuit, Suit leadSuit, Card highestPlayedCard){
