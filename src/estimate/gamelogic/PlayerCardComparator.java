@@ -57,6 +57,7 @@ public class PlayerCardComparator implements Comparator<PlayerCardArray> {
             }
 
         } else {
+            System.out.println("Printed");
             return -(o1.compareTo(o2));
         }
 
