@@ -9,10 +9,10 @@ import java.util.Comparator;
  * @author madhumitha
  * @version 1.0
  */ 
-public class BidPosFirstCardComparator implements Comparator<Card> {
+public class BidNegFirstCardComparator implements Comparator<Card> {
     private Suit trumpSuit;
 
-    public BidPosFirstCardComparator(Suit trumpSuit) {
+    public BidNegFirstCardComparator(Suit trumpSuit) {
         this.trumpSuit = trumpSuit;
     }
 
@@ -32,7 +32,7 @@ public class BidPosFirstCardComparator implements Comparator<Card> {
         if ( suitDiff != 0 ){
             return suitDiff;
         }else{
-            return -rankDiff;
+            return rankDiff;
         }
 
     }
