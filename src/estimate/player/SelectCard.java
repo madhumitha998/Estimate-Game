@@ -164,7 +164,7 @@ public class SelectCard {
      Collections.sort(leadRestCards);
      Collections.sort(trumpLowerCards);
      Collections.sort(trumpRestCards );
-     Collections.sort(otherCards);
+     otherCards.sort(new BidNegNextCardComparator(trumpSuit, leadSuit));
 
      //picking the best card
      if(!leadLowerCards.isEmpty()){
@@ -174,7 +174,7 @@ public class SelectCard {
      } else if(!leadRestCards.isEmpty()) {
          return leadRestCards.get(leadRestCards.size()-1);
      } else {
-         return otherCards.get(otherCards.size()-1);
+         return otherCards.get(0);
      }
 
      //If highest played card is trumpsuit
@@ -201,7 +201,7 @@ public class SelectCard {
      Collections.sort(leadRestCards);
      Collections.sort(trumpLowerCards);
      Collections.sort(trumpRestCards );
-     Collections.sort(otherCards);
+     otherCards.sort(new BidNegNextCardComparator(trumpSuit, leadSuit));
 
      //picking the best card
      if(!trumpLowerCards.isEmpty()){
@@ -211,7 +211,7 @@ public class SelectCard {
     } else if(!leadRestCards.isEmpty()) {
         return leadRestCards.get(leadRestCards.size()-1);
     } else {
-        return otherCards.get(otherCards.size()-1);
+        return otherCards.get(0);
     }
 
     }

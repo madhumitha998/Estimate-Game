@@ -115,7 +115,7 @@ public class TestComputer {
         //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
 
-        assertEquals(testCard4,com1.playCard(trumpSuit,null, null));
+        assertEquals(testCard,com1.playCard(trumpSuit,null, null));
 
     }
 

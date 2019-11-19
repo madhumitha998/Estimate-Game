@@ -1,24 +1,27 @@
 package estimate.player;
-import cards.*;
-import java.util.*;
-import java.lang.Math;
-import estimate.player.SelectCard;
+
+import cards.Card;
+import cards.Suit;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+
 /**
  *
  * @author madhumitha
  * @version 1.0
  */ 
-public class BidPosFirstCardComparator implements Comparator<Card> {
+public class BidNegNextCardComparator implements Comparator<Card> {
     private Suit trumpSuit;
+    private Suit leadSuit;
 
-    public BidPosFirstCardComparator(Suit trumpSuit) {
+    public BidNegNextCardComparator(Suit trumpSuit, Suit leadSuit) {
         this.trumpSuit = trumpSuit;
+        this.leadSuit = leadSuit;
     }
 
-    public BidPosFirstCardComparator() {
-
-    }
 
     public int compare(Card c1, Card c2) {
         List<String> suitList = Arrays.asList("Clubs","Diamonds","Hearts","Spades");
@@ -26,8 +29,9 @@ public class BidPosFirstCardComparator implements Comparator<Card> {
         suitArrayList.addAll(suitList);
 
         String trumpSuitName = trumpSuit.getName();
+        String leadSuitName = leadSuit.getName();
         suitArrayList.remove(trumpSuitName);
-        suitArrayList.add(trumpSuitName);
+        suitArrayList.remove(leadSuitName);
 
         int suitDiff = suitArrayList.indexOf(c1.getSuit().getName())-suitArrayList.indexOf(c2.getSuit().getName());
 
