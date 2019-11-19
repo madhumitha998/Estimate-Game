@@ -68,19 +68,13 @@ public class TestComputer {
     // Test available bid for round 3 when position 3 ; possible bids follow the rules. i + ii + iii 
     
 
-
-
-
     @Test
     public void playCardTest() {
         Computer com1 = new Computer(0,3);
-        //normal card
+
         Card testCard = new Card(Suit.DIAMONDS, Rank.JACK, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
-        //high card
         Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
-        //trump card
         Card testCard4 = new Card(Suit.DIAMONDS, Rank.TEN, null );
 
         com1.setHand(testCard);
@@ -100,12 +94,13 @@ public class TestComputer {
     // test computer first player of round + bid positive + hand has trump and other cards
     public void testFirstPlayer1() {
         Computer com1 = new Computer(1,0);
-        //positive bid 1
         com1.setBid(1);
+
         Card testCard = new Card(Suit.DIAMONDS, Rank.JACK, null );
         Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
         Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
         Card testCard4 = new Card(Suit.DIAMONDS, Rank.TEN, null );
+
         com1.setHand(testCard);
         com1.setHand(testCard2);
         com1.setHand(testCard3);
@@ -125,14 +120,11 @@ public class TestComputer {
     public void testFirstPlayer2() {
         Computer com1 = new Computer(2,0);
         com1.setBid(2);
-        //normal card
+
         Card testCard1 = new Card(Suit.DIAMONDS, Rank.JACK, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
         Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
         Card testCard4 = new Card(Suit.DIAMONDS, Rank.TEN, null );
-        //highest card played so far
-        Card testCard5 = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
 
         com1.setHand(testCard1);
         com1.setHand(testCard2);
@@ -152,13 +144,12 @@ public class TestComputer {
     public void testFirstPlayer3() {
         Computer com1 = new Computer(3,0);
         com1.setBid(3);
+
         Card testCard = new Card(Suit.DIAMONDS, Rank.JACK, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.DIAMONDS, Rank.TEN, null );
-        //high card
         Card testCard3 = new Card(Suit.DIAMONDS, Rank.KING, null );
-        //trump card
         Card testCard4 = new Card(Suit.DIAMONDS, Rank.TEN, null );
+
         com1.setHand(testCard);
         com1.setHand(testCard2);
         com1.setHand(testCard3);
@@ -177,12 +168,11 @@ public class TestComputer {
     public void testFirstPlayer4() {
         Computer com1 = new Computer(4,0);
         com1.setBid(0);
-        //normal card
+
         Card testCard = new Card(Suit.DIAMONDS, Rank.JACK, null );
         Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
         Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
         Card testCard4 = new Card(Suit.DIAMONDS, Rank.TEN, null );
-        //highest card played so far
 
         com1.setHand(testCard);
         com1.setHand(testCard2);
@@ -201,13 +191,10 @@ public class TestComputer {
     public void testComputerSecondPlayer() {
         Computer com1 = new Computer(4,1);
         com1.setBid(4);
-        //normal card
+
         Card testCard = new Card(Suit.DIAMONDS, Rank.JACK, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
-        //high card
         Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
-        //trump card
         Card testCard4 = new Card(Suit.DIAMONDS, Rank.TEN, null );
 
         com1.setHand(testCard);
@@ -215,8 +202,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Card highestPlayedCard = new Card(Suit.DIAMONDS, Rank.EIGHT, null );
 
@@ -227,13 +212,10 @@ public class TestComputer {
     public void testComputerSecondPlayerAndTrumpPlaying() {
         Computer com1 = new Computer(4,1);
         com1.setBid(4);
-        //normal card
+
         Card testCard = new Card(Suit.CLUBS, Rank.NINE, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.SPADES, Rank.TEN, null );
-        //high card
         Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
-        //trump card
         Card testCard4 = new Card(Suit.SPADES, Rank.KING, null );
 
         com1.setHand(testCard);
@@ -241,8 +223,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.CLUBS, Rank.EIGHT, null );
@@ -254,13 +234,10 @@ public class TestComputer {
     public void testComputerSecondPlayerAndNoChoice() {
         Computer com1 = new Computer(4,1);
         com1.setBid(4);
-        //normal card
+
         Card testCard = new Card(Suit.CLUBS, Rank.NINE, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.SPADES, Rank.TEN, null );
-        //high card
         Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
-        //trump card
         Card testCard4 = new Card(Suit.SPADES, Rank.KING, null );
 
         com1.setHand(testCard);
@@ -268,8 +245,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.CLUBS, Rank.KING, null );
@@ -281,13 +256,10 @@ public class TestComputer {
     public void testComputerSecondPlayerAndNoChoiceNoLead() {
         Computer com1 = new Computer(4,1);
         com1.setBid(4);
-        //normal card
+
         Card testCard = new Card(Suit.CLUBS, Rank.NINE, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
-        //high card
         Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
-        //trump card
         Card testCard4 = new Card(Suit.DIAMONDS, Rank.KING, null );
 
         com1.setHand(testCard);
@@ -295,8 +267,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.CLUBS, Rank.KING, null );
@@ -308,13 +278,10 @@ public class TestComputer {
     public void testComputerSecondPlayerAndNoChoiceNoLeadNoTrump() {
         Computer com1 = new Computer(4,1);
         com1.setBid(4);
-        //normal card
+
         Card testCard = new Card(Suit.DIAMONDS, Rank.NINE, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
-        //high card
         Card testCard3 = new Card(Suit.HEARTS, Rank.JACK, null );
-        //trump card
         Card testCard4 = new Card(Suit.DIAMONDS, Rank.ACE, null );
 
         com1.setHand(testCard);
@@ -322,8 +289,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.CLUBS, Rank.KING, null );
@@ -335,13 +300,10 @@ public class TestComputer {
     public void testComputerSecondPlayerNormalTrynaLose() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
-        //normal card
+
         Card testCard = new Card(Suit.SPADES, Rank.KING, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.SPADES, Rank.JACK, null );
-        //high card
         Card testCard3 = new Card(Suit.SPADES, Rank.NINE, null );
-        //trump card
         Card testCard4 = new Card(Suit.CLUBS, Rank.ACE, null );
 
         com1.setHand(testCard);
@@ -349,8 +311,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.SPADES, Rank.QUEEN, null );
@@ -362,13 +322,10 @@ public class TestComputer {
     public void testComputerSecondPlayerNormalTrynaLose2() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
-        //normal card
+
         Card testCard = new Card(Suit.HEARTS, Rank.JACK, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.SPADES, Rank.JACK, null );
-        //high card
         Card testCard3 = new Card(Suit.SPADES, Rank.NINE, null );
-        //trump card
         Card testCard4 = new Card(Suit.CLUBS, Rank.JACK, null );
 
         com1.setHand(testCard);
@@ -376,8 +333,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.SPADES, Rank.QUEEN, null );
@@ -389,13 +344,10 @@ public class TestComputer {
     public void testComputerSecondPlayerNormalTrynaLoseToTRUMP() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
-        //normal card
+
         Card testCard = new Card(Suit.HEARTS, Rank.JACK, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.SPADES, Rank.JACK, null );
-        //high card
         Card testCard3 = new Card(Suit.CLUBS, Rank.NINE, null );
-        //trump card
         Card testCard4 = new Card(Suit.CLUBS, Rank.JACK, null );
 
         com1.setHand(testCard);
@@ -403,8 +355,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.CLUBS, Rank.QUEEN, null );
@@ -417,13 +367,10 @@ public class TestComputer {
     public void testComputerSecondPlayerNormalTrynaLoseToTrumpBUTCANT() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
-        //normal card
+
         Card testCard = new Card(Suit.HEARTS, Rank.JACK, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.SPADES, Rank.JACK, null );
-        //high card
         Card testCard3 = new Card(Suit.CLUBS, Rank.NINE, null );
-        //trump card
         Card testCard4 = new Card(Suit.CLUBS, Rank.JACK, null );
 
         com1.setHand(testCard);
@@ -431,8 +378,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.SPADES, Rank.THREE, null );
@@ -445,13 +390,10 @@ public class TestComputer {
     public void testComputerSecondPlayerNormalTrynaLoseToTrumpBUTCANT2() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
-        //normal card
+
         Card testCard = new Card(Suit.HEARTS, Rank.JACK, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.SPADES, Rank.JACK, null );
-        //high card
         Card testCard3 = new Card(Suit.CLUBS, Rank.NINE, null );
-        //trump card
         Card testCard4 = new Card(Suit.CLUBS, Rank.JACK, null );
 
         com1.setHand(testCard);
@@ -459,8 +401,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.CLUBS, Rank.THREE, null );
@@ -473,13 +413,10 @@ public class TestComputer {
     public void testComputerSecondPlayerNormalTrynaLoseToTrumpBUTCANTAndNoTrump() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
-        //normal card
+
         Card testCard = new Card(Suit.HEARTS, Rank.JACK, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.SPADES, Rank.JACK, null );
-        //high card
         Card testCard3 = new Card(Suit.SPADES, Rank.NINE, null );
-        //trump card
         Card testCard4 = new Card(Suit.SPADES, Rank.THREE, null );
 
         com1.setHand(testCard);
@@ -487,8 +424,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.SPADES, Rank.THREE, null );
@@ -501,13 +436,10 @@ public class TestComputer {
     public void testComputerSecondPlayerNormalTrynaLoseToTrumpBUTCANTAndNoTrump2() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
-        //normal card
+
         Card testCard = new Card(Suit.HEARTS, Rank.JACK, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.SPADES, Rank.JACK, null );
-        //high card
         Card testCard3 = new Card(Suit.SPADES, Rank.NINE, null );
-        //trump card
         Card testCard4 = new Card(Suit.SPADES, Rank.THREE, null );
 
         com1.setHand(testCard);
@@ -515,8 +447,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.CLUBS, Rank.THREE, null );
@@ -529,13 +459,10 @@ public class TestComputer {
     public void testComputerSecondPlayerNormalTrynaLoseANDNOCHOICE() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
-        //normal card
+
         Card testCard = new Card(Suit.HEARTS, Rank.JACK, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.DIAMONDS, Rank.JACK, null );
-        //high card
         Card testCard3 = new Card(Suit.DIAMONDS, Rank.NINE, null );
-        //trump card
         Card testCard4 = new Card(Suit.HEARTS, Rank.THREE, null );
 
         com1.setHand(testCard);
@@ -543,8 +470,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.SPADES, Rank.THREE, null );
@@ -557,13 +482,10 @@ public class TestComputer {
     public void testComputerSecondPlayerNormalTrynaLoseANDNOCHOICE2() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
-        //normal card
+
         Card testCard = new Card(Suit.HEARTS, Rank.JACK, null );
-        //Trump and high card
         Card testCard2 = new Card(Suit.DIAMONDS, Rank.JACK, null );
-        //high card
         Card testCard3 = new Card(Suit.DIAMONDS, Rank.NINE, null );
-        //trump card
         Card testCard4 = new Card(Suit.HEARTS, Rank.THREE, null );
 
         com1.setHand(testCard);
@@ -571,8 +493,6 @@ public class TestComputer {
         com1.setHand(testCard3);
         com1.setHand(testCard4);
 
-        //com1 is now first player so no lead suit or highestplayedcard declared yet for the trick
-        //pass in null values for these
         Suit trumpSuit = Suit.CLUBS;
         Suit leadSuit = Suit.SPADES;
         Card highestPlayedCard = new Card(Suit.CLUBS, Rank.THREE, null );
