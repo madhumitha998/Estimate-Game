@@ -42,7 +42,7 @@ public class TestComputer {
     }
     @Test
     //1st trick of round 3, dealer, num <= 75%
-    public void bidWinningTricksTest() {
+    public void isDealer75PercentBid() {
         //dealer pos=3
         Computer com1 = new Computer(0,3);
         //normal card
@@ -75,7 +75,7 @@ public class TestComputer {
 
     // 1st trick of round 3, non-dealer, num <= 25%
     @Test
-    public void bidWinningTricksTest2() {
+    public void nonDealer25PercentBid() {
         Computer com1 = new Computer(0,0);
         //normal card
         Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
@@ -106,7 +106,7 @@ public class TestComputer {
 
     // 1st trick of round 3, non-dealer, 25 < num <= 50%
     @Test
-    public void bidWinningTricksTest3() {
+    public void nonDealer50PercentBid() {
         Computer com1 = new Computer(0,0);
         //normal card
         Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
@@ -136,7 +136,7 @@ public class TestComputer {
     }
     // 1st trick of round 3, non-dealer, 50 < num <= 75%:
     @Test
-    public void bidWinningTricksTest4() {
+    public void nonDealer75PercentBid() {
         Computer com1 = new Computer(0,1);
         //normal card
         Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
@@ -167,7 +167,7 @@ public class TestComputer {
 
     //1st trick of round 3, non-dealer, 75 < num <= 100%:
     @Test
-    public void bidWinningTricksTest5() {
+    public void nonDealer100PercentBid() {
         Computer com1 = new Computer(0,2);
         //normal card
         Card testCard = new Card(Suit.DIAMONDS, Rank.ACE, null );
