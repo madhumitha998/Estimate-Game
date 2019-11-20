@@ -1,3 +1,11 @@
+/**
+ * The Computer class can place bids and play cards
+ *
+ *
+ * @author  Madhumitha
+ * @version 1.2
+ * @since   2019-10-19
+ */
 package estimate.player;
 
 import cards.*; 

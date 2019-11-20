@@ -6,11 +6,11 @@
 * @version 1.2
 * @since   2019-10-19 
 */
+
 package estimate.player;
 import cards.*;
 import java.util.*;
 import java.lang.Math;
-import estimate.player.SelectCard;
 
 public class Computer extends Player{
 

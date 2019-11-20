@@ -10,7 +10,6 @@ package estimate.player;
 
 import cards.*;
 import estimate.player.*;
-
 import java.lang.reflect.Array;
 import java.util.*;
 
