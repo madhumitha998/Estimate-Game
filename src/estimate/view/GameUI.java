@@ -135,7 +135,8 @@ public class GameUI {
 		whoNext = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
 
 		displayTrump();
-		displayCards();
+		playPlayerCards();
+		// displayCards();
 		displayAvailableBids();
 		displayTableHand();
 
@@ -578,7 +579,7 @@ public class GameUI {
 
 				Map<String, Card> buttonMap = new HashMap<String, Card>();
 
-				// JButton[] btnArr = new JButton(playerHandCards.size()); 
+				JButton[] btnArr = new JButton[playerHandCards.size()]; 
 
 				for (int i = 0; i < playerHandCards.size(); i++) {
 		            cardIndex++;
@@ -592,8 +593,8 @@ public class GameUI {
 			        JButton btnCard = new JButton();
 			        btnCard.setText(String.valueOf(i));
 
-			        // btnArr[i] = btnCard;
-			        // btnArr[i] = addActionListener(this);
+			        btnArr[i] = btnCard;
+			        // btnArr[i].addActionListener(this);
 
 
 			        springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + cardIndex * card_width),
@@ -617,27 +618,27 @@ public class GameUI {
 			        if (!(playableCards.contains(card))){
 			        	btnCard.setEnabled(false);
 			        }
-			        System.out.println("TESTTTTTT");
-			        estimationGame.getContentPane().add(btnCard);
+			        System.out.println(buttonMap);
+			        // estimationGame.getContentPane().add(btnCard);
 
 			        btnCard.addActionListener(new ActionListener() {
 			        	@Override
 			        	public void actionPerformed(ActionEvent e){
+			        		System.out.println("TESTTTTTT!!!afjnalfnalfn");
 			        		// if (waitingUser){
-			        		System.out.println(card);
-			        		JButton button = (JButton) e.getSource();
-			        		// System.out.println(button);
-			        		// System.out.println(btnCard);
-			        		Card c = buttonMap.get(button.getText());
+			        		// System.out.println(card);
+			        		// JButton button = (JButton) e.getSource();
+			        		// Card c = buttonMap.get(button.getText());
 		        			// System.out.println("CLICKING BUTTON: " + c);
-		        			selectedCard = c;
+
+		        			selectedCard = card;
 		        			passSelectedCard();
 		        			playSubRound();
 		        			btnCard.setVisible(false);
 
-			        		// }
 			        	}
 			        });
+			    estimationGame.getContentPane().add(btnCard);
 			    }
 			}
 
