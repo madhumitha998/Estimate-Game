@@ -210,7 +210,7 @@ public class GameUI {
 			if (waitingUser){
 				drawNoti("Your turn");
 				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PLAYER'S TURN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-				playPlayerCards(gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getHand().getHand(), gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0));
+				playPlayerCards();
 				break;
 			} else {
 				drawNoti("...");
@@ -220,9 +220,9 @@ public class GameUI {
 
 				if (waitingUser()){
 					// displayAvailableBids();
-					displayTableHand();
-					displayCards();
 					// playPlayerCards(gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getHand().getHand(), gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0));
+					displayTableHand();
+					// displayCards();
 					waitingUser = true;
 				}
 			}
@@ -254,21 +254,21 @@ public class GameUI {
 		        Card highestPlayedCard;
 		//           Card leadSuit;
 		        Suit leadSuit2;
-		        // System.out.println("TESTING 001 " + gameLogic.getLeadSuit());
+		        System.out.println("TESTING 001 " + gameLogic.getLeadSuit());
 		        if (gameLogic.getLeadSuit() == null) {
 		            leadSuit2 = null;
 		        } else {
-		        	// System.out.println("TESTING 002 " + gameLogic.getLeadSuit().getSuit());
+		        	System.out.println("TESTING 002 " + gameLogic.getLeadSuit().getSuit());
 		            leadSuit2 = gameLogic.getLeadSuit().getSuit();
 		        }
 
-		        // System.out.println("TESTING 003 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2);
+		        System.out.println("TESTING 003 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2);
 		        if (gameLogic.getTableHand().sortedTableHand( gameLogic.getTrumpSuit().getSuit(), leadSuit2 ).size() == 0 ) {
 		            highestPlayedCard = null;
 		//                leadSuit = null;
 		        } else {
 		//                leadSuit = this.leadSuit;
-		        	// System.out.println("TESTING 004 " + gameLogic.getLeadSuit().getSuit() + " " + gameLogic.getTrumpSuit().getSuit() + " ");
+		        	System.out.println("TESTING 004 " + gameLogic.getLeadSuit().getSuit() + " " + gameLogic.getTrumpSuit().getSuit() + " ");
 		            highestPlayedCard = gameLogic.getTableHand().sortedTableHand(gameLogic.getTrumpSuit().getSuit(), gameLogic.getLeadSuit().getSuit()).get(0).getPlayerCard();
 		        }
 		        System.out.println("\n Player ID: " + p.getPlayerId() );
@@ -277,12 +277,12 @@ public class GameUI {
 		        if (p instanceof Computer) {
 	                System.out.println("Entered Computer");
 	                
-	                // System.out.println("TESTING 005 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2 + " " + highestPlayedCard);
+	                System.out.println("TESTING 005 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2 + " " + highestPlayedCard);
 
 	                Computer pComputer = (Computer) p;
 	                System.out.println(pComputer);
 
-	                // System.out.println("TESTING 006 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2 + " " + highestPlayedCard);
+	                System.out.println("TESTING 006 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2 + " " + highestPlayedCard);
 	                Card cardForCompToPlay = pComputer.playCard(gameLogic.getTrumpSuit().getSuit(), leadSuit2, highestPlayedCard);
 	                System.out.println("Computer's Hand" + p.getHand() + "\n");
 
@@ -311,7 +311,7 @@ public class GameUI {
 	                // displayCards();
 
 	                System.out.println(p.getHand().getHand());
-	                playPlayerCards(p.getHand().getHand(), p);
+	                playPlayerCards();
 	                System.out.println("Enter Your Card Index You want to play \n" + selectedCard);
 
 	                int cardIndex = p.getHand().findCard(selectedCard);
@@ -562,75 +562,86 @@ public class GameUI {
 	}
 
 
-	public void playPlayerCards(ArrayList<Card> playerHandCards, Player p){
-		System.out.println("TESTTEST");
-		int cardLeft = 300;
-		int cardTop = 645;
-
-		float cardIndex = -1;
-
-		Map<String, Card> buttonMap = new HashMap<String, Card>();
-
-		// JButton[] btnArr = new JButton(playerHandCards.size()); 
-
-		for (int i = 0; i < playerHandCards.size(); i++) {
-            cardIndex++;
-            Card card = playerHandCards.get(i);
-
-            buttonMap.put(String.valueOf(i), card);
-            
-
-	        JButton btnCard = new JButton();
-	        btnCard.setText(String.valueOf(i));
-
-	        // btnArr[i] = btnCard;
-	        // btnArr[i] = addActionListener(this);
+	public void playPlayerCards(){
+		for (Player player: gameLogic.getArrayOfPlayers().getArrayOfPlayers()){
+			PlayerHand playerHand = player.getHand();
+			ArrayList<Card> playerHandCards = playerHand.getHand();
+			if (!(player instanceof Computer)){
 
 
-	        springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + cardIndex * card_width),
-	            SpringLayout.WEST, estimationGame.getContentPane());
-	        springLayout.putConstraint(SpringLayout.EAST, btnCard, (int) (cardLeft + (cardIndex + 1) * card_width),
-	            SpringLayout.WEST, estimationGame.getContentPane());
-	        springLayout.putConstraint(SpringLayout.NORTH, btnCard, cardTop, SpringLayout.NORTH,
-	            estimationGame.getContentPane());
-	        springLayout.putConstraint(SpringLayout.SOUTH, btnCard, cardTop + card_height, SpringLayout.NORTH,
-	            estimationGame.getContentPane());
+				System.out.println("TESTTEST");
 
-	        try {
-	        	ImageIcon cardImg = card.getCardImage();
-	        	btnCard.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
-	        } catch (NullPointerException e){
-	        	System.out.println("Image not found");
-	        	btnCard.setText("Not found");
-	        }
+				int cardLeft = 300;
+				int cardTop = 645;
 
-	        ArrayList<Card> playableCards = getPlayableCards(p);
-	        if (!(playableCards.contains(card))){
-	        	btnCard.setEnabled(false);
-	        }
+				float cardIndex = -1;
+
+				Map<String, Card> buttonMap = new HashMap<String, Card>();
+
+				// JButton[] btnArr = new JButton(playerHandCards.size()); 
+
+				for (int i = 0; i < playerHandCards.size(); i++) {
+		            cardIndex++;
+		            Card card = playerHandCards.get(i);
+
+		            System.out.println("a1");
+
+		            buttonMap.put(String.valueOf(i), card);
+		            
+
+			        JButton btnCard = new JButton();
+			        btnCard.setText(String.valueOf(i));
+
+			        // btnArr[i] = btnCard;
+			        // btnArr[i] = addActionListener(this);
+
+
+			        springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + cardIndex * card_width),
+			            SpringLayout.WEST, estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.EAST, btnCard, (int) (cardLeft + (cardIndex + 1) * card_width),
+			            SpringLayout.WEST, estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.NORTH, btnCard, cardTop, SpringLayout.NORTH,
+			            estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.SOUTH, btnCard, cardTop + card_height, SpringLayout.NORTH,
+			            estimationGame.getContentPane());
+			        System.out.println("a2");
+			        try {
+			        	ImageIcon cardImg = card.getCardImage();
+			        	btnCard.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+			        } catch (NullPointerException e){
+			        	System.out.println("Image not found");
+			        	btnCard.setText("Not found");
+			        }
+			        System.out.println("a3");
+			        ArrayList<Card> playableCards = getPlayableCards(player);
+			        if (!(playableCards.contains(card))){
+			        	btnCard.setEnabled(false);
+			        }
+			        System.out.println("TESTTTTTT");
+			        estimationGame.getContentPane().add(btnCard);
+
+			        btnCard.addActionListener(new ActionListener() {
+			        	@Override
+			        	public void actionPerformed(ActionEvent e){
+			        		// if (waitingUser){
+			        		System.out.println(card);
+			        		JButton button = (JButton) e.getSource();
+			        		// System.out.println(button);
+			        		// System.out.println(btnCard);
+			        		Card c = buttonMap.get(button.getText());
+		        			// System.out.println("CLICKING BUTTON: " + c);
+		        			selectedCard = c;
+		        			passSelectedCard();
+		        			playSubRound();
+		        			btnCard.setVisible(false);
+
+			        		// }
+			        	}
+			        });
+			    }
+			}
 
 	        // estimationGame.getContentPane().add(btnCard);
-
-	        btnCard.addActionListener(new ActionListener() {
-	        	@Override
-	        	public void actionPerformed(ActionEvent e){
-	        		// if (waitingUser){
-	        		System.out.println(card);
-	        		JButton button = (JButton) e.getSource();
-	        		// System.out.println(button);
-	        		// System.out.println(btnCard);
-	        		Card c = buttonMap.get(button.getText());
-        			System.out.println("CLICKING BUTTON: " + c);
-        			selectedCard = c;
-        			passSelectedCard();
-        			playSubRound();
-        			btnCard.setVisible(false);
-
-	        		// }
-	        	}
-	        });
-
-	        estimationGame.getContentPane().add(btnCard);
         }
    //      public void actionPerformed(ActionEvent e){
    //      		// if (waitingUser){

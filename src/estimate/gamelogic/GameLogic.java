@@ -52,7 +52,7 @@ public class GameLogic {
     }
 
     public void setLeadSuit(Card leadSuitCard){
-        this.leadSuit = leadSuit;
+        this.leadSuit = leadSuitCard;
     }
 
     /**
