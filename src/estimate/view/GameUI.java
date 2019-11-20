@@ -119,7 +119,7 @@ public class GameUI {
 
 	private void newRound(){
 
-		System.out.println("PREPPING ROUND SETUP");
+		System.out.println("PREPPING ROUND " + round + " SETUP");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~");
 		gameLogic.setDealer(round);
 		gameLogic.setPlayersHand(round);
@@ -161,10 +161,10 @@ public class GameUI {
 
 		if (roundsTotal[round-1] == roundCounter){
 			roundCounter = 0;
+			round += 1;
 			System.out.println("#################################ROUND COMPLETED############################");
 			return true;
 		}else{
-			round += 1;
 			return false;
 		}
 	}
