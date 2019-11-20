@@ -311,7 +311,7 @@ public class GameUI {
 	                // Get input from user
 
 	                playPlayerCards();
-	                System.out.println("Enter Your Card Index You want to play \n" + selectedCard);
+	                System.out.println("Enter Your Card Index You want to play \n" + index);
 
 	                // int cardIndex = p.getHand().findCard(selectedCard);
 	                try {
@@ -346,7 +346,7 @@ public class GameUI {
         PlayerCardArray winner = sortedTableHand.get(0);
 
         // Display winner of the round
-        System.out.println("The winner is player ID: "+winner.getPlayerId());
+        System.out.println("The winner is player ID: " + winner.getPlayerId());
         gameLogic.getScoreboard().addTricksWon(round, winner.getPlayerId());
 
         JOptionPane.showMessageDialog(null, "The winner is player ID: "+winner.getPlayerId());
@@ -422,9 +422,9 @@ public class GameUI {
 			availableBidsString[i] = Integer.toString(availableBids.get(i));
 		}
 
-		// waitingUser = true;
+		waitingUser = true;
     	int bidSelected = JOptionPane.showOptionDialog(null,
-                        "Select from available bids", "input", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, availableBidsString, availableBidsString[0]);
+                        "Select one from the available bids:", "BID WINDOW", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, availableBidsString, availableBidsString[0]);
 		
 		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()){
 			if (!(p instanceof Computer)){
@@ -570,7 +570,7 @@ public class GameUI {
 			ArrayList<Card> playerHandCards = playerHand.getHand();
 			if (!(player instanceof Computer)){
 				int cardLeft = 300;
-				int cardTop = 645;
+				int cardTop = 675;
 
 				float cardIndex = -1;
 
