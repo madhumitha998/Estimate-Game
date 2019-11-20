@@ -41,7 +41,7 @@ public class TestComputer {
         assertEquals(2, com1.indexOfBid(0.65, 4, 1));
     }
     @Test
-    //3 tricks in round, dealer, num >= 75%
+    //1st trick of round 3, dealer, num <= 75%
     public void bidWinningTricksTest() {
         Computer com1 = new Computer(0,3);
         //normal card
@@ -61,25 +61,27 @@ public class TestComputer {
         int totTricksInRound = 3;
         int sumOfBidsInTrick = 2;
         Suit trumpSuit = Suit.HEARTS;
-        //[0, 1, 2, 3]
+
+        //totTricksInRound = max bid = 3
+        //possible bids: [0, 1, 2, 3]
         com1.bidWinningTricks(totTricksInRound, sumOfBidsInTrick, trumpSuit);
-        //[0,2,3]
+        //isDealer so bid cannot be totTricksInRound - sumOfBidsInTrick : 3 - 2 = 1
+        //final possible bids: [0,2,3]
         //median: 2
-        //num 75% Pick the possible bid 2 places to the right (or max possible)
-        //3
+        //num 75% Pick the possible bid 1 place to the right (or max possible): 3
         assertEquals(3,com1.getBid());
 
     }
 
-    // Test available bid for 3 tricks in round, non-dealer, num <= 25%
+    // 1st trick of round 3, non-dealer, num <= 25%
     @Test
     public void bidWinningTricksTest2() {
         Computer com1 = new Computer(0,3);
         //normal card
         Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
-        //Trump and high card
-        Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
-        //high card
+        //normal card
+        Card testCard2 = new Card(Suit.DIAMONDS, Rank.SEVEN, null );
+        //normal card
         Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
         //trump card
         Card testCard4 = new Card(Suit.HEARTS, Rank.TWO, null );
@@ -87,18 +89,22 @@ public class TestComputer {
         com1.setHand(testCard2);
         com1.setHand(testCard3);
         com1.setHand(testCard4);
-        assertEquals(4,com1.getHand().getNumberOfCards());
-        com1.setIsDealer(true);
 
-        int totTricksInRound = 5;
-        int sumOfBidsInTrick = 4;
+        int totTricksInRound = 3;
+        int sumOfBidsInTrick = 2;
         Suit trumpSuit = Suit.HEARTS;
+
         com1.bidWinningTricks(totTricksInRound, sumOfBidsInTrick, trumpSuit);
-        assertEquals(4,com1.getBid());
+
+        //totTricksInRound = max bid = 3
+        //possible bids: [0, 1, 2, 3]
+        //median: 1
+        //num <= 25%: Pick the possible bid 2 places to the left (or 0): 0
+        assertEquals(0,com1.getBid());
 
     }
 
-    // Test available bid for 3 tricks in round, non-dealer, 25 < num <= 50%
+    // 1st trick of round 3, non-dealer, 25 < num <= 50%
     @Test
     public void bidWinningTricksTest3() {
         Computer com1 = new Computer(0,3);
@@ -108,23 +114,27 @@ public class TestComputer {
         Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
         //high card
         Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
-        //trump card
-        Card testCard4 = new Card(Suit.HEARTS, Rank.TWO, null );
+        //normal card
+        Card testCard4 = new Card(Suit.DIAMONDS, Rank.TWO, null );
         com1.setHand(testCard);
         com1.setHand(testCard2);
         com1.setHand(testCard3);
         com1.setHand(testCard4);
-        assertEquals(4,com1.getHand().getNumberOfCards());
-        com1.setIsDealer(true);
 
-        int totTricksInRound = 5;
-        int sumOfBidsInTrick = 4;
+        int totTricksInRound = 3;
+        int sumOfBidsInTrick = 2;
         Suit trumpSuit = Suit.HEARTS;
+
         com1.bidWinningTricks(totTricksInRound, sumOfBidsInTrick, trumpSuit);
-        assertEquals(4,com1.getBid());
+
+        //totTricksInRound = max bid = 3
+        //possible bids: [0, 1, 2, 3]
+        //median: 1
+        //25 < num <= 50%: Pick the possible bid 1 places to the left (or 0): 0
+        assertEquals(0,com1.getBid());
 
     }
-    // Test available bid for 3 tricks in round, non-dealer, 50 < num <= 75%:
+    // 1st trick of round 3, non-dealer, 50 < num <= 75%:
     @Test
     public void bidWinningTricksTest4() {
         Computer com1 = new Computer(0,3);
@@ -140,23 +150,27 @@ public class TestComputer {
         com1.setHand(testCard2);
         com1.setHand(testCard3);
         com1.setHand(testCard4);
-        assertEquals(4,com1.getHand().getNumberOfCards());
-        com1.setIsDealer(true);
 
-        int totTricksInRound = 5;
-        int sumOfBidsInTrick = 4;
+
+        int totTricksInRound = 3;
+        int sumOfBidsInTrick = 2;
         Suit trumpSuit = Suit.HEARTS;
         com1.bidWinningTricks(totTricksInRound, sumOfBidsInTrick, trumpSuit);
-        assertEquals(4,com1.getBid());
+
+        //totTricksInRound = max bid = 3
+        //possible bids: [0, 1, 2, 3]
+        //median: 1
+        //50 < num <= 75%: Pick the possible bid 1 places to the right (or max possible): 2
+        assertEquals(2,com1.getBid());
 
     }
 
-    // Test available bid for 3 tricks in round, non-dealer, 75 < num <= 100%:
+    //1st trick of round 3, non-dealer, 75 < num <= 100%:
     @Test
     public void bidWinningTricksTest5() {
         Computer com1 = new Computer(0,3);
         //normal card
-        Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
+        Card testCard = new Card(Suit.DIAMONDS, Rank.ACE, null );
         //Trump and high card
         Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
         //high card
@@ -167,14 +181,18 @@ public class TestComputer {
         com1.setHand(testCard2);
         com1.setHand(testCard3);
         com1.setHand(testCard4);
-        assertEquals(4,com1.getHand().getNumberOfCards());
-        com1.setIsDealer(true);
 
-        int totTricksInRound = 5;
-        int sumOfBidsInTrick = 4;
+
+        int totTricksInRound = 3;
+        int sumOfBidsInTrick = 2;
         Suit trumpSuit = Suit.HEARTS;
         com1.bidWinningTricks(totTricksInRound, sumOfBidsInTrick, trumpSuit);
-        assertEquals(4,com1.getBid());
+
+        //totTricksInRound = max bid = 3
+        //possible bids: [0, 1, 2, 3]
+        //median: 1
+        //75 < num <= 100%: Pick the possible bid 2 places to the right (or max possible): 3
+        assertEquals(3,com1.getBid());
 
     }
     
