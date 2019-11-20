@@ -51,6 +51,10 @@ public class GameLogic {
         return this.leadSuit;
     }
 
+    public void setLeadSuit(Card leadSuitCard){
+        this.leadSuit = leadSuit;
+    }
+
     /**
      * Sets the order of players at the start of every round / subround
      */
