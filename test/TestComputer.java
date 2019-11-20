@@ -58,16 +58,16 @@ public class TestComputer {
         com1.setHand(testCard4);
         com1.setIsDealer(true);
 
-        int totTricksInRound = 3;
+        int totTricksInRound = 4;
         int sumOfBidsInTrick = 2;
         Suit trumpSuit = Suit.HEARTS;
 
         //totTricksInRound = max bid = 3
-        //possible bids: [0, 1, 2, 3]
+        //possible bids: [0, 1, 2, 3, 4]
         com1.bidWinningTricks(totTricksInRound, sumOfBidsInTrick, trumpSuit);
         //isDealer so bid cannot be totTricksInRound - sumOfBidsInTrick : 3 - 2 = 1
-        //final possible bids: [0,2,3]
-        //median: 2
+        //final possible bids: [0,1,3,4]
+        //median: 1
         //num 75% Pick the possible bid 1 place to the right (or max possible): 3
         assertEquals(3,com1.getBid());
 
@@ -134,6 +134,39 @@ public class TestComputer {
         assertEquals(0,com1.getBid());
 
     }
+
+    // 1st trick of round 3, non-dealer, 25 < num <= 50%
+    @Test
+    public void bidWinningTricksTest3_2() {
+        Computer com1 = new Computer(0,3);
+        //normal card
+        Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
+        //Trump and high card
+        Card testCard2 = new Card(Suit.HEARTS, Rank.TEN, null );
+        //high card
+        Card testCard3 = new Card(Suit.CLUBS, Rank.JACK, null );
+        //normal card
+        Card testCard4 = new Card(Suit.DIAMONDS, Rank.TWO, null );
+        com1.setHand(testCard);
+        com1.setHand(testCard2);
+        com1.setHand(testCard3);
+        com1.setHand(testCard4);
+
+        int totTricksInRound = 5;
+        int sumOfBidsInTrick = 2;
+        Suit trumpSuit = Suit.HEARTS;
+
+        com1.bidWinningTricks(totTricksInRound, sumOfBidsInTrick, trumpSuit);
+
+        //totTricksInRound = max bid = 3
+        //possible bids: [0, 1, 2, 3, 4, 5]
+        // actual bids: [0, 1, 2 ,4 ,5]
+        //median: 2
+        //25 < num <= 50%: Pick the possible bid 1 places to the left (or 0): 0
+        assertEquals(1,com1.getBid());
+
+    }
+
     // 1st trick of round 3, non-dealer, 50 < num <= 75%:
     @Test
     public void bidWinningTricksTest4() {
