@@ -38,16 +38,16 @@ public class GameUI {
 	private String notification;
 	private JButton btnAvatarA;
     private JLabel lblNameA;
-    private JLabel lblTrickA;
+    private JLabel lblScoreA;
     private JButton btnCardA;
     private JLabel lblNameB;
-    private JLabel lblTrickB;
+    private JLabel lblScoreB;
     private JButton btnCardB;
     private JButton btnCardC;
     private JLabel lblNameC;
-    private JLabel lblTrickC;
+    private JLabel lblScoreC;
     private JLabel lblNameD;
-    private JLabel lblTrickD;
+    private JLabel lblScoreD;
     private JButton btnCardD;
     private JLabel lblNoti;
 
@@ -90,7 +90,7 @@ public class GameUI {
         springLayout = new SpringLayout();
         estimationGame.getContentPane().setLayout(springLayout);
 
-        notification = "Click icon below to start game";
+        notification = "Click your player icon to start game!";
 
 		initA();
         initB();
@@ -201,6 +201,7 @@ public class GameUI {
 
 					gameLogic.getScoreboard().calculateRoundScore(round);
 					gameLogic.getScoreboard().calculateTotalScore();
+					updateScoreUI();
             		System.out.println(gameLogic.getScoreboard().getTotalScore());
             		int[] winner = gameLogic.getScoreboard().getWinner(round);
 
@@ -346,10 +347,10 @@ public class GameUI {
         PlayerCardArray winner = sortedTableHand.get(0);
 
         // Display winner of the round
-        System.out.println("The winner is player ID: " + winner.getPlayerId());
+        System.out.println("The winner of this round is player ID: " + winner.getPlayerId() + " " + (11 - round) + " more rounds to go!");
         gameLogic.getScoreboard().addTricksWon(round, winner.getPlayerId());
 
-        JOptionPane.showMessageDialog(null, "The winner is player ID: "+winner.getPlayerId());
+        JOptionPane.showMessageDialog(null, "The winner is player ID: " + winner.getPlayerId() + "\n " + (11 - round) + " more rounds to go!");
 
         //set Winner for player
         for (Player p : gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
@@ -359,6 +360,9 @@ public class GameUI {
                 p.setTrickWinner(false);
             }
         }
+
+        System.out.println("PRINGINT SCORE");
+        System.out.println(gameLogic.getScoreboard().getTotalScore());
 
         //Set position for players
         if (round != 11) {
@@ -393,6 +397,16 @@ public class GameUI {
 		} else {
 			return false;
 		}
+	}
+
+
+	public void updateScoreUI(){
+		Map<Integer, Integer> scoreMap = gameLogic.getScoreboard().getTotalScore();
+
+		lblScoreA.setText(String.valueOf(scoreMap.get(0)));
+        lblScoreB.setText(String.valueOf(scoreMap.get(1)));
+        lblScoreC.setText(String.valueOf(scoreMap.get(2)));
+        lblScoreD.setText(String.valueOf(scoreMap.get(3)));
 	}
 
 
@@ -829,17 +843,17 @@ public class GameUI {
         lblNameA.setFont(new Font("Tahoma", Font.PLAIN, 15));
         estimationGame.getContentPane().add(lblNameA);
 
-        lblTrickA = new JLabel();
-        lblTrickA.setText("0");
-        lblTrickA.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTrickA.setBorder(new LineBorder(Color.ORANGE, 3, true));
-        lblTrickA.setForeground(new Color(255, 153, 255));
-        lblTrickA.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        lblTrickA.setBackground(Color.GRAY);
-        springLayout.putConstraint(SpringLayout.WEST, lblTrickA, 0, SpringLayout.WEST, btnAvatarA);
-        springLayout.putConstraint(SpringLayout.NORTH, lblTrickA, 5, SpringLayout.SOUTH, lblNameA);
-        springLayout.putConstraint(SpringLayout.EAST, lblTrickA, 0, SpringLayout.EAST, btnAvatarA);
-        estimationGame.getContentPane().add(lblTrickA);
+        lblScoreA = new JLabel();
+        lblScoreA.setText("0");
+        lblScoreA.setHorizontalAlignment(SwingConstants.CENTER);
+        lblScoreA.setBorder(new LineBorder(Color.ORANGE, 3, true));
+        lblScoreA.setForeground(new Color(255, 153, 255));
+        lblScoreA.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        lblScoreA.setBackground(Color.GRAY);
+        springLayout.putConstraint(SpringLayout.WEST, lblScoreA, 0, SpringLayout.WEST, btnAvatarA);
+        springLayout.putConstraint(SpringLayout.NORTH, lblScoreA, 5, SpringLayout.SOUTH, lblNameA);
+        springLayout.putConstraint(SpringLayout.EAST, lblScoreA, 0, SpringLayout.EAST, btnAvatarA);
+        estimationGame.getContentPane().add(lblScoreA);
 
         btnCardA = new JButton();
 
@@ -887,17 +901,17 @@ public class GameUI {
         lblNameB.setFont(new Font("Tahoma", Font.PLAIN, 15));
         estimationGame.getContentPane().add(lblNameB);
 
-        lblTrickB = new JLabel();
-        lblTrickB.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTrickB.setBorder(new LineBorder(Color.ORANGE, 3, true));
-        lblTrickB.setForeground(new Color(255, 153, 255));
-        lblTrickB.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        lblTrickB.setText("0");
-        lblTrickB.setBackground(Color.GRAY);
-        springLayout.putConstraint(SpringLayout.WEST, lblTrickB, 0, SpringLayout.WEST, btnAvatarB);
-        springLayout.putConstraint(SpringLayout.EAST, lblTrickB, 0, SpringLayout.EAST, btnAvatarB);
-        springLayout.putConstraint(SpringLayout.NORTH, lblTrickB, 5, SpringLayout.SOUTH, lblNameB);
-        estimationGame.getContentPane().add(lblTrickB);
+        lblScoreB = new JLabel();
+        lblScoreB.setHorizontalAlignment(SwingConstants.CENTER);
+        lblScoreB.setBorder(new LineBorder(Color.ORANGE, 3, true));
+        lblScoreB.setForeground(new Color(255, 153, 255));
+        lblScoreB.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        lblScoreB.setText("0");
+        lblScoreB.setBackground(Color.GRAY);
+        springLayout.putConstraint(SpringLayout.WEST, lblScoreB, 0, SpringLayout.WEST, btnAvatarB);
+        springLayout.putConstraint(SpringLayout.EAST, lblScoreB, 0, SpringLayout.EAST, btnAvatarB);
+        springLayout.putConstraint(SpringLayout.NORTH, lblScoreB, 5, SpringLayout.SOUTH, lblNameB);
+        estimationGame.getContentPane().add(lblScoreB);
 
         btnCardB = new JButton();
 
@@ -932,25 +946,25 @@ public class GameUI {
         }
 
         estimationGame.getContentPane().add(btnAvatarC);
-        lblTrickC = new JLabel();
-        lblTrickC.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTrickC.setBorder(new LineBorder(Color.ORANGE, 3, true));
-        lblTrickC.setForeground(new Color(255, 153, 255));
-        lblTrickC.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        lblTrickC.setText("0");
-        lblTrickC.setBackground(Color.GRAY);
-        springLayout.putConstraint(SpringLayout.WEST, lblTrickC, 10, SpringLayout.EAST, btnAvatarC);
-        springLayout.putConstraint(SpringLayout.SOUTH, lblTrickC, 0, SpringLayout.SOUTH, btnAvatarC);
-        springLayout.putConstraint(SpringLayout.EAST, lblTrickC, 100, SpringLayout.EAST, btnAvatarC);
-        estimationGame.getContentPane().add(lblTrickC);
+        lblScoreC = new JLabel();
+        lblScoreC.setHorizontalAlignment(SwingConstants.CENTER);
+        lblScoreC.setBorder(new LineBorder(Color.ORANGE, 3, true));
+        lblScoreC.setForeground(new Color(255, 153, 255));
+        lblScoreC.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        lblScoreC.setText("0");
+        lblScoreC.setBackground(Color.GRAY);
+        springLayout.putConstraint(SpringLayout.WEST, lblScoreC, 10, SpringLayout.EAST, btnAvatarC);
+        springLayout.putConstraint(SpringLayout.SOUTH, lblScoreC, 0, SpringLayout.SOUTH, btnAvatarC);
+        springLayout.putConstraint(SpringLayout.EAST, lblScoreC, 100, SpringLayout.EAST, btnAvatarC);
+        estimationGame.getContentPane().add(lblScoreC);
 
         lblNameC = new JLabel("Robot C");
-        springLayout.putConstraint(SpringLayout.NORTH, lblTrickC, 5, SpringLayout.SOUTH, lblNameC);
+        springLayout.putConstraint(SpringLayout.NORTH, lblScoreC, 5, SpringLayout.SOUTH, lblNameC);
         springLayout.putConstraint(SpringLayout.NORTH, lblNameC, 5, SpringLayout.NORTH, btnAvatarC);
-        springLayout.putConstraint(SpringLayout.WEST, lblNameC, 0, SpringLayout.WEST, lblTrickC);
+        springLayout.putConstraint(SpringLayout.WEST, lblNameC, 0, SpringLayout.WEST, lblScoreC);
         lblNameC.setHorizontalAlignment(SwingConstants.CENTER);
         lblNameC.setAlignmentX(Component.CENTER_ALIGNMENT);
-        springLayout.putConstraint(SpringLayout.EAST, lblNameC, 0, SpringLayout.EAST, lblTrickC);
+        springLayout.putConstraint(SpringLayout.EAST, lblNameC, 0, SpringLayout.EAST, lblScoreC);
         lblNameC.setForeground(Color.CYAN);
         lblNameC.setFont(new Font("Tahoma", Font.PLAIN, 15));
         estimationGame.getContentPane().add(lblNameC);
@@ -1014,22 +1028,22 @@ public class GameUI {
         lblNameD.setFont(new Font("Tahoma", Font.PLAIN, 15));
         estimationGame.getContentPane().add(lblNameD);
 
-        lblTrickD = new JLabel();
-        lblTrickD.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTrickD.setBorder(new LineBorder(Color.ORANGE, 3, true));
-        lblTrickD.setForeground(new Color(255, 153, 255));
-        lblTrickD.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        lblTrickD.setText("0");
-        lblTrickD.setBackground(Color.GRAY);
-        springLayout.putConstraint(SpringLayout.NORTH, lblTrickD, 5, SpringLayout.SOUTH, lblNameD);
-        springLayout.putConstraint(SpringLayout.WEST, lblTrickD, 0, SpringLayout.WEST, btnAvatarD);
-        springLayout.putConstraint(SpringLayout.EAST, lblTrickD, 0, SpringLayout.EAST, btnAvatarD);
-        estimationGame.getContentPane().add(lblTrickD);
+        lblScoreD = new JLabel();
+        lblScoreD.setHorizontalAlignment(SwingConstants.CENTER);
+        lblScoreD.setBorder(new LineBorder(Color.ORANGE, 3, true));
+        lblScoreD.setForeground(new Color(255, 153, 255));
+        lblScoreD.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        lblScoreD.setText("0");
+        lblScoreD.setBackground(Color.GRAY);
+        springLayout.putConstraint(SpringLayout.NORTH, lblScoreD, 5, SpringLayout.SOUTH, lblNameD);
+        springLayout.putConstraint(SpringLayout.WEST, lblScoreD, 0, SpringLayout.WEST, btnAvatarD);
+        springLayout.putConstraint(SpringLayout.EAST, lblScoreD, 0, SpringLayout.EAST, btnAvatarD);
+        estimationGame.getContentPane().add(lblScoreD);
     }
 
     private void initNoti() {
         lblNoti = new JLabel("");
-        springLayout.putConstraint(SpringLayout.WEST, lblNoti, 370, SpringLayout.WEST, estimationGame.getContentPane());
+        springLayout.putConstraint(SpringLayout.WEST, lblNoti, 300, SpringLayout.WEST, estimationGame.getContentPane());
         springLayout.putConstraint(SpringLayout.SOUTH, lblNoti, -10, SpringLayout.NORTH, btnAvatarA);
         lblNoti.setForeground(new Color(224, 255, 255));
         lblNoti.setFont(new Font("Tahoma", Font.PLAIN, 15));
