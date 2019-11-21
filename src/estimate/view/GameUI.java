@@ -352,6 +352,7 @@ public class GameUI {
         gameLogic.getTableHand().clearTableHand();
 	}
 
+
 	/**
      * Checks if SubRound is completed
      */
@@ -364,6 +365,7 @@ public class GameUI {
 			return true;
 		}
 	}
+
 
 	/**
      * Checks if Round is completed
@@ -396,6 +398,7 @@ public class GameUI {
 		}
 		return false;
 	}
+
 
 	/**
      * Displays the card UI and executes the player action of selecting a card
@@ -577,6 +580,10 @@ public class GameUI {
         estimationGame.repaint();
 	}
 
+
+	/**
+     * Passes the selected card chosen in method displayCardUI() to playSubRound() method
+     */
 	public void passSelectedCard(int index){
 		System.out.println("PLAYER SELECTED CARD INDEX " + index);
 		waitingUser = false;
@@ -586,6 +593,9 @@ public class GameUI {
 	}
 
 
+	/**
+     * Gets the cards that can be played for a round for the player
+     */
 	public ArrayList<Card> getPlayableCards(Player p) {
         ArrayList<Card> playableCards;
 	    //Display playableHand to user
@@ -603,6 +613,9 @@ public class GameUI {
 	}
 
 
+	/**
+     * Displays the UI of all available bids for the player to select from
+     */
 	public void displayAvailableBidsUI() {
 		System.out.println("BIDDING TIME");
 
@@ -651,6 +664,9 @@ public class GameUI {
 	}
 
 
+	/**
+     * Displays a message that informs the player the bid amount he selected
+     */
 	public void displayBidUI(int bidSelected) {
 		if (!(bidList.isEmpty())) {
 			for (JLabel item: bidList) {
@@ -675,6 +691,9 @@ public class GameUI {
 	}
 
 
+	/**
+     * Displays the card UI of the cards played by the player and the computer
+     */
 	public void displayTableHandUI() {
 		ArrayList<PlayerCardArray> tableHandCards = gameLogic.getTableHand().getTableHand();
 		drawNoti(null);
@@ -738,6 +757,9 @@ public class GameUI {
 	}
 
 
+	/**
+     * Checks whether the user is the first player of the round
+     */
 	public Boolean waitingUser(){
 		if (whoNext == 0){
 			return true;
@@ -747,6 +769,9 @@ public class GameUI {
 	}
 
 
+	/**
+     * Updates and display the UI of the total score displayed
+     */
 	public void updateScoreUI() {
 		Map<Integer, Integer> scoreMap = gameLogic.getScoreboard().getTotalScore();
 
@@ -757,6 +782,9 @@ public class GameUI {
 	}
 
 
+	/**
+     * Displays a message informing player of the trump suit
+     */
 	public void displayTrumpUI() {
 		trumpSuitString = gameLogic.getTrumpSuit().getSuit().getName();
 
@@ -783,6 +811,9 @@ public class GameUI {
 	}
 
 
+	/**
+     * Display a message informing player of the lead suit
+     */
 	public void displayLead(String leadSuitString) {
 		if (!(leadList.isEmpty())) {
 			for (JLabel item: leadList) {
@@ -806,6 +837,9 @@ public class GameUI {
 	}
 
 
+	/**
+     * Sets the UI for notification messages
+     */
     private void initNoti() {
         lblNoti = new JLabel("");
 
@@ -817,6 +851,10 @@ public class GameUI {
         estimationGame.getContentPane().add(lblNoti);
 	}
 
+
+	/**
+     * Changes the notification message according to the player turn
+     */
 	private void drawNoti(String noti) {
         if (noti != null) {
             notification = noti;
@@ -826,6 +864,9 @@ public class GameUI {
     }
 
 
+	/**
+     * Sets the Ui for player
+     */
 	private void initPlayer0() {
         btnAvatarA = new JButton();
 
@@ -889,6 +930,9 @@ public class GameUI {
 	}
 
 
+	/**
+     * Sets the UI for computer
+     */
     private void initPlayer1() {
         JButton btnAvatarB = new JButton();
 
@@ -950,6 +994,9 @@ public class GameUI {
     }
 
 
+	/**
+     * Sets the UI for computer
+     */
     private void initPlayer2() {
         JButton btnAvatarC = new JButton();
 
@@ -1010,6 +1057,10 @@ public class GameUI {
         estimationGame.getContentPane().add(btnCardC);
     }
 
+
+	/**
+     * Sets the UI for computer
+     */
     private void initPlayer3() {
         btnCardD = new JButton();
 
