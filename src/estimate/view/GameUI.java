@@ -50,6 +50,7 @@ public class GameUI {
     private JLabel lblScoreD;
     private JButton btnCardD;
     private JLabel lblNoti;
+    private JLabel lblLead;
 
 
 	public static void main(String[] args){
@@ -142,7 +143,7 @@ public class GameUI {
 		displayAvailableBids();
 		displayTableHand();
 
-		System.out.println("BEGIN ROUND");
+		System.out.println("BEGIN ROUND " + round);
 		todoThread();
 	}
 
@@ -472,8 +473,9 @@ public class GameUI {
 
 
 	public void displayLead(String leadSuitString){
+		// estimationGame.getContentPane().remove(lblLead);
 
-		JLabel lblLead = new JLabel("The lead suit is: " + leadSuitString);
+		lblLead = new JLabel("The lead suit is: " + leadSuitString);
         springLayout.putConstraint(SpringLayout.WEST, lblLead, 10, SpringLayout.WEST,
                 estimationGame.getContentPane());
         lblLead.setForeground(Color.WHITE);
@@ -712,7 +714,7 @@ public class GameUI {
 
 
 	public void passSelectedCard(int index){
-		System.out.println("PLAYER SELECTED CARD INDEX" + index);
+		System.out.println("PLAYER SELECTED CARD INDEX " + index);
 		waitingUser = false;
 		playSubRound(index);
 
