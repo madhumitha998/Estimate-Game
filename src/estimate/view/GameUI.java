@@ -27,6 +27,7 @@ public class GameUI {
 
 	private ArrayList<JButton> listButton = new ArrayList<JButton>();
 	private ArrayList<JLabel> leadList = new ArrayList<JLabel>();
+	private ArrayList<JLabel> trumpList = new ArrayList<JLabel>();
 
 	private int card_width = 75;
     private int card_height = 108;
@@ -472,6 +473,12 @@ public class GameUI {
 	public void displayTrump(){
 		trumpSuitString = gameLogic.getTrumpSuit().getSuit().getName();
 
+		if (!(trumpList.isEmpty())){
+			for (JLabel item: trumpList){
+				estimationGame.getContentPane().remove(item);
+			}
+		}
+
 		JLabel lblTrump = new JLabel("The trump suit is: " + trumpSuitString);
         springLayout.putConstraint(SpringLayout.WEST, lblTrump, 10, SpringLayout.WEST,
                 estimationGame.getContentPane());
@@ -480,6 +487,7 @@ public class GameUI {
                 estimationGame.getContentPane());
         lblTrump.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
+        trumpList.add(lblTrump);
         estimationGame.getContentPane().add(lblTrump);
         estimationGame.validate();
 	    estimationGame.repaint();
@@ -507,14 +515,6 @@ public class GameUI {
         estimationGame.validate();
 	    estimationGame.repaint();
 	}
-
-
-	// public void clearTableHand(List<JButton> tableHandCardList){
-	// 	for (JButton item: tableHandCardList){
-	// 		estimationGame.getContentPane().remove(item);
-	// 	}
-	// 	tableHandCardList.clear();
-	// }
 
 
 	public void displayTableHand(){
