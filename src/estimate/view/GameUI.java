@@ -210,7 +210,7 @@ public class GameUI {
             		int[] winner = gameLogic.getScoreboard().getWinner(round);
 
             		if (completeGame(winner)){
-            			JOptionPane.showMessageDialog(new JFrame(), "THE GRAND WINNER IS: " + winner[0] + " with " + winner[1] + " POINTS!!!!", "Info",
+            			JOptionPane.showMessageDialog(new JFrame(), "THE GRAND WINNER IS Player " + winner[0] + " with " + winner[1] + " POINTS!!!!", "Info",
                                 JOptionPane.INFORMATION_MESSAGE);
             			MainMenuUI.main(null);
             			return;
