@@ -146,6 +146,7 @@ public class GameUI {
 		System.out.println("PREPPING ROUND " + round + " SETUP. Game Logic round (should be aligned) : " + gameLogic.getRound());
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		
+		System.out.println("PRINTING LEADSUIT OF NEW ROUND " + gameLogic.getLeadSuit());
 		gameLogic.initialiseDeck();
 		gameLogic.setDealer(round);
 		
@@ -164,7 +165,6 @@ public class GameUI {
 		whoNext = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
 
 		displayRoundUI();
-		displaySubRoundUI();
 		displayTrumpUI();
 		displayCardUI();
 		displayAvailableBidsUI();
@@ -183,6 +183,7 @@ public class GameUI {
 	public void todoThread() {
 		while (true) {
 			numberOfSubRounds = cardsToDealPerRound[round - 1];
+			displaySubRoundUI();
 
 			if (completeSubRound()) {
 				finishSubRound();
@@ -203,6 +204,7 @@ public class GameUI {
                                 JOptionPane.INFORMATION_MESSAGE);
             			return;
             		} else {
+            			gameLogic.setLeadSuit(null);
             			newRound();
             		}
             		return;
@@ -348,6 +350,8 @@ public class GameUI {
             whoNext = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
             if (whoNext == 0){
             	waitingUser = true;
+            } else {
+            	waitingUser = false;
             }
 
             System.out.println("NEW PLAYER ORDER: " + gameLogic.getArrayOfPlayers().getArrayOfPlayers());
@@ -377,7 +381,7 @@ public class GameUI {
      */
 	public Boolean completeRound(){
 		int[] roundsTotal = {1,2,3,4,5,6,5,4,3,2,1};
-		System.out.println("Round: " + round + " SubRound: " + roundCounter + " Total number of SubRounds: " + roundsTotal[round-1]);
+		System.out.println("Round: " + round + " | SubRound: " + roundCounter + " | Total number of SubRounds: " + roundsTotal[round-1]);
 
 		if (roundsTotal[round-1] == roundCounter) {
 			roundCounter = 0;
@@ -833,7 +837,7 @@ public class GameUI {
 			subRoundList.clear();
 		}
 
-		JLabel lblSubRound = new JLabel("Subround: " + roundCounter);
+		JLabel lblSubRound = new JLabel("Subround: " + (roundCounter+1));
 
         springLayout.putConstraint(SpringLayout.WEST, lblSubRound, 10, SpringLayout.WEST,
                 estimationGame.getContentPane());
