@@ -61,6 +61,8 @@ public class GameUI {
 	private ArrayList<JLabel> bidList = new ArrayList<JLabel>();
 	private ArrayList<JLabel> leadList = new ArrayList<JLabel>();
 	private ArrayList<JLabel> trumpList = new ArrayList<JLabel>();
+	private ArrayList<JLabel> roundList = new ArrayList<JLabel>();
+	private ArrayList<JLabel> subRoundList = new ArrayList<JLabel>();
 	private ArrayList<JButton> listButton = new ArrayList<JButton>();
 	private ArrayList<JButton> listButton1 = new ArrayList<JButton>();
 	private ArrayList<JButton> listButton2 = new ArrayList<JButton>();
@@ -144,6 +146,7 @@ public class GameUI {
 		System.out.println("PREPPING ROUND " + round + " SETUP. Game Logic round (should be aligned) : " + gameLogic.getRound());
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		
+		System.out.println("PRINTING LEADSUIT OF NEW ROUND " + gameLogic.getLeadSuit());
 		gameLogic.initialiseDeck();
 		gameLogic.setDealer(round);
 		
@@ -161,6 +164,7 @@ public class GameUI {
 
 		whoNext = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
 
+		displayRoundUI();
 		displayTrumpUI();
 		displayCardUI();
 		displayAvailableBidsUI();
@@ -179,6 +183,7 @@ public class GameUI {
 	public void todoThread() {
 		while (true) {
 			numberOfSubRounds = cardsToDealPerRound[round - 1];
+			displaySubRoundUI();
 
 			if (completeSubRound()) {
 				finishSubRound();
@@ -199,6 +204,7 @@ public class GameUI {
                                 JOptionPane.INFORMATION_MESSAGE);
             			return;
             		} else {
+            			gameLogic.setLeadSuit(null);
             			newRound();
             		}
             		return;
@@ -255,23 +261,17 @@ public class GameUI {
 		            leadSuit2 = gameLogic.getLeadSuit().getSuit();
 		        }
 
-		        System.out.println("TESTING 003 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2);
-		        System.out.println("TESTING 003.1 " + gameLogic.getTableHand().sortedTableHand( gameLogic.getTrumpSuit().getSuit(), leadSuit2 ).size());
 		        if (gameLogic.getTableHand().sortedTableHand( gameLogic.getTrumpSuit().getSuit(), leadSuit2 ).size() == 0 ) {
 		            highestPlayedCard = null;
 		        } else {
-		        	System.out.println("TESTING 004 " + gameLogic.getLeadSuit().getSuit() + " " + gameLogic.getTrumpSuit().getSuit() + " ");
 		            highestPlayedCard = gameLogic.getTableHand().sortedTableHand(gameLogic.getTrumpSuit().getSuit(), gameLogic.getLeadSuit().getSuit()).get(0).getPlayerCard();
 		        }
 
 		        if (p instanceof Computer) {
-	                System.out.println("TESTING 005 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2 + " " + highestPlayedCard);
 
 	                Computer pComputer = (Computer) p;
 	                System.out.println("Printing computer: " + pComputer);
-	                System.out.println("CHECKING THE FKING HAND" + p.getHand());
 
-	                System.out.println("TESTING 006 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2 + " " + highestPlayedCard);
 	                Card cardForCompToPlay = pComputer.playCard(gameLogic.getTrumpSuit().getSuit(), leadSuit2, highestPlayedCard);
 	                System.out.println("Computer's Hand" + p.getHand() + "\n");
 
@@ -346,15 +346,15 @@ public class GameUI {
         //Set position for players
         System.out.println("OLD PLAYER ORDER: " + gameLogic.getArrayOfPlayers().getArrayOfPlayers());
         if (round != 11) {
-        	System.out.println("SETTING PLAYER ORDER: ");
             gameLogic.setPlayerOrder(round);
             whoNext = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
             if (whoNext == 0){
             	waitingUser = true;
+            } else {
+            	waitingUser = false;
             }
-            System.out.println("PRINTING WHO NEXT: " + whoNext);
 
-            System.out.println(gameLogic.getArrayOfPlayers().getArrayOfPlayers());
+            System.out.println("NEW PLAYER ORDER: " + gameLogic.getArrayOfPlayers().getArrayOfPlayers());
         }
 
         // Clear tableHand at end of subround
@@ -381,7 +381,7 @@ public class GameUI {
      */
 	public Boolean completeRound(){
 		int[] roundsTotal = {1,2,3,4,5,6,5,4,3,2,1};
-		System.out.println("Round: " + round + " SubRound: " + roundCounter + " Total number of SubRounds: " + roundsTotal[round-1]);
+		System.out.println("Round: " + round + " | SubRound: " + roundCounter + " | Total number of SubRounds: " + roundsTotal[round-1]);
 
 		if (roundsTotal[round-1] == roundCounter) {
 			roundCounter = 0;
@@ -794,6 +794,62 @@ public class GameUI {
         lblScoreB.setText(String.valueOf(scoreMap.get(1)));
         lblScoreC.setText(String.valueOf(scoreMap.get(2)));
         lblScoreD.setText(String.valueOf(scoreMap.get(3)));
+	}
+
+
+	/**
+     * Displays a message informing player of the trump suit
+     */
+	public void displayRoundUI() {
+
+		if (!(roundList.isEmpty())){
+			for (JLabel item: roundList){
+				estimationGame.getContentPane().remove(item);
+			}
+			roundList.clear();
+		}
+
+		JLabel lblRound = new JLabel("Round: " + round);
+
+        springLayout.putConstraint(SpringLayout.WEST, lblRound, 10, SpringLayout.WEST,
+                estimationGame.getContentPane());
+        lblRound.setForeground(Color.WHITE);
+        springLayout.putConstraint(SpringLayout.NORTH, lblRound, 50, SpringLayout.NORTH,
+                estimationGame.getContentPane());
+        lblRound.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+        roundList.add(lblRound);
+        estimationGame.getContentPane().add(lblRound);
+        estimationGame.validate();
+	    estimationGame.repaint();
+	}
+
+
+	/**
+     * Displays a message informing player of the trump suit
+     */
+	public void displaySubRoundUI() {
+
+		if (!(subRoundList.isEmpty())){
+			for (JLabel item: subRoundList){
+				estimationGame.getContentPane().remove(item);
+			}
+			subRoundList.clear();
+		}
+
+		JLabel lblSubRound = new JLabel("Subround: " + (roundCounter+1));
+
+        springLayout.putConstraint(SpringLayout.WEST, lblSubRound, 10, SpringLayout.WEST,
+                estimationGame.getContentPane());
+        lblSubRound.setForeground(Color.WHITE);
+        springLayout.putConstraint(SpringLayout.NORTH, lblSubRound, 70, SpringLayout.NORTH,
+                estimationGame.getContentPane());
+        lblSubRound.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+        subRoundList.add(lblSubRound);
+        estimationGame.getContentPane().add(lblSubRound);
+        estimationGame.validate();
+	    estimationGame.repaint();
 	}
 
 
