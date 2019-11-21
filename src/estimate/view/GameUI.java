@@ -26,6 +26,10 @@ public class GameUI {
 	private int numberOfSubRounds;
 
 	private ArrayList<JButton> listButton = new ArrayList<JButton>();
+	private ArrayList<JButton> listButton1 = new ArrayList<JButton>();
+	private ArrayList<JButton> listButton2 = new ArrayList<JButton>();
+	private ArrayList<JButton> listButton3 = new ArrayList<JButton>();
+	private ArrayList<JButton> listButton4 = new ArrayList<JButton>();
 	private ArrayList<JLabel> leadList = new ArrayList<JLabel>();
 	private ArrayList<JLabel> trumpList = new ArrayList<JLabel>();
 
@@ -164,9 +168,9 @@ public class GameUI {
 
 	public Boolean completeRound(){
 		int[] roundsTotal = {1,2,3,4,5,6,5,4,3,2,1};
-		System.out.println("ROUND###### "+ round);
-		System.out.println("ROUNDCOUNTER###### "+ roundCounter);
-		System.out.println("NUM SUBROUNDS###### "+ roundsTotal[round-1]);
+		System.out.println("*********ROUND : "+ round);
+		System.out.println("*********ROUNDCOUNTER : "+ roundCounter);
+		System.out.println("*********NUM SUBROUNDS : "+ roundsTotal[round-1]);
 
 		if (roundsTotal[round-1] == roundCounter){
 			roundCounter = 0;
@@ -198,12 +202,6 @@ public class GameUI {
 				finishSubRound();
 				roundCounter += 1;
 
-				System.out.println();
-				System.out.println("SUBROUND IS " + roundCounter);
-				System.out.println("ROUND IS " + round);
-				System.out.println();
-
-				// displayCards();
 				displayTableHand();
 				playPlayerCards();
 
@@ -238,10 +236,7 @@ public class GameUI {
 				displayTableHand();
 
 				if (waitingUser()){
-					// displayAvailableBids();
-					// playPlayerCards(gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getHand().getHand(), gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0));
 					displayTableHand();
-					// displayCards();
 					waitingUser = true;
 				}
 			}
@@ -606,6 +601,111 @@ public class GameUI {
 		for (Player player: gameLogic.getArrayOfPlayers().getArrayOfPlayers()){
 			PlayerHand playerHand = player.getHand();
 			ArrayList<Card> playerHandCards = playerHand.getHand();
+
+			if (player.getPlayerId() == 1){
+				float cardIndex = -1;
+				int cardLeft = 80;
+				int cardTop = 235;
+
+				for (JButton item: listButton1){
+					estimationGame.getContentPane().remove(item);
+				}
+				listButton1.clear();
+
+				for (int i = 0; i < playerHandCards.size(); i++) {
+		            cardIndex++;
+					JButton btnCard1 = new JButton();
+
+					springLayout.putConstraint(SpringLayout.WEST, btnCard1, (int) (cardLeft),
+			            SpringLayout.WEST, estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.EAST, btnCard1, (int) (cardLeft + card_height),
+			            SpringLayout.WEST, estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.NORTH, btnCard1, (int) (cardTop + cardIndex * card_width), SpringLayout.NORTH,
+			            estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.SOUTH, btnCard1, (int) (cardTop + (cardIndex + 1) *  card_width), SpringLayout.NORTH,
+			            estimationGame.getContentPane());
+
+			        try {
+		                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+		                btnCard1.setIcon(new ImageIcon(
+		                        img.getImage().getScaledInstance(card_height, card_width, java.awt.Image.SCALE_SMOOTH)));
+		            } catch (NullPointerException e) {
+		                System.out.println("Image not found");
+		                btnCard1.setText("Not found");
+		            }
+		            listButton1.add(btnCard1);
+			        estimationGame.getContentPane().add(btnCard1);
+			    }
+			}
+
+			if (player.getPlayerId() == 2){
+				float cardIndex = -1;
+				int cardLeft = 300;
+				int cardTop = 40;
+
+				for (JButton item: listButton2){
+					estimationGame.getContentPane().remove(item);
+				}
+				listButton2.clear();
+
+				for (int i = 0; i < playerHandCards.size(); i++) {
+		            cardIndex++;
+					JButton btnCard2 = new JButton();
+
+					springLayout.putConstraint(SpringLayout.WEST, btnCard2, (int) (cardLeft + cardIndex * card_width),
+			            SpringLayout.WEST, estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.EAST, btnCard2, (int) (cardLeft + (cardIndex + 1) * card_width),
+			            SpringLayout.WEST, estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.NORTH, btnCard2, cardTop, SpringLayout.NORTH,
+			            estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.SOUTH, btnCard2, cardTop + card_height, SpringLayout.NORTH,
+			            estimationGame.getContentPane());
+
+			        try {
+		                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+		                btnCard2.setIcon(new ImageIcon(
+		                        img.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+		            } catch (NullPointerException e) {
+		                System.out.println("Image not found");
+		                btnCard2.setText("Not found");
+		            }
+
+		            listButton2.add(btnCard2);
+			        estimationGame.getContentPane().add(btnCard2);
+		    	}
+			}
+
+			if (player.getPlayerId() == 3){
+				float cardIndex = -1;
+				int cardLeft = 700;
+				int cardTop = 235;
+
+				for (int i = 0; i < playerHandCards.size(); i++) {
+		            cardIndex++;
+					JButton btnCard3 = new JButton();
+
+			        springLayout.putConstraint(SpringLayout.WEST, btnCard3, (int) (cardLeft),
+			            SpringLayout.WEST, estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.EAST, btnCard3, (int) (cardLeft + card_height),
+			            SpringLayout.WEST, estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.NORTH, btnCard3, (int) (cardTop + cardIndex * card_width), SpringLayout.NORTH,
+			            estimationGame.getContentPane());
+			        springLayout.putConstraint(SpringLayout.SOUTH, btnCard3, (int) (cardTop + (cardIndex + 1) *  card_width), SpringLayout.NORTH,
+			            estimationGame.getContentPane());
+
+			        try {
+		                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+		                btnCard3.setIcon(new ImageIcon(
+		                        img.getImage().getScaledInstance(card_height, card_width, java.awt.Image.SCALE_SMOOTH)));
+		            } catch (NullPointerException e) {
+		                System.out.println("Image not found");
+		                btnCard3.setText("Not found");
+		            }
+		            listButton3.add(btnCard3);
+			        estimationGame.getContentPane().add(btnCard3);
+		    	}
+			}
+
 			if (!(player instanceof Computer)){
 				System.out.println("PLAYERS HAND to PLAY: "  + playerHandCards);
 				int cardLeft = 300;
