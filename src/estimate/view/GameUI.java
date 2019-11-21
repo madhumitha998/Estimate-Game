@@ -125,7 +125,7 @@ public class GameUI {
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~");
 		gameLogic.initialiseDeck();
 		gameLogic.setDealer(round);
-		System.out.println(gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getHand());
+		System.out.println("Players Hand (Should be empty): " + gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getHand());
 		gameLogic.setPlayersHand(round);
 		gameLogic.setTrump();
 		gameLogic.setPlayerOrder(round);
@@ -160,8 +160,11 @@ public class GameUI {
 		}
 	}
 
-	public Boolean completeRound(int roundCounter){
+	public Boolean completeRound(){
 		int[] roundsTotal = {1,2,3,4,5,6,5,4,3,2,1};
+		System.out.println("ROUND###### "+ round);
+		System.out.println("ROUNDCOUNTER###### "+ roundCounter);
+		System.out.println("NUM SUBROUNDS###### "+ roundsTotal[round-1]);
 
 		if (roundsTotal[round-1] == roundCounter){
 			roundCounter = 0;
@@ -170,6 +173,7 @@ public class GameUI {
 			System.out.println("#################################ROUND COMPLETED############################");
 			return true;
 		}else{
+			// roundCounter += 1;
 			return false;
 		}
 	}
@@ -193,7 +197,7 @@ public class GameUI {
 				roundCounter += 1;
 
 				System.out.println();
-				System.out.println("ROUNDCOUNTER IS " + roundCounter);
+				System.out.println("SUBROUND IS " + roundCounter);
 				System.out.println("ROUND IS " + round);
 				System.out.println();
 
@@ -201,7 +205,7 @@ public class GameUI {
 				displayTableHand();
 				playPlayerCards();
 
-				if (completeRound(roundCounter)){
+				if (completeRound()){
 
 					gameLogic.getScoreboard().calculateRoundScore(round);
 					gameLogic.getScoreboard().calculateTotalScore();
@@ -218,12 +222,12 @@ public class GameUI {
             		}
             		return;
 				}
+
 			}
 
 			if (waitingUser){
 				drawNoti("Your turn");
 				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PLAYER'S TURN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-				// playPlayerCards();
 				break;
 			} else {
 				drawNoti("...");
@@ -254,11 +258,13 @@ public class GameUI {
 
 		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()){
 			if (whoNext == p.getPlayerId()){
+				System.out.println("CURRENT TURN PLAYER HAND : " + gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(whoNext).getHand());
 				if (whoNext == 3){
 					whoNext = 0;
 				} else {
 					whoNext += 1;
 				}
+
 
 		        Card highestPlayedCard;
 		        Suit leadSuit2;
@@ -440,7 +446,12 @@ public class GameUI {
 			availableBidsString[i] = Integer.toString(availableBids.get(i));
 		}
 
-		waitingUser = true;
+		// waitingUser = true;
+		if (waitingUser()){
+			waitingUser = true;
+		} else {
+			waitingUser = false;
+		}
     	int bidSelected = JOptionPane.showOptionDialog(null,
                         "Select one from the available bids:", "BID WINDOW", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, availableBidsString, availableBidsString[0]);
 		
@@ -588,6 +599,7 @@ public class GameUI {
 			PlayerHand playerHand = player.getHand();
 			ArrayList<Card> playerHandCards = playerHand.getHand();
 			if (!(player instanceof Computer)){
+				System.out.println("PLAYERS HAND to PLAY: "  + playerHandCards);
 				int cardLeft = 300;
 				int cardTop = 675;
 
@@ -695,23 +707,6 @@ public class GameUI {
 	        estimationGame.getContentPane().add(btnCard);
 	    }
 	}
-
-	// public Card getSelectedCard(){
-	// 	 btnCard.addActionListener(new ActionListener() {
-	//         	@Override
-	//         	public void actionPerformed(ActionEvent e){
-	//         		if (waitingUser){
-	//         			System.out.println("CLICKING BUTTON");
-	//         			System.out.println(card);
-	//         			selectedCard = card;
-	//         			// passSelectedCard(selectedCard);
-	//         			playSubRound(selectedCard);
-	//         			btnCard.setVisible(false);
-
-	//         		}
-	//         	}
-	//         });
-	// }
 
 
 	public void passSelectedCard(int index){
