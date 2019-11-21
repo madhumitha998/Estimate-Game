@@ -365,6 +365,7 @@ public class GameLogic {
         } else {
             System.out.println("Spoilt broskis, not enough cards in the deck");
             System.out.println("Expected: " + remainingCards  );
+            System.out.println("Actual: " + deckOfCards.getNumberOfCardsRemaining() );
         }
    
     }
