@@ -437,8 +437,6 @@ public class GameLogic {
      * Set winning player as the first position and all to the left of him as subsequent players
      */
     public void startSubRound(int roundNumber) {
-        GameUI gameUi = new GameUI(); 
-
         tableHand.clearTableHand();
         // Display Table Hand
         System.out.println(tableHand.toString());
