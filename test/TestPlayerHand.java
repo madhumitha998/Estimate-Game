@@ -34,4 +34,24 @@ public class TestPlayerHand {
 
 
     }
+
+    @Test
+    public void testPlayableHand() {
+        PlayerHand playerhand = new PlayerHand();
+        Card testCard = new Card(Suit.HEARTS, Rank.ACE, null );
+        Card testCard2 = new Card(Suit.SPADES, Rank.THREE, null );
+        Card testCard3 = new Card(Suit.CLUBS, Rank.THREE, null );
+        Card testCard4 = new Card(Suit.CLUBS, Rank.THREE, null );
+
+        playerhand.addCard(testCard);
+        playerhand.addCard(testCard2);
+        playerhand.addCard(testCard3);
+        playerhand.addCard(testCard4);
+        ArrayList<Card>  testReturnArray = playerhand.getPlayableHand(null,Suit.DIAMONDS);
+
+        System.out.println(testReturnArray);
+
+
+
+    }
 }
