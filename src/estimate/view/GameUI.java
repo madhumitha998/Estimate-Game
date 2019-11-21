@@ -344,8 +344,13 @@ public class GameUI {
         }
 
         //Set position for players
+        System.out.println("OLD PLAYER ORDER: " + gameLogic.getArrayOfPlayers().getArrayOfPlayers());
         if (round != 11) {
+        	System.out.println("SETTING PLAYER ORDER: ");
             gameLogic.setPlayerOrder(round);
+            whoNext = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
+
+            System.out.println(gameLogic.getArrayOfPlayers().getArrayOfPlayers());
         }
 
         // Clear tableHand at end of subround
