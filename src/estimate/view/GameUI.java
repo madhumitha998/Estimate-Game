@@ -259,23 +259,17 @@ public class GameUI {
 		            leadSuit2 = gameLogic.getLeadSuit().getSuit();
 		        }
 
-		        System.out.println("TESTING 003 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2);
-		        System.out.println("TESTING 003.1 " + gameLogic.getTableHand().sortedTableHand( gameLogic.getTrumpSuit().getSuit(), leadSuit2 ).size());
 		        if (gameLogic.getTableHand().sortedTableHand( gameLogic.getTrumpSuit().getSuit(), leadSuit2 ).size() == 0 ) {
 		            highestPlayedCard = null;
 		        } else {
-		        	System.out.println("TESTING 004 " + gameLogic.getLeadSuit().getSuit() + " " + gameLogic.getTrumpSuit().getSuit() + " ");
 		            highestPlayedCard = gameLogic.getTableHand().sortedTableHand(gameLogic.getTrumpSuit().getSuit(), gameLogic.getLeadSuit().getSuit()).get(0).getPlayerCard();
 		        }
 
 		        if (p instanceof Computer) {
-	                System.out.println("TESTING 005 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2 + " " + highestPlayedCard);
 
 	                Computer pComputer = (Computer) p;
 	                System.out.println("Printing computer: " + pComputer);
-	                System.out.println("CHECKING THE FKING HAND" + p.getHand());
 
-	                System.out.println("TESTING 006 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2 + " " + highestPlayedCard);
 	                Card cardForCompToPlay = pComputer.playCard(gameLogic.getTrumpSuit().getSuit(), leadSuit2, highestPlayedCard);
 	                System.out.println("Computer's Hand" + p.getHand() + "\n");
 
@@ -350,15 +344,13 @@ public class GameUI {
         //Set position for players
         System.out.println("OLD PLAYER ORDER: " + gameLogic.getArrayOfPlayers().getArrayOfPlayers());
         if (round != 11) {
-        	System.out.println("SETTING PLAYER ORDER: ");
             gameLogic.setPlayerOrder(round);
             whoNext = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
             if (whoNext == 0){
             	waitingUser = true;
             }
-            System.out.println("PRINTING WHO NEXT: " + whoNext);
 
-            System.out.println(gameLogic.getArrayOfPlayers().getArrayOfPlayers());
+            System.out.println("NEW PLAYER ORDER: " + gameLogic.getArrayOfPlayers().getArrayOfPlayers());
         }
 
         // Clear tableHand at end of subround
