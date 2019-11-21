@@ -12,6 +12,13 @@ import estimate.gamelogic.*;
 import estimate.player.*;
 import estimate.scoreboard.*;
 
+/**
+ * Main GUI of the game. Contains all the methods to display selected options by player.
+ * GameUI is called by the main menu, GUI. The logic is controlled by GameLogic.
+ * @author Elias Lim
+ * @version 2.0 
+ * @since   Nov 21, 2019
+ */
 
 public class GameUI {
 	private JFrame estimationGame;
@@ -86,7 +93,12 @@ public class GameUI {
 	public GameUI(){
 	}
 
-
+	/**
+     * Sets the frame and attributes for the game.
+     * Initalizes the variables from GameLogic
+     * Initalizes computer and player
+     * Adds button to start the game
+     */
 	private void initalizeGame(){
 		estimationGame = new JFrame();
 		estimationGame.setTitle("Estimation Game");
@@ -123,7 +135,10 @@ public class GameUI {
         });
 	}
 
-
+	/**
+     * Starts a new round for the game to be played
+     * This method is called at the start of the game, and after every subround/round
+     */
 	private void newRound(){
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("PREPPING ROUND " + round + " SETUP. Game Logic round (should be aligned) : " + gameLogic.getRound());
@@ -156,8 +171,13 @@ public class GameUI {
 	}
 
 
-	public void todoThread(){
-		while (true){
+	/**
+     * Starts the sequence of events for the game
+     * Checks if SubRound / Round / Game has been completed
+     * If not, continue playing
+     */
+	public void todoThread() {
+		while (true) {
 			numberOfSubRounds = cardsToDealPerRound[round - 1];
 
 			if (completeSubRound()) {
@@ -185,7 +205,7 @@ public class GameUI {
 				}
 			}
 
-			if (waitingUser){
+			if (waitingUser) {
 				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PLAYER'S TURN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 				drawNoti("Your turn");
 				break;
@@ -195,7 +215,7 @@ public class GameUI {
 				playSubRound(-1);
 				displayTableHandUI();
 
-				if (waitingUser()){
+				if (waitingUser()) {
 					displayTableHandUI();
 					waitingUser = true;
 				}
@@ -204,7 +224,11 @@ public class GameUI {
 	}
 
 
-	public void playSubRound(int index){
+	/**
+     * Starts the sequence of events for a SubRound.
+     * This is the main method for the player and computer to play the game
+     */
+	public void playSubRound(int index) {
 		System.out.println();
 		System.out.println("PRINTING ARRAY OF PLAYERS:");
 		System.out.println(gameLogic.getArrayOfPlayers().getArrayOfPlayers());
@@ -293,6 +317,9 @@ public class GameUI {
 	}
 
 
+	/**
+     * After each SubRound, this method is called to calculate the scores and get the trick winner
+     */
 	public void finishSubRound(){
         ArrayList<PlayerCardArray> sortedTableHand = gameLogic.getTableHand().sortedTableHand(gameLogic.getTrumpSuit().getSuit(),
                 gameLogic.getLeadSuit().getSuit());
@@ -325,7 +352,9 @@ public class GameUI {
         gameLogic.getTableHand().clearTableHand();
 	}
 
-
+	/**
+     * Checks if SubRound is completed
+     */
 	public Boolean completeSubRound() {
 		if (subRound != 1) {
 			return false;
@@ -336,7 +365,9 @@ public class GameUI {
 		}
 	}
 
-
+	/**
+     * Checks if Round is completed
+     */
 	public Boolean completeRound(){
 		int[] roundsTotal = {1,2,3,4,5,6,5,4,3,2,1};
 		System.out.println("Round: " + round + " SubRound: " + roundCounter + " Total number of SubRounds: " + roundsTotal[round-1]);
@@ -355,6 +386,9 @@ public class GameUI {
 	}
 
 
+	/**
+     * Checks if Game is completed
+     */
 	public Boolean completeGame(int[] winner) {
 		if (winner != null) {
 			System.out.println("CONGRATZZZ THE WINNER IS: " + winner[0] + " with " + winner[1] + " points!!!!");
@@ -363,7 +397,9 @@ public class GameUI {
 		return false;
 	}
 
-
+	/**
+     * Displays the card UI and executes the player action of selecting a card
+     */
 	public void displayCardUI() {
 		for (Player player: gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
 			ArrayList<Card> playerHandCards = player.getHand().getHand();
