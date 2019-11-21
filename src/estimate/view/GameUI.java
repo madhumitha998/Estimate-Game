@@ -349,6 +349,10 @@ public class GameUI {
         	System.out.println("SETTING PLAYER ORDER: ");
             gameLogic.setPlayerOrder(round);
             whoNext = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
+            if (whoNext == 0){
+            	waitingUser = true;
+            }
+            System.out.println("PRINTING WHO NEXT: " + whoNext);
 
             System.out.println(gameLogic.getArrayOfPlayers().getArrayOfPlayers());
         }
@@ -493,6 +497,11 @@ public class GameUI {
 				int cardLeft = 700;
 				int cardTop = 235;
 
+				for (JButton item: listButton3) {
+					estimationGame.getContentPane().remove(item);
+				}
+				listButton3.clear();
+
 				for (int i = 0; i < playerHandCards.size(); i++) {
 		            cardIndex++;
 
@@ -571,6 +580,7 @@ public class GameUI {
 			        	public void actionPerformed(ActionEvent e){
 			        		if (waitingUser){
 			        			int index = Integer.parseInt(btnCard.getName());
+			        			System.out.println("CLICKING BUTTON CARD NOW: " +  index);
 			        			passSelectedCard(index);
 			        		}
 			        	}
