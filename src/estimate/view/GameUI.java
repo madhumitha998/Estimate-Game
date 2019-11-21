@@ -35,6 +35,10 @@ public class GameUI {
 	private int subRound = 0;
 	private int roundCounter = 0;
 	private int whoNext;
+	private int roundBidsWon = 0;
+	private int roundBidsWon1 = 0;
+	private int roundBidsWon2 = 0;
+	private int roundBidsWon3 = 0;
 	private Boolean waitingUser;
 
 	private int card_width = 75;
@@ -52,7 +56,15 @@ public class GameUI {
 	private JLabel lblNoti;
 	private String notification;
 
+
 	private ArrayList<JLabel> bidList = new ArrayList<JLabel>();
+	private ArrayList<JLabel> bidList1 = new ArrayList<JLabel>();
+	private ArrayList<JLabel> bidList2 = new ArrayList<JLabel>();
+	private ArrayList<JLabel> bidList3 = new ArrayList<>();
+	private ArrayList<JLabel> bidWonList = new ArrayList<JLabel>();
+	private ArrayList<JLabel> bidWonList1 = new ArrayList<JLabel>();
+	private ArrayList<JLabel> bidWonList2 = new ArrayList<JLabel>();
+	private ArrayList<JLabel> bidWonList3 = new ArrayList<JLabel>();
 	private ArrayList<JLabel> leadList = new ArrayList<JLabel>();
 	private ArrayList<JLabel> trumpList = new ArrayList<JLabel>();
 	private ArrayList<JLabel> roundList = new ArrayList<JLabel>();
@@ -184,9 +196,15 @@ public class GameUI {
 				displayTableHandUI();
 				displayCardUI();
 
-				roundCounter += 1;
+				roundCounter++;
 
 				if (completeRound()) {
+
+					roundBidsWon = 0;
+					roundBidsWon1 = 0;
+					roundBidsWon2 = 0;
+					roundBidsWon3 = 0;
+
 					updateScoreUI();
             		System.out.println(gameLogic.getScoreboard().getTotalScore());
             		int[] winner = gameLogic.getScoreboard().getWinner(round);
@@ -234,13 +252,14 @@ public class GameUI {
 		System.out.println("PRINTING ARRAY OF PLAYERS:");
 		System.out.println(gameLogic.getArrayOfPlayers().getArrayOfPlayers());
 
+		displayBidsWonUI();
+
 		if (whoNext ==  gameLogic.getArrayOfPlayers().getArrayOfPlayers().get( gameLogic.getArrayOfPlayers().getArrayOfPlayers().size()-1).getPlayerId()){
 			subRound += 1;
 		}
 
 		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
 			if (whoNext == p.getPlayerId()) {
-				System.out.println("CURRENT TURN PLAYER HAND : " + gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(whoNext).getHand());
 				if (whoNext == 3){
 					whoNext = 0;
 				} else {
@@ -288,11 +307,8 @@ public class GameUI {
 
 	                // Get input from user
 	                displayCardUI();
-	                System.out.println("Enter Your Card Index You want to play \n" + index);
 
 	                try {
-		                System.out.println(index);
-
 		                if (p.getPosition() == 0) {
 		                    gameLogic.setLeadSuit(p.getHand().getCard(index));
 		                	String leadSuitString = "" + gameLogic.getLeadSuit().getSuit();
@@ -304,7 +320,6 @@ public class GameUI {
 
 	                displayTableHandUI();
 	                // Display Table Hand
-	                System.out.println(gameLogic.getTableHand().toString());
             		break;
 	            }
 	        }
@@ -327,7 +342,7 @@ public class GameUI {
         System.out.println("The winner of this round is player ID: " + winner.getPlayerId());
         gameLogic.getScoreboard().addTricksWon(round, winner.getPlayerId());
 
-        JOptionPane.showMessageDialog(null, "The winner is player ID: " + winner.getPlayerId() + "\n " + (11 - round) + " more rounds to go!");
+        JOptionPane.showMessageDialog(null, "Round: " + round + "\nSubround: " + roundCounter + "\nWinner is player ID: " + winner.getPlayerId());
 
         //set Winner for player
         for (Player p : gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
@@ -337,6 +352,22 @@ public class GameUI {
                 p.setTrickWinner(false);
             }
         }
+
+		for (Player p : gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
+			if (winner.getPlayerId() == 0){
+				roundBidsWon += 1;
+				break;
+			} else if (winner.getPlayerId() == 1){
+				roundBidsWon1 += 1;
+				break;
+			} else if (winner.getPlayerId() == 2){
+				roundBidsWon2 += 1;
+				break;
+			} else if (winner.getPlayerId() == 3){
+				roundBidsWon3 += 1;
+				break;
+			}
+		}
 
         //Set position for players
         System.out.println("OLD PLAYER ORDER: " + gameLogic.getArrayOfPlayers().getArrayOfPlayers());
@@ -348,10 +379,8 @@ public class GameUI {
             } else {
             	waitingUser = false;
             }
-
             System.out.println("NEW PLAYER ORDER: " + gameLogic.getArrayOfPlayers().getArrayOfPlayers());
         }
-
         // Clear tableHand at end of subround
         gameLogic.getTableHand().clearTableHand();
 	}
@@ -376,7 +405,6 @@ public class GameUI {
      */
 	public Boolean completeRound(){
 		int[] roundsTotal = {1,2,3,4,5,6,5,4,3,2,1};
-		System.out.println("Round: " + round + " | SubRound: " + roundCounter + " | Total number of SubRounds: " + roundsTotal[round-1]);
 
 		if (roundsTotal[round-1] == roundCounter) {
 			System.out.println("ROUNDCOUNTER ####### " + roundCounter);
@@ -419,7 +447,7 @@ public class GameUI {
 
 			if (player.getPlayerId() == 1) {
 				float cardIndex = -1;
-				int cardLeft = 80;
+				int cardLeft = 55;
 				int cardTop = 235;
 
 				for (JButton item: listButton1){
@@ -449,7 +477,6 @@ public class GameUI {
 		                System.out.println("Image not found");
 		                btnCard1.setText("Not found");
 		            }
-
 		            listButton1.add(btnCard1);
 			        estimationGame.getContentPane().add(btnCard1);
 			    }
@@ -495,8 +522,8 @@ public class GameUI {
 
 			if (player.getPlayerId() == 3) {
 				float cardIndex = -1;
-				int cardLeft = 700;
-				int cardTop = 225;
+				int cardLeft = 750;
+				int cardTop = 215;
 
 				for (JButton item: listButton3) {
 					estimationGame.getContentPane().remove(item);
@@ -681,7 +708,7 @@ public class GameUI {
 
 
 	/**
-     * Displays a message that informs the player the bid amount he selected
+     * Displays a message that informs the player the tricks amount he selected
      */
 	public void displayBidUI(int bidSelected) {
 		if (!(bidList.isEmpty())) {
@@ -691,19 +718,168 @@ public class GameUI {
 			bidList.clear();
 		}
 
-		JLabel lblBid = new JLabel("You predicted you will win " + bidSelected + " times");
+		JLabel lblBid = new JLabel("Tricks to win: " + bidSelected);
 
-        springLayout.putConstraint(SpringLayout.WEST, lblBid, 165, SpringLayout.WEST,
+        springLayout.putConstraint(SpringLayout.WEST, lblBid, 295, SpringLayout.WEST,
                 estimationGame.getContentPane());
         lblBid.setForeground(Color.WHITE);
-        springLayout.putConstraint(SpringLayout.NORTH, lblBid, 645, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.NORTH, lblBid, 565, SpringLayout.NORTH,
                 estimationGame.getContentPane());
         lblBid.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
-        bidList.add(lblBid);
-        estimationGame.getContentPane().add(lblBid);
+		bidList.add(lblBid);
+		estimationGame.getContentPane().add(lblBid);
+
+		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
+			if (p instanceof Computer) {
+
+				if (p.getPlayerId() == 1) {
+					if (!(bidList1.isEmpty())) {
+						for (JLabel item : bidList1) {
+							estimationGame.getContentPane().remove(item);
+						}
+						bidList1.clear();
+					}
+
+					JLabel lblBid1 = new JLabel("Tricks to win: " + p.getBid());
+
+					springLayout.putConstraint(SpringLayout.WEST, lblBid1, 180, SpringLayout.WEST,
+							estimationGame.getContentPane());
+					lblBid1.setForeground(Color.WHITE);
+					springLayout.putConstraint(SpringLayout.NORTH, lblBid1, 440, SpringLayout.NORTH,
+							estimationGame.getContentPane());
+					lblBid1.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+					bidList1.add(lblBid1);
+					estimationGame.getContentPane().add(lblBid1);
+				}
+
+				if (p.getPlayerId() == 3) {
+					if (!(bidList3.isEmpty())) {
+						for (JLabel item : bidList3) {
+							estimationGame.getContentPane().remove(item);
+						}
+						bidList3.clear();
+					}
+
+					JLabel lblBid3 = new JLabel("Tricks to win: " + p.getBid());
+
+					springLayout.putConstraint(SpringLayout.WEST, lblBid3, 610, SpringLayout.WEST,
+							estimationGame.getContentPane());
+					lblBid3.setForeground(Color.WHITE);
+					springLayout.putConstraint(SpringLayout.NORTH, lblBid3, 440, SpringLayout.NORTH,
+							estimationGame.getContentPane());
+					lblBid3.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+					bidList3.add(lblBid3);
+					estimationGame.getContentPane().add(lblBid3);
+				}
+
+				if (p.getPlayerId() == 2) {
+					if (!(bidList2.isEmpty())) {
+						for (JLabel item : bidList2) {
+							estimationGame.getContentPane().remove(item);
+						}
+						bidList2.clear();
+					}
+
+					JLabel lblBid2 = new JLabel("Tricks to win: " + p.getBid());
+
+					springLayout.putConstraint(SpringLayout.WEST, lblBid2, 275, SpringLayout.WEST,
+							estimationGame.getContentPane());
+					lblBid2.setForeground(Color.WHITE);
+					springLayout.putConstraint(SpringLayout.NORTH, lblBid2, 160, SpringLayout.NORTH,
+							estimationGame.getContentPane());
+					lblBid2.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+					bidList2.add(lblBid2);
+					estimationGame.getContentPane().add(lblBid2);
+				}
+			}
+		}
         estimationGame.validate();
 	    estimationGame.repaint();
+	}
+
+	/**
+	 * Displays a message that informs the player how many tricks he won that round
+	 */
+	public void displayBidsWonUI() {
+		if (!(bidWonList.isEmpty())) {
+			for (JLabel item: bidWonList) {
+				estimationGame.getContentPane().remove(item);
+			}
+			bidWonList.clear();
+		}
+
+		JLabel lblBidsWon = new JLabel("Tricks won: " + roundBidsWon);
+
+		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon, 295, SpringLayout.WEST,
+				estimationGame.getContentPane());
+		lblBidsWon.setForeground(Color.WHITE);
+		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon, 585, SpringLayout.NORTH,
+				estimationGame.getContentPane());
+		lblBidsWon.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+		if (!(bidWonList1.isEmpty())) {
+			for (JLabel item: bidWonList1) {
+				estimationGame.getContentPane().remove(item);
+			}
+			bidWonList1.clear();
+		}
+
+		JLabel lblBidsWon1 = new JLabel("Tricks won: " + roundBidsWon1);
+
+		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon1, 180, SpringLayout.WEST,
+				estimationGame.getContentPane());
+		lblBidsWon1.setForeground(Color.WHITE);
+		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon1, 460, SpringLayout.NORTH,
+				estimationGame.getContentPane());
+		lblBidsWon1.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+		if (!(bidWonList2.isEmpty())) {
+			for (JLabel item: bidWonList2) {
+				estimationGame.getContentPane().remove(item);
+			}
+			bidWonList2.clear();
+		}
+
+		JLabel lblBidsWon2 = new JLabel("Tricks won: " + roundBidsWon2);
+
+		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon2, 275, SpringLayout.WEST,
+				estimationGame.getContentPane());
+		lblBidsWon2.setForeground(Color.WHITE);
+		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon2, 180, SpringLayout.NORTH,
+				estimationGame.getContentPane());
+		lblBidsWon2.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+		if (!(bidWonList3.isEmpty())) {
+			for (JLabel item: bidWonList3) {
+				estimationGame.getContentPane().remove(item);
+			}
+			bidWonList3.clear();
+		}
+
+		JLabel lblBidsWon3 = new JLabel("Tricks won: " + roundBidsWon3);
+
+		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon3, 610, SpringLayout.WEST,
+				estimationGame.getContentPane());
+		lblBidsWon3.setForeground(Color.WHITE);
+		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon3, 460, SpringLayout.NORTH,
+				estimationGame.getContentPane());
+		lblBidsWon3.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+		bidWonList.add(lblBidsWon);
+		estimationGame.getContentPane().add(lblBidsWon);
+		bidWonList1.add(lblBidsWon1);
+		estimationGame.getContentPane().add(lblBidsWon1);
+		bidWonList2.add(lblBidsWon2);
+		estimationGame.getContentPane().add(lblBidsWon2);
+		bidWonList3.add(lblBidsWon3);
+		estimationGame.getContentPane().add(lblBidsWon3);
+
+		estimationGame.validate();
+		estimationGame.repaint();
 	}
 
 
@@ -838,7 +1014,7 @@ public class GameUI {
 			subRoundList.clear();
 		}
 
-		JLabel lblSubRound = new JLabel("Subround: " + (roundCounter+1));
+		JLabel lblSubRound = new JLabel("Subround: " + (roundCounter+1) + " / " + cardsToDealPerRound[round-1]);
 
         springLayout.putConstraint(SpringLayout.WEST, lblSubRound, 10, SpringLayout.WEST,
                 estimationGame.getContentPane());
