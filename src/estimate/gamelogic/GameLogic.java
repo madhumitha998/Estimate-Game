@@ -35,6 +35,10 @@ public class GameLogic {
  // private Score; <- this score will always be replaced in a new round
     // private ScoreBoard scoreboard;
 
+    public int getRound() {
+        return this.round;
+    }
+
     public TableHand getTableHand() {
         return this.tableHand;
     }

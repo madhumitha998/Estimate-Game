@@ -120,7 +120,7 @@ public class GameUI {
 
 	private void newRound(){
 
-		System.out.println("PREPPING ROUND " + round + " SETUP");
+		System.out.println("PREPPING ROUND " + round + " SETUP. Game Logic round (should be aligned) : " + gameLogic.getRound());
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~");
 		gameLogic.initialiseDeck();
 		gameLogic.setDealer(round);
