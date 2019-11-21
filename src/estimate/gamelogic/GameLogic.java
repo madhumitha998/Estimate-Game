@@ -97,10 +97,14 @@ public class GameLogic {
             int winnerId = -1;
             for(Player p : arrayOfPlayers.getArrayOfPlayers() ) {
                 if (p.getTrickWinner() == true) {
+                    System.out.println("Found a winner");
                     winnerId = p.getPlayerId();
                     p.setTrickWinner(false);
                     break;
                 }
+            }
+            if (winnerId == -1 ) {
+                System.out.println("Did not find a winner, error in GameLogic setPlayerOrder");
             }
             int firstPosition = winnerId;
             int secondPosition = clockWiseNext(firstPosition);
