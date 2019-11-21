@@ -13,35 +13,35 @@ import estimate.player.*;
 import estimate.scoreboard.*;
 
 public class GameUI {
-	private GameLogic gameLogic;
-	private Scoreboard scoreboard;
-	private String trumpSuitString;
-	private String leadSuitString;
-	private int subRound = 0;
-	private int round = 1;
-	private int roundCounter = 0;
-	private int[] cardsToDealPerRound = {1,2,3,4,5,6,5,4,3,2,1};
-	private int whoNext;
-	private Boolean waitingUser;
-	private int numberOfSubRounds;
+	private JFrame estimationGame;
+	private SpringLayout springLayout;
 
+	private int whoNext;
+	private int round = 1;
+	private int selectedBid;
+	private int subRound = 0;
+	private GameLogic gameLogic;
+	private Boolean waitingUser;
+	private int roundCounter = 0;
+	private int numberOfSubRounds;
+	private Scoreboard scoreboard;
+	private String leadSuitString;
+	private String trumpSuitString;
+	private int[] cardsToDealPerRound = {1,2,3,4,5,6,5,4,3,2,1};
+
+	private ArrayList<JLabel> bidList = new ArrayList<JLabel>();
+	private ArrayList<JLabel> leadList = new ArrayList<JLabel>();
+	private ArrayList<JLabel> trumpList = new ArrayList<JLabel>();
 	private ArrayList<JButton> listButton = new ArrayList<JButton>();
 	private ArrayList<JButton> listButton1 = new ArrayList<JButton>();
 	private ArrayList<JButton> listButton2 = new ArrayList<JButton>();
 	private ArrayList<JButton> listButton3 = new ArrayList<JButton>();
 	private ArrayList<JButton> listButton4 = new ArrayList<JButton>();
-	private ArrayList<JLabel> leadList = new ArrayList<JLabel>();
-	private ArrayList<JLabel> trumpList = new ArrayList<JLabel>();
 
 	private int card_width = 75;
     private int card_height = 108;
 
-    private SpringLayout springLayout;
-	private JFrame estimationGame;
 
-	private int selectedBid;
-
-	private String notification;
 	private JButton btnAvatarA;
     private JLabel lblNameA;
     private JLabel lblScoreA;
@@ -57,6 +57,8 @@ public class GameUI {
     private JButton btnCardD;
     private JLabel lblNoti;
     private JLabel lblLead;
+    private JLabel lblBid;
+	private String notification;
 
 
 	public static void main(String[] args){
@@ -110,9 +112,7 @@ public class GameUI {
         gameLogic = new GameLogic();
         gameLogic.getScoreboard();
 		gameLogic.getTableHand();
-
 		gameLogic.startNewGame();
-        // ArrayList<Player> playerArray = players.getArrayOfPlayers();
 
         btnAvatarA.addActionListener(new ActionListener() {
             @Override
@@ -146,7 +146,6 @@ public class GameUI {
 
 		displayTrump();
 		playPlayerCards();
-		// displayCards();
 		displayAvailableBids();
 		displayTableHand();
 
@@ -292,6 +291,9 @@ public class GameUI {
 	                Computer pComputer = (Computer) p;
 	                System.out.println(pComputer);
 
+	                System.out.println("CHECKING THE FKING HAND" + p.getHand());
+	                System.out.println("TESTTT");
+
 	                System.out.println("TESTING 006 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2 + " " + highestPlayedCard);
 	                Card cardForCompToPlay = pComputer.playCard(gameLogic.getTrumpSuit().getSuit(), leadSuit2, highestPlayedCard);
 	                System.out.println("Computer's Hand" + p.getHand() + "\n");
@@ -369,8 +371,7 @@ public class GameUI {
             }
         }
 
-        System.out.println("PRINGINT SCORE");
-        System.out.println(gameLogic.getScoreboard().getTotalScore());
+        System.out.println("SCORE : " + gameLogic.getScoreboard().getTotalScore());
 
         //Set position for players
         if (round != 11) {
@@ -406,6 +407,24 @@ public class GameUI {
 			return false;
 		}
 	}
+
+
+	// public void displayScoreboard(){
+	// 	JButton scoreBtn = new JButton("Scoreboard");  
+	// 	scoreBtn.setBounds(10,50,95,30);  
+
+	// 	estimationGame.getContentPane().add(scoreBtn);
+ //        estimationGame.validate();
+	//     estimationGame.repaint();
+
+	// 	scoreBtn.addActionListener(new ActionListener() {
+ //        	@Override
+ //        	public void actionPerformed(ActionEvent e){
+        		
+	// 		}
+	// 	});
+
+	// }
 
 
 	public void updateScoreUI(){
@@ -453,6 +472,8 @@ public class GameUI {
     	int bidSelected = JOptionPane.showOptionDialog(null,
                         "Select one from the available bids:", "BID WINDOW", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, availableBidsString, availableBidsString[0]);
 		
+		displayBidUI(bidSelected);
+
 		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()){
 			if (!(p instanceof Computer)){
 				p.setBid(bidSelected);
@@ -472,6 +493,7 @@ public class GameUI {
 			for (JLabel item: trumpList){
 				estimationGame.getContentPane().remove(item);
 			}
+			trumpList.clear();
 		}
 
 		JLabel lblTrump = new JLabel("The trump suit is: " + trumpSuitString);
@@ -489,12 +511,37 @@ public class GameUI {
 	}
 
 
+	public void displayBidUI(int bidSelected){
+		System.out.println("DISASLAOJSFASFBAKFB " + bidSelected);
+		if (!(bidList.isEmpty())){
+			for (JLabel item: bidList){
+				estimationGame.getContentPane().remove(item);
+			}
+			bidList.clear();
+		}
+
+		lblBid = new JLabel("You predicted you will win " + bidSelected + " times");
+        springLayout.putConstraint(SpringLayout.WEST, lblBid, 165, SpringLayout.WEST,
+                estimationGame.getContentPane());
+        lblBid.setForeground(Color.WHITE);
+        springLayout.putConstraint(SpringLayout.NORTH, lblBid, 645, SpringLayout.NORTH,
+                estimationGame.getContentPane());
+        lblBid.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+        bidList.add(lblBid);
+        estimationGame.getContentPane().add(lblBid);
+        estimationGame.validate();
+	    estimationGame.repaint();
+	}
+
+
 	public void displayLead(String leadSuitString){
 
 		if (!(leadList.isEmpty())){
 			for (JLabel item: leadList){
 				estimationGame.getContentPane().remove(item);
 			}
+			leadList.clear();
 		}
 
 		lblLead = new JLabel("The lead suit is: " + leadSuitString);
