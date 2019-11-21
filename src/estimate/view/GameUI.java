@@ -21,7 +21,7 @@ import java.util.Map;
  * GameUI is called by the main menu, GUI. The logic is controlled by GameLogic.
  * @author Elias Lim
  * @version 2.0 
- * @since   Nov 21, 2019
+ * @since   Nov 4, 2019
  */
 
 public class GameUI {
@@ -197,8 +197,8 @@ public class GameUI {
 				roundCounter += 1;
 
 				if (completeRound()) {
-					gameLogic.getScoreboard().calculateRoundScore(round);
-					gameLogic.getScoreboard().calculateTotalScore();
+//					gameLogic.getScoreboard().calculateRoundScore(round);
+//					gameLogic.getScoreboard().calculateTotalScore();
 					updateScoreUI();
             		System.out.println(gameLogic.getScoreboard().getTotalScore());
             		int[] winner = gameLogic.getScoreboard().getWinner(round);
@@ -209,12 +209,20 @@ public class GameUI {
             			GUI.main(null);
             			return;
             		} else {
-						if (roundCounter == cardsToDealPerRound[round]){
-							System.out.println("SETTING LEAD TO NULL");
+//            			System.out.println("ROUNDCOUNTER ####### " + roundCounter);
+//						System.out.println("TOTAL SUBROUND ####### " + cardsToDealPerRound[round-1]);
+//						System.out.println("ROUND ####### " + round);
+						if (roundCounter+1 == cardsToDealPerRound[round-1]){
+//							System.out.println("SETTING LEAD TO NULL");
+//							gameLogic.getScoreboard().calculateRoundScore(round);
+//							gameLogic.getScoreboard().calculateTotalScore();
 							gameLogic.setLeadSuit(null);
+//							gameLogic.getScoreboard().printScoreForAllRounds();
 						}
             			newRound();
             		}
+//					roundCounter = 0;
+//					round += 1;
             		return;
 				}
 			}
@@ -392,6 +400,14 @@ public class GameUI {
 		System.out.println("Round: " + round + " | SubRound: " + roundCounter + " | Total number of SubRounds: " + roundsTotal[round-1]);
 
 		if (roundsTotal[round-1] == roundCounter) {
+//			System.out.println("SETTING LEAD TO NULL");
+			System.out.println("ROUNDCOUNTER ####### " + roundCounter);
+			System.out.println("TOTAL SUBROUND ####### " + cardsToDealPerRound[round-1]);
+			System.out.println("ROUND ####### " + round);
+			gameLogic.getScoreboard().calculateRoundScore(round);
+			gameLogic.getScoreboard().calculateTotalScore();
+//			gameLogic.setLeadSuit(null);
+			gameLogic.getScoreboard().printScoreForAllRounds();
 			roundCounter = 0;
 			round += 1;
 			gameLogic.setRound(round);
