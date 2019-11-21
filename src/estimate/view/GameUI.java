@@ -26,6 +26,7 @@ public class GameUI {
 	private int numberOfSubRounds;
 
 	private ArrayList<JButton> listButton = new ArrayList<JButton>();
+	private ArrayList<JLabel> leadList = new ArrayList<JLabel>();
 
 	private int card_width = 75;
     private int card_height = 108;
@@ -277,6 +278,7 @@ public class GameUI {
 		        }
 
 		        System.out.println("TESTING 003 " + gameLogic.getTrumpSuit().getSuit() + " " + leadSuit2);
+		        System.out.println("TESTING 003.1 " + gameLogic.getTableHand().sortedTableHand( gameLogic.getTrumpSuit().getSuit(), leadSuit2 ).size());
 		        if (gameLogic.getTableHand().sortedTableHand( gameLogic.getTrumpSuit().getSuit(), leadSuit2 ).size() == 0 ) {
 		            highestPlayedCard = null;
 		        } else {
@@ -485,7 +487,12 @@ public class GameUI {
 
 
 	public void displayLead(String leadSuitString){
-		// estimationGame.getContentPane().remove(lblLead);
+
+		if (!(leadList.isEmpty())){
+			for (JLabel item: leadList){
+				estimationGame.getContentPane().remove(item);
+			}
+		}
 
 		lblLead = new JLabel("The lead suit is: " + leadSuitString);
         springLayout.putConstraint(SpringLayout.WEST, lblLead, 10, SpringLayout.WEST,
@@ -495,6 +502,7 @@ public class GameUI {
                 estimationGame.getContentPane());
         lblLead.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
+        leadList.add(lblLead);
         estimationGame.getContentPane().add(lblLead);
         estimationGame.validate();
 	    estimationGame.repaint();
