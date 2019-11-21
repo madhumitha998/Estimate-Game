@@ -212,7 +212,7 @@ public class GameUI {
             		if (completeGame(winner)){
             			JOptionPane.showMessageDialog(new JFrame(), "THE GRAND WINNER IS: " + winner[0] + " with " + winner[1] + " POINTS!!!!", "Info",
                                 JOptionPane.INFORMATION_MESSAGE);
-            			GUI.main(null);
+            			MainMenuUI.main(null);
             			return;
             		} else {
 						if (roundCounter == cardsToDealPerRound[round-1]){
@@ -485,7 +485,7 @@ public class GameUI {
 			if (player.getPlayerId() == 2) {
 				float cardIndex = -1;
 				int cardLeft = 300;
-				int cardTop = 40;
+				int cardTop = 30;
 
 				for (JButton item: listButton2) {
 					estimationGame.getContentPane().remove(item);
