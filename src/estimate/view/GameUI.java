@@ -61,6 +61,8 @@ public class GameUI {
 	private ArrayList<JLabel> bidList = new ArrayList<JLabel>();
 	private ArrayList<JLabel> leadList = new ArrayList<JLabel>();
 	private ArrayList<JLabel> trumpList = new ArrayList<JLabel>();
+	private ArrayList<JLabel> roundList = new ArrayList<JLabel>();
+	private ArrayList<JLabel> subRoundList = new ArrayList<JLabel>();
 	private ArrayList<JButton> listButton = new ArrayList<JButton>();
 	private ArrayList<JButton> listButton1 = new ArrayList<JButton>();
 	private ArrayList<JButton> listButton2 = new ArrayList<JButton>();
@@ -161,6 +163,8 @@ public class GameUI {
 
 		whoNext = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
 
+		displayRoundUI();
+		displaySubRoundUI();
 		displayTrumpUI();
 		displayCardUI();
 		displayAvailableBidsUI();
@@ -794,6 +798,62 @@ public class GameUI {
         lblScoreB.setText(String.valueOf(scoreMap.get(1)));
         lblScoreC.setText(String.valueOf(scoreMap.get(2)));
         lblScoreD.setText(String.valueOf(scoreMap.get(3)));
+	}
+
+
+	/**
+     * Displays a message informing player of the trump suit
+     */
+	public void displayRoundUI() {
+
+		if (!(roundList.isEmpty())){
+			for (JLabel item: roundList){
+				estimationGame.getContentPane().remove(item);
+			}
+			roundList.clear();
+		}
+
+		JLabel lblRound = new JLabel("Round: " + round);
+
+        springLayout.putConstraint(SpringLayout.WEST, lblRound, 10, SpringLayout.WEST,
+                estimationGame.getContentPane());
+        lblRound.setForeground(Color.WHITE);
+        springLayout.putConstraint(SpringLayout.NORTH, lblRound, 50, SpringLayout.NORTH,
+                estimationGame.getContentPane());
+        lblRound.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+        roundList.add(lblRound);
+        estimationGame.getContentPane().add(lblRound);
+        estimationGame.validate();
+	    estimationGame.repaint();
+	}
+
+
+	/**
+     * Displays a message informing player of the trump suit
+     */
+	public void displaySubRoundUI() {
+
+		if (!(subRoundList.isEmpty())){
+			for (JLabel item: subRoundList){
+				estimationGame.getContentPane().remove(item);
+			}
+			subRoundList.clear();
+		}
+
+		JLabel lblSubRound = new JLabel("Subround: " + roundCounter);
+
+        springLayout.putConstraint(SpringLayout.WEST, lblSubRound, 10, SpringLayout.WEST,
+                estimationGame.getContentPane());
+        lblSubRound.setForeground(Color.WHITE);
+        springLayout.putConstraint(SpringLayout.NORTH, lblSubRound, 70, SpringLayout.NORTH,
+                estimationGame.getContentPane());
+        lblSubRound.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+        subRoundList.add(lblSubRound);
+        estimationGame.getContentPane().add(lblSubRound);
+        estimationGame.validate();
+	    estimationGame.repaint();
 	}
 
 
