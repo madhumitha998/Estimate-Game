@@ -1,16 +1,20 @@
 package estimate.view;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.border.LineBorder;
-import java.util.*;
+import cards.Card;
+import cards.Suit;
+import estimate.gamelogic.GameLogic;
+import estimate.gamelogic.PlayerCardArray;
+import estimate.player.Computer;
+import estimate.player.Player;
+import estimate.scoreboard.Scoreboard;
 
-import cards.*;
-import estimate.gamelogic.*;
-import estimate.player.*;
-import estimate.scoreboard.*;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Main GUI of the game. Contains all the methods to display selected options by player.
@@ -202,9 +206,13 @@ public class GameUI {
             		if (completeGame(winner)){
             			JOptionPane.showMessageDialog(new JFrame(), "THE GRAND WINNER IS: " + winner[0] + " with " + winner[1] + " POINTS!!!!", "Info",
                                 JOptionPane.INFORMATION_MESSAGE);
+            			GUI.main(null);
             			return;
             		} else {
-            			gameLogic.setLeadSuit(null);
+						if (roundCounter == cardsToDealPerRound[round]){
+							System.out.println("SETTING LEAD TO NULL");
+							gameLogic.setLeadSuit(null);
+						}
             			newRound();
             		}
             		return;
