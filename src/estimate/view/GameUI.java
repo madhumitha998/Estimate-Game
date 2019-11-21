@@ -125,6 +125,7 @@ public class GameUI {
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~");
 		gameLogic.initialiseDeck();
 		gameLogic.setDealer(round);
+		System.out.println(gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getHand());
 		gameLogic.setPlayersHand(round);
 		gameLogic.setTrump();
 		gameLogic.setPlayerOrder(round);
