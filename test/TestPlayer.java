@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestPlayer {
+    /**
+     * Test methods within player class
+     */
     @Test
     public void playerTest() {
         Player player1 = new Player(0,3);
@@ -55,6 +58,9 @@ public class TestPlayer {
         assertEquals(false, player1.isDealer());
     }
 
+    /**
+     * Test available bids that player can make
+     */
     @Test
     public void testAvailableBids() {
         Player player1 = new Player(0,0);

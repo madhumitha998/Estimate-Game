@@ -3,13 +3,16 @@ import cards.Rank;
 import cards.Suit;
 import estimate.player.PlayerHand;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class TestPlayerHand {
+    /**
+     * Test to see if player's hand works
+     * Should be able to add cards in hand and get card from hand
+     */
     @Test
     public void playerHandTest() {
         PlayerHand playerhand = new PlayerHand();
@@ -30,13 +33,15 @@ public class TestPlayerHand {
         //get specific card from playerHand
         assertEquals(testCard, playerhand.getCard(0));
         assertEquals("Ace of Clubs", playerhand.getCard(0).toString());
-
-
-
     }
 
+    /**
+     * Test the playable cards in player's hand
+     */
     @Test
     public void testPlayableHand() {
+
+        // When lead suit is null
         PlayerHand playerhand = new PlayerHand();
         Card testCard = new Card(Suit.HEARTS, Rank.ACE, null );
         Card testCard2 = new Card(Suit.SPADES, Rank.THREE, null );
@@ -47,11 +52,39 @@ public class TestPlayerHand {
         playerhand.addCard(testCard2);
         playerhand.addCard(testCard3);
         playerhand.addCard(testCard4);
-        ArrayList<Card>  testReturnArray = playerhand.getPlayableHand(null,Suit.DIAMONDS);
 
+        ArrayList<Card>  testReturnArray = playerhand.getPlayableHand(null,Suit.DIAMONDS);
         System.out.println(testReturnArray);
 
 
+        // when trumpsuit both leadSuit and trumpSuit is set
+        playerhand = new PlayerHand();
+        testCard = new Card(Suit.HEARTS, Rank.ACE, null );
+        testCard2 = new Card(Suit.SPADES, Rank.THREE, null );
+        testCard3 = new Card(Suit.CLUBS, Rank.THREE, null );
+        testCard4 = new Card(Suit.CLUBS, Rank.THREE, null );
 
+        playerhand.addCard(testCard);
+        playerhand.addCard(testCard2);
+        playerhand.addCard(testCard3);
+        playerhand.addCard(testCard4);
+
+        testReturnArray = playerhand.getPlayableHand(Suit.CLUBS,Suit.DIAMONDS);
+        System.out.println(testReturnArray);
+
+        // when both null
+        playerhand = new PlayerHand();
+        testCard = new Card(Suit.HEARTS, Rank.ACE, null );
+        testCard2 = new Card(Suit.SPADES, Rank.THREE, null );
+        testCard3 = new Card(Suit.CLUBS, Rank.THREE, null );
+        testCard4 = new Card(Suit.DIAMONDS, Rank.THREE, null );
+
+        playerhand.addCard(testCard);
+        playerhand.addCard(testCard2);
+        playerhand.addCard(testCard3);
+        playerhand.addCard(testCard4);
+
+        testReturnArray = playerhand.getPlayableHand(null,null);
+        System.out.println(testReturnArray);
     }
 }
