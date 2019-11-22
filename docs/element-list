@@ -1,1 +1,6 @@
 unnamed package
+cards
+estimate.gamelogic
+estimate.player
+estimate.scoreboard
+estimate.view
