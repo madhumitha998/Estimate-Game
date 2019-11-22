@@ -10,26 +10,32 @@ import java.util.*;
   * @version 2.0
   */
  public class TableHand {
-    private ArrayList<PlayerCardArray> tableHand;
-    private ArrayList<PlayerCardArray> sortedTableHand;
+    private List<PlayerCardArray> tableHand;
+    private List<PlayerCardArray> sortedTableHand;
 
-     
+     /**
+      * Constructor initialises two ArrayList
+       */
     public TableHand() {
         tableHand = new ArrayList<PlayerCardArray>();
         sortedTableHand = new ArrayList<PlayerCardArray>();
     }
 
-    public ArrayList<PlayerCardArray> getTableHand(){
+
+    public List<PlayerCardArray> getTableHand(){
         return this.tableHand;
     }
 
+     /**
+      * Clears the table of all cards
+      */
     public void clearTableHand() {
         tableHand.clear();
         sortedTableHand.clear();
     }
 
     /**
-     * Adds a player's id and card to the table
+     * Adds a player and card to the table
      * @param player
      * @param card
      */
@@ -40,19 +46,25 @@ import java.util.*;
         
     }
 
-    /**
-     * Sorts the cards on the table and returns an array list with the winning/highest card and player at index 0
-     * @return returns an array list of player and card according to descending order
-     */
-    public ArrayList<PlayerCardArray> sortedTableHand(Suit trumpSuit, Suit leadSuit) {
-        Collections.sort(sortedTableHand, new PlayerCardComparator(trumpSuit, leadSuit) );
-        return sortedTableHand;
-    }
-
-     public ArrayList<PlayerCardArray> sortedTableHand() {
+     /**
+      * Sorts the cards on the table with the winning/highest card and player at index 0
+      * @return ArrayList of PlayerCardArray object
+      */
+     public List<PlayerCardArray> sortedTableHand() {
          Collections.sort(sortedTableHand, new PlayerCardComparator() );
          return sortedTableHand;
      }
+
+    /**
+     * Overloads sortedTableHand()
+     * Include trumpSuit and LeadSuit
+     * Sorts the cards on the table and returns an array list with the winning/highest card and player at index 0
+     * @return returns an array list of player and card according to descending order
+     */
+    public List<PlayerCardArray> sortedTableHand(Suit trumpSuit, Suit leadSuit) {
+        Collections.sort(sortedTableHand, new PlayerCardComparator(trumpSuit, leadSuit) );
+        return sortedTableHand;
+    }
 
     public String toString() {
         return "Table Hand Cards \n " + Arrays.deepToString(tableHand.toArray(new PlayerCardArray[tableHand.size()]));

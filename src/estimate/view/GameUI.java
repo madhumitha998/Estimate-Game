@@ -12,8 +12,8 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 /**
  * Main GUI of the game. Contains all the methods to display selected options by player.
@@ -331,7 +331,8 @@ public class GameUI {
      * After each SubRound, this method is called to calculate the scores and get the trick winner
      */
 	public void finishSubRound(){
-        ArrayList<PlayerCardArray> sortedTableHand = gameLogic.getTableHand().sortedTableHand(gameLogic.getTrumpCard().getSuit(),
+        List<PlayerCardArray> sortedTableHand =
+				gameLogic.getTableHand().sortedTableHand(gameLogic.getTrumpCard().getSuit(),
                 gameLogic.getLeadSuitCard().getSuit());
 
         System.out.println(sortedTableHand);
@@ -887,7 +888,7 @@ public class GameUI {
      * Displays the card UI of the cards played by the player and the computer
      */
 	public void displayTableHandUI() {
-		ArrayList<PlayerCardArray> tableHandCards = gameLogic.getTableHand().getTableHand();
+		List<PlayerCardArray> tableHandCards = gameLogic.getTableHand().getTableHand();
 		drawNoti(null);
 		btnCardA.setVisible(false);
         btnCardB.setVisible(false);
