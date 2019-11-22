@@ -1,1 +1,1 @@
-java -classes classFiles estimate/view/MainMenuUI
+java -classpath classes estimate/view/MainMenuUI

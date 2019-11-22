@@ -15,6 +15,10 @@ import java.util.*;
 */
 public class SelectCard {
 
+    /**
+     * Constructs an instance of SelectCard
+     *
+     */
     public SelectCard(){
         
     }
