@@ -120,8 +120,8 @@ public class GameUI {
         estimationGame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 15));
         estimationGame.getContentPane().setBackground(new Color(7,99,36));
         estimationGame.setBackground(SystemColor.desktop);
-        estimationGame.setResizable(false);
-        estimationGame.setBounds(50, 50, 950, 850);
+        estimationGame.setResizable(true);
+        estimationGame.setBounds(280, 280, 860, 800);
         estimationGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         springLayout = new SpringLayout();
         estimationGame.getContentPane().setLayout(springLayout);
@@ -1298,6 +1298,7 @@ public class GameUI {
             String path = GameUI.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "../images/dog_avatar.jpg";
                         // System.out.println(path );
             ImageIcon img = new ImageIcon(path);
+            // ImageIcon img = new ImageIcon(this.getClass().getClassLoader().getResource("images/bot_avatar.jpg"));
             btnAvatarA.setIcon(new ImageIcon(img.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)));
         } catch (NullPointerException e) {
             System.out.println("Image not found");
