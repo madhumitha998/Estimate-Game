@@ -34,15 +34,15 @@ public class GameUI {
 	private int round = 1;
 	private int subRound = 0;
 	private int roundCounter = 0;
-	private int whoNext;
+	private int currentPlayer;
 	private int roundBidsWon = 0;
 	private int roundBidsWon1 = 0;
 	private int roundBidsWon2 = 0;
 	private int roundBidsWon3 = 0;
 	private Boolean waitingUser;
 
-	private int card_width = 75;
-    private int card_height = 108;
+	private int cardWidth = 75;
+    private int cardHeight = 108;
 
 	private JButton btnAvatarA;
     private JButton btnCardA;
@@ -69,6 +69,10 @@ public class GameUI {
 	private ArrayList<JLabel> trumpList = new ArrayList<JLabel>();
 	private ArrayList<JLabel> roundList = new ArrayList<JLabel>();
 	private ArrayList<JLabel> subRoundList = new ArrayList<JLabel>();
+	private ArrayList<JLabel> positionList = new ArrayList<>();
+	private ArrayList<JLabel> positionList1 = new ArrayList<>();
+	private ArrayList<JLabel> positionList2 = new ArrayList<>();
+	private ArrayList<JLabel> positionList3 = new ArrayList<>();
 	private ArrayList<JButton> listButton = new ArrayList<JButton>();
 	private ArrayList<JButton> listButton1 = new ArrayList<JButton>();
 	private ArrayList<JButton> listButton2 = new ArrayList<JButton>();
@@ -86,7 +90,7 @@ public class GameUI {
             public void run() {
                 try {
                     GameUI window = new GameUI();
-                    window.initalizeGame();
+                    window.initializeGame();
 
                     window.estimationGame.setVisible(true);
                 } catch (Exception e) {
@@ -106,7 +110,7 @@ public class GameUI {
      * Initalizes computer and player
      * Adds button to start the game
      */
-	private void initalizeGame(){
+	private void initializeGame(){
 		estimationGame = new JFrame();
 		estimationGame.setTitle("Estimation Game");
         estimationGame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -167,7 +171,7 @@ public class GameUI {
 			waitingUser = true;
 		}
 
-		whoNext = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
+		currentPlayer = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
 
 		displayRoundUI();
 		displayTrumpUI();
@@ -192,9 +196,16 @@ public class GameUI {
 
 			if (completeSubRound()) {
 				finishSubRound();
+
+				System.out.println("ROUND OVER; SETTING LEAD SUIT TO NULL");
+				gameLogic.setLeadSuit(null);
+				System.out.println(gameLogic.getLeadSuit());
+
 				clearLeadUI();
 				displayTableHandUI();
 				displayCardUI();
+
+
 
 				roundCounter++;
 
@@ -215,9 +226,10 @@ public class GameUI {
             			MainMenuUI.main(null);
             			return;
             		} else {
-						if (roundCounter == cardsToDealPerRound[round-1]){
-							gameLogic.setLeadSuit(null);
-						}
+//						if (roundCounter == cardsToDealPerRound[round-1]){
+//							System.out.println("ROUND OVER; SETTING LEAD SUIT TO NULL");
+//							gameLogic.setLeadSuit(null);
+//						}
             			newRound();
             		}
             		return;
@@ -254,16 +266,16 @@ public class GameUI {
 
 		displayBidsWonUI();
 
-		if (whoNext ==  gameLogic.getArrayOfPlayers().getArrayOfPlayers().get( gameLogic.getArrayOfPlayers().getArrayOfPlayers().size()-1).getPlayerId()){
+		if (currentPlayer ==  gameLogic.getArrayOfPlayers().getArrayOfPlayers().get( gameLogic.getArrayOfPlayers().getArrayOfPlayers().size()-1).getPlayerId()){
 			subRound += 1;
 		}
 
 		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
-			if (whoNext == p.getPlayerId()) {
-				if (whoNext == 3){
-					whoNext = 0;
+			if (currentPlayer == p.getPlayerId()) {
+				if (currentPlayer == 3){
+					currentPlayer = 0;
 				} else {
-					whoNext += 1;
+					currentPlayer += 1;
 				}
 
 		        Card highestPlayedCard;
@@ -342,7 +354,7 @@ public class GameUI {
         System.out.println("The winner of this round is player ID: " + winner.getPlayerId());
         gameLogic.getScoreboard().addTricksWon(round, winner.getPlayerId());
 
-        JOptionPane.showMessageDialog(null, "Round: " + round + "\nSubround: " + roundCounter + "\nWinner is player ID: " + winner.getPlayerId());
+        JOptionPane.showMessageDialog(null, "Round: " + round + "\nSubround: " + (roundCounter+1) + "\nWinner is player ID: " + winner.getPlayerId());
 
         //set Winner for player
         for (Player p : gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
@@ -373,8 +385,9 @@ public class GameUI {
         System.out.println("OLD PLAYER ORDER: " + gameLogic.getArrayOfPlayers().getArrayOfPlayers());
         if (round != 11) {
             gameLogic.setPlayerOrder(round);
-            whoNext = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
-            if (whoNext == 0){
+            currentPlayer = gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getPlayerId();
+            if (currentPlayer == 0){
+            	System.out.println("YOU ARE NOW THE FIRST PERSON TO PLAY");
             	waitingUser = true;
             } else {
             	waitingUser = false;
@@ -412,7 +425,7 @@ public class GameUI {
 			System.out.println("ROUND ####### " + round);
 			gameLogic.getScoreboard().calculateRoundScore(round);
 			gameLogic.getScoreboard().calculateTotalScore();
-			gameLogic.getScoreboard().printScoreForAllRounds();
+//			gameLogic.getScoreboard().printScoreForAllRounds();
 			roundCounter = 0;
 			round += 1;
 			gameLogic.setRound(round);
@@ -445,6 +458,7 @@ public class GameUI {
 		for (Player player: gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
 			ArrayList<Card> playerHandCards = player.getHand().getHand();
 
+			/* Displays the card back for Computer 1 */
 			if (player.getPlayerId() == 1) {
 				float cardIndex = -1;
 				int cardLeft = 55;
@@ -462,17 +476,17 @@ public class GameUI {
 
 					springLayout.putConstraint(SpringLayout.WEST, btnCard1, (int) (cardLeft),
 			            SpringLayout.WEST, estimationGame.getContentPane());
-			        springLayout.putConstraint(SpringLayout.EAST, btnCard1, (int) (cardLeft + card_height),
+			        springLayout.putConstraint(SpringLayout.EAST, btnCard1, (int) (cardLeft + cardHeight),
 			            SpringLayout.WEST, estimationGame.getContentPane());
-			        springLayout.putConstraint(SpringLayout.NORTH, btnCard1, (int) (cardTop + cardIndex * card_width), SpringLayout.NORTH,
+			        springLayout.putConstraint(SpringLayout.NORTH, btnCard1, (int) (cardTop + cardIndex * cardWidth), SpringLayout.NORTH,
 			            estimationGame.getContentPane());
-			        springLayout.putConstraint(SpringLayout.SOUTH, btnCard1, (int) (cardTop + (cardIndex + 1) *  card_width), SpringLayout.NORTH,
+			        springLayout.putConstraint(SpringLayout.SOUTH, btnCard1, (int) (cardTop + (cardIndex + 1) * cardWidth), SpringLayout.NORTH,
 			            estimationGame.getContentPane());
 
 			        try {
 		                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
 		                btnCard1.setIcon(new ImageIcon(
-		                        img.getImage().getScaledInstance(card_height, card_width, java.awt.Image.SCALE_SMOOTH)));
+		                        img.getImage().getScaledInstance(cardHeight, cardWidth, java.awt.Image.SCALE_SMOOTH)));
 		            } catch (NullPointerException e) {
 		                System.out.println("Image not found");
 		                btnCard1.setText("Not found");
@@ -482,6 +496,7 @@ public class GameUI {
 			    }
 			}
 
+			/* Displays the card back for Computer 2 */
 			if (player.getPlayerId() == 2) {
 				float cardIndex = -1;
 				int cardLeft = 300;
@@ -497,19 +512,19 @@ public class GameUI {
 
 					JButton btnCard2 = new JButton();
 
-					springLayout.putConstraint(SpringLayout.WEST, btnCard2, (int) (cardLeft + cardIndex * card_width),
+					springLayout.putConstraint(SpringLayout.WEST, btnCard2, (int) (cardLeft + cardIndex * cardWidth),
 			            SpringLayout.WEST, estimationGame.getContentPane());
-			        springLayout.putConstraint(SpringLayout.EAST, btnCard2, (int) (cardLeft + (cardIndex + 1) * card_width),
+			        springLayout.putConstraint(SpringLayout.EAST, btnCard2, (int) (cardLeft + (cardIndex + 1) * cardWidth),
 			            SpringLayout.WEST, estimationGame.getContentPane());
 			        springLayout.putConstraint(SpringLayout.NORTH, btnCard2, cardTop, SpringLayout.NORTH,
 			            estimationGame.getContentPane());
-			        springLayout.putConstraint(SpringLayout.SOUTH, btnCard2, cardTop + card_height, SpringLayout.NORTH,
+			        springLayout.putConstraint(SpringLayout.SOUTH, btnCard2, cardTop + cardHeight, SpringLayout.NORTH,
 			            estimationGame.getContentPane());
 
 			        try {
 		                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
 		                btnCard2.setIcon(new ImageIcon(
-		                        img.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+		                        img.getImage().getScaledInstance(cardWidth, cardHeight, java.awt.Image.SCALE_SMOOTH)));
 		            } catch (NullPointerException e) {
 		                System.out.println("Image not found");
 		                btnCard2.setText("Not found");
@@ -520,6 +535,7 @@ public class GameUI {
 		    	}
 			}
 
+			/* Displays the card back for Computer 3 */
 			if (player.getPlayerId() == 3) {
 				float cardIndex = -1;
 				int cardLeft = 750;
@@ -537,17 +553,17 @@ public class GameUI {
 
 			        springLayout.putConstraint(SpringLayout.WEST, btnCard3, (int) (cardLeft),
 			            SpringLayout.WEST, estimationGame.getContentPane());
-			        springLayout.putConstraint(SpringLayout.EAST, btnCard3, (int) (cardLeft + card_height),
+			        springLayout.putConstraint(SpringLayout.EAST, btnCard3, (int) (cardLeft + cardHeight),
 			            SpringLayout.WEST, estimationGame.getContentPane());
-			        springLayout.putConstraint(SpringLayout.NORTH, btnCard3, (int) (cardTop + cardIndex * card_width), SpringLayout.NORTH,
+			        springLayout.putConstraint(SpringLayout.NORTH, btnCard3, (int) (cardTop + cardIndex * cardWidth), SpringLayout.NORTH,
 			            estimationGame.getContentPane());
-			        springLayout.putConstraint(SpringLayout.SOUTH, btnCard3, (int) (cardTop + (cardIndex + 1) *  card_width), SpringLayout.NORTH,
+			        springLayout.putConstraint(SpringLayout.SOUTH, btnCard3, (int) (cardTop + (cardIndex + 1) * cardWidth), SpringLayout.NORTH,
 			            estimationGame.getContentPane());
 
 			        try {
 		                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
 		                btnCard3.setIcon(new ImageIcon(
-		                        img.getImage().getScaledInstance(card_height, card_width, java.awt.Image.SCALE_SMOOTH)));
+		                        img.getImage().getScaledInstance(cardHeight, cardWidth, java.awt.Image.SCALE_SMOOTH)));
 		            } catch (NullPointerException e) {
 		                System.out.println("Image not found");
 		                btnCard3.setText("Not found");
@@ -558,6 +574,7 @@ public class GameUI {
 		    	}
 			}
 
+			/* Displays the cards for Player 0 */
 			if (!(player instanceof Computer)) {
 				System.out.println("PLAYERS HAND to PLAY: "  + playerHandCards);
 				int cardLeft = 300;
@@ -572,6 +589,7 @@ public class GameUI {
 				listButton.clear();
 
 				ArrayList<Card> listCard = playerHandCards;
+				ArrayList<Card> playableCards = getPlayableCards(player);
 
 				for (int i = 0; i < listCard.size(); i++) {
 		            cardIndex++;
@@ -581,27 +599,29 @@ public class GameUI {
 			        btnCard.setFocusPainted(false);
 			        btnCard.setName(i + "");
 
-			        springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + cardIndex * card_width),
+			        springLayout.putConstraint(SpringLayout.WEST, btnCard, (int) (cardLeft + cardIndex * cardWidth),
 			            SpringLayout.WEST, estimationGame.getContentPane());
-			        springLayout.putConstraint(SpringLayout.EAST, btnCard, (int) (cardLeft + (cardIndex + 1) * card_width),
+			        springLayout.putConstraint(SpringLayout.EAST, btnCard, (int) (cardLeft + (cardIndex + 1) * cardWidth),
 			            SpringLayout.WEST, estimationGame.getContentPane());
 			        springLayout.putConstraint(SpringLayout.NORTH, btnCard, cardTop, SpringLayout.NORTH,
 			            estimationGame.getContentPane());
-			        springLayout.putConstraint(SpringLayout.SOUTH, btnCard, cardTop + card_height, SpringLayout.NORTH,
+			        springLayout.putConstraint(SpringLayout.SOUTH, btnCard, cardTop + cardHeight, SpringLayout.NORTH,
 			            estimationGame.getContentPane());
 
 			        try {
 			        	ImageIcon cardImg = card.getCardImage();
-			        	btnCard.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+			        	btnCard.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(cardWidth, cardHeight, java.awt.Image.SCALE_SMOOTH)));
 			        } catch (NullPointerException e){
 			        	System.out.println("Image not found");
 			        	btnCard.setText("Not found");
 			        }
 
-			        ArrayList<Card> playableCards = getPlayableCards(player);
-			        if (!(playableCards.contains(card))){
-			        	btnCard.setEnabled(false);
-			        }
+					/* if the player is the first to play, allow all cards to be played */
+					if (currentPlayer != 0) {
+						if (!(playableCards.contains(card))) {
+							btnCard.setEnabled(false);
+						}
+					}
 
 			        btnCard.addActionListener(new ActionListener() {
 			        	@Override
@@ -723,7 +743,7 @@ public class GameUI {
         springLayout.putConstraint(SpringLayout.WEST, lblBid, 295, SpringLayout.WEST,
                 estimationGame.getContentPane());
         lblBid.setForeground(Color.WHITE);
-        springLayout.putConstraint(SpringLayout.NORTH, lblBid, 565, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.NORTH, lblBid, 585, SpringLayout.NORTH,
                 estimationGame.getContentPane());
         lblBid.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
@@ -746,7 +766,7 @@ public class GameUI {
 					springLayout.putConstraint(SpringLayout.WEST, lblBid1, 180, SpringLayout.WEST,
 							estimationGame.getContentPane());
 					lblBid1.setForeground(Color.WHITE);
-					springLayout.putConstraint(SpringLayout.NORTH, lblBid1, 440, SpringLayout.NORTH,
+					springLayout.putConstraint(SpringLayout.NORTH, lblBid1, 460, SpringLayout.NORTH,
 							estimationGame.getContentPane());
 					lblBid1.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
@@ -767,7 +787,7 @@ public class GameUI {
 					springLayout.putConstraint(SpringLayout.WEST, lblBid3, 610, SpringLayout.WEST,
 							estimationGame.getContentPane());
 					lblBid3.setForeground(Color.WHITE);
-					springLayout.putConstraint(SpringLayout.NORTH, lblBid3, 440, SpringLayout.NORTH,
+					springLayout.putConstraint(SpringLayout.NORTH, lblBid3, 460, SpringLayout.NORTH,
 							estimationGame.getContentPane());
 					lblBid3.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
@@ -788,7 +808,7 @@ public class GameUI {
 					springLayout.putConstraint(SpringLayout.WEST, lblBid2, 275, SpringLayout.WEST,
 							estimationGame.getContentPane());
 					lblBid2.setForeground(Color.WHITE);
-					springLayout.putConstraint(SpringLayout.NORTH, lblBid2, 160, SpringLayout.NORTH,
+					springLayout.putConstraint(SpringLayout.NORTH, lblBid2, 180, SpringLayout.NORTH,
 							estimationGame.getContentPane());
 					lblBid2.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
@@ -817,7 +837,7 @@ public class GameUI {
 		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon, 295, SpringLayout.WEST,
 				estimationGame.getContentPane());
 		lblBidsWon.setForeground(Color.WHITE);
-		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon, 585, SpringLayout.NORTH,
+		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon, 605, SpringLayout.NORTH,
 				estimationGame.getContentPane());
 		lblBidsWon.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
@@ -833,7 +853,7 @@ public class GameUI {
 		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon1, 180, SpringLayout.WEST,
 				estimationGame.getContentPane());
 		lblBidsWon1.setForeground(Color.WHITE);
-		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon1, 460, SpringLayout.NORTH,
+		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon1, 480, SpringLayout.NORTH,
 				estimationGame.getContentPane());
 		lblBidsWon1.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
@@ -849,7 +869,7 @@ public class GameUI {
 		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon2, 275, SpringLayout.WEST,
 				estimationGame.getContentPane());
 		lblBidsWon2.setForeground(Color.WHITE);
-		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon2, 180, SpringLayout.NORTH,
+		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon2, 200, SpringLayout.NORTH,
 				estimationGame.getContentPane());
 		lblBidsWon2.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
@@ -865,7 +885,7 @@ public class GameUI {
 		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon3, 610, SpringLayout.WEST,
 				estimationGame.getContentPane());
 		lblBidsWon3.setForeground(Color.WHITE);
-		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon3, 460, SpringLayout.NORTH,
+		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon3, 480, SpringLayout.NORTH,
 				estimationGame.getContentPane());
 		lblBidsWon3.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
@@ -877,6 +897,99 @@ public class GameUI {
 		estimationGame.getContentPane().add(lblBidsWon2);
 		bidWonList3.add(lblBidsWon3);
 		estimationGame.getContentPane().add(lblBidsWon3);
+
+		estimationGame.validate();
+		estimationGame.repaint();
+	}
+
+
+	public void displayPositionUI(){
+		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
+
+			if (p.getPlayerId() == 0) {
+				if (!(positionList.isEmpty())) {
+					for (JLabel item : positionList) {
+						estimationGame.getContentPane().remove(item);
+					}
+					positionList.clear();
+				}
+
+				JLabel lblPosition = new JLabel("Position: " + p.getPosition());
+
+				springLayout.putConstraint(SpringLayout.WEST, lblPosition, 295, SpringLayout.WEST,
+						estimationGame.getContentPane());
+				lblPosition.setForeground(Color.WHITE);
+				springLayout.putConstraint(SpringLayout.NORTH, lblPosition, 565, SpringLayout.NORTH,
+						estimationGame.getContentPane());
+				lblPosition.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+				positionList.add(lblPosition);
+				estimationGame.getContentPane().add(lblPosition);
+			}
+
+			if (p.getPlayerId() == 1) {
+				if (!(positionList1.isEmpty())) {
+					for (JLabel item : positionList1) {
+						estimationGame.getContentPane().remove(item);
+					}
+					positionList1.clear();
+				}
+
+				JLabel lblPosition1 = new JLabel("Position: " + p.getPosition());
+
+				springLayout.putConstraint(SpringLayout.WEST, lblPosition1, 180, SpringLayout.WEST,
+						estimationGame.getContentPane());
+				lblPosition1.setForeground(Color.WHITE);
+				springLayout.putConstraint(SpringLayout.NORTH, lblPosition1, 440, SpringLayout.NORTH,
+						estimationGame.getContentPane());
+				lblPosition1.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+				positionList1.add(lblPosition1);
+				estimationGame.getContentPane().add(lblPosition1);
+			}
+
+			if (p.getPlayerId() == 2) {
+				if (!(positionList2.isEmpty())) {
+					for (JLabel item : positionList2) {
+						estimationGame.getContentPane().remove(item);
+					}
+					positionList2.clear();
+				}
+
+				JLabel lblPosition2 = new JLabel("Position: " + p.getPosition());
+
+				springLayout.putConstraint(SpringLayout.WEST, lblPosition2, 275, SpringLayout.WEST,
+						estimationGame.getContentPane());
+				lblPosition2.setForeground(Color.WHITE);
+				springLayout.putConstraint(SpringLayout.NORTH, lblPosition2, 160, SpringLayout.NORTH,
+						estimationGame.getContentPane());
+				lblPosition2.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+				positionList2.add(lblPosition2);
+				estimationGame.getContentPane().add(lblPosition2);
+			}
+
+			if (p.getPlayerId() == 3) {
+				if (!(positionList3.isEmpty())) {
+					for (JLabel item : positionList3) {
+						estimationGame.getContentPane().remove(item);
+					}
+					positionList3.clear();
+				}
+
+				JLabel lblPosition3 = new JLabel("Position: " + p.getPosition());
+
+				springLayout.putConstraint(SpringLayout.WEST, lblPosition3, 610, SpringLayout.WEST,
+						estimationGame.getContentPane());
+				lblPosition3.setForeground(Color.WHITE);
+				springLayout.putConstraint(SpringLayout.NORTH, lblPosition3, 440, SpringLayout.NORTH,
+						estimationGame.getContentPane());
+				lblPosition3.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+				positionList3.add(lblPosition3);
+				estimationGame.getContentPane().add(lblPosition3);
+			}
+		}
 
 		estimationGame.validate();
 		estimationGame.repaint();
@@ -900,7 +1013,7 @@ public class GameUI {
 			if (playerCard.getPlayerId() == 0){
 		        try {
 		        	ImageIcon cardImg = playedCard.getCardImage();
-		        	btnCardA.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+		        	btnCardA.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(cardWidth, cardHeight, java.awt.Image.SCALE_SMOOTH)));
 		        } catch (NullPointerException e){
 		        	System.out.println("Image not found");
 		        	btnCardA.setText("Not found");
@@ -911,7 +1024,7 @@ public class GameUI {
 			} else if (playerCard.getPlayerId() == 1){
 		        try {
 		        	ImageIcon cardImg = playedCard.getCardImage();
-		        	btnCardB.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+		        	btnCardB.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(cardWidth, cardHeight, java.awt.Image.SCALE_SMOOTH)));
 		        } catch (NullPointerException e){
 		        	System.out.println("Image not found");
 		        	btnCardB.setText("Not found");
@@ -923,7 +1036,7 @@ public class GameUI {
 			if (playerCard.getPlayerId() == 2) {
 		        try {
 		        	ImageIcon cardImg = playedCard.getCardImage();
-		        	btnCardC.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+		        	btnCardC.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(cardWidth, cardHeight, java.awt.Image.SCALE_SMOOTH)));
 		        } catch (NullPointerException e){
 		        	System.out.println("Image not found");
 		        	btnCardC.setText("Not found");
@@ -935,7 +1048,7 @@ public class GameUI {
 			if (playerCard.getPlayerId() == 3) {
 		        try {
 		        	ImageIcon cardImg = playedCard.getCardImage();
-		        	btnCardD.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(card_width, card_height, java.awt.Image.SCALE_SMOOTH)));
+		        	btnCardD.setIcon(new ImageIcon(cardImg.getImage().getScaledInstance(cardWidth, cardHeight, java.awt.Image.SCALE_SMOOTH)));
 		        } catch (NullPointerException e){
 		        	System.out.println("Image not found");
 		        	btnCardD.setText("Not found");
@@ -953,7 +1066,8 @@ public class GameUI {
      * Checks whether the user is the first player of the round
      */
 	public Boolean waitingUser(){
-		if (whoNext == 0){
+		if (currentPlayer == 0){
+			System.out.println("You are the first player, changing waitingUser to true");
 			return true;
 		} else {
 			return false;
@@ -1177,11 +1291,11 @@ public class GameUI {
 
         springLayout.putConstraint(SpringLayout.WEST, btnCardA, cardA_left, SpringLayout.WEST,
                 estimationGame.getContentPane());
-        springLayout.putConstraint(SpringLayout.EAST, btnCardA, cardA_left + card_width, SpringLayout.WEST,
+        springLayout.putConstraint(SpringLayout.EAST, btnCardA, cardA_left + cardWidth, SpringLayout.WEST,
                 estimationGame.getContentPane());
         springLayout.putConstraint(SpringLayout.NORTH, btnCardA, cardA_top, SpringLayout.NORTH,
                 estimationGame.getContentPane());
-        springLayout.putConstraint(SpringLayout.SOUTH, btnCardA, cardA_top + card_height, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.SOUTH, btnCardA, cardA_top + cardHeight, SpringLayout.NORTH,
                 estimationGame.getContentPane());
 
         btnCardA.setVisible(false);
@@ -1243,9 +1357,9 @@ public class GameUI {
         int cardB_left = 50;
 
         springLayout.putConstraint(SpringLayout.WEST, btnCardB, cardB_left, SpringLayout.EAST, btnAvatarB);
-        springLayout.putConstraint(SpringLayout.EAST, btnCardB, cardB_left + card_width, SpringLayout.EAST, btnAvatarB);
+        springLayout.putConstraint(SpringLayout.EAST, btnCardB, cardB_left + cardWidth, SpringLayout.EAST, btnAvatarB);
         springLayout.putConstraint(SpringLayout.NORTH, btnCardB, cardB_top, SpringLayout.NORTH, btnAvatarB);
-        springLayout.putConstraint(SpringLayout.SOUTH, btnCardB, cardB_top + card_height, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.SOUTH, btnCardB, cardB_top + cardHeight, SpringLayout.NORTH,
                 btnAvatarB);
 
         btnCardB.setVisible(false);
@@ -1307,9 +1421,9 @@ public class GameUI {
         int cardC_left = 20;
 
         springLayout.putConstraint(SpringLayout.WEST, btnCardC, cardC_left, SpringLayout.WEST, btnAvatarC);
-        springLayout.putConstraint(SpringLayout.EAST, btnCardC, cardC_left + card_width, SpringLayout.WEST, btnAvatarC);
+        springLayout.putConstraint(SpringLayout.EAST, btnCardC, cardC_left + cardWidth, SpringLayout.WEST, btnAvatarC);
         springLayout.putConstraint(SpringLayout.NORTH, btnCardC, cardC_top, SpringLayout.SOUTH, btnAvatarC);
-        springLayout.putConstraint(SpringLayout.SOUTH, btnCardC, cardC_top + card_height, SpringLayout.SOUTH,
+        springLayout.putConstraint(SpringLayout.SOUTH, btnCardC, cardC_top + cardHeight, SpringLayout.SOUTH,
                 btnAvatarC);
         btnCardC.setVisible(false);
 
@@ -1330,9 +1444,9 @@ public class GameUI {
                 estimationGame.getContentPane());
         springLayout.putConstraint(SpringLayout.WEST, btnCardD, cardD_left, SpringLayout.WEST,
                 estimationGame.getContentPane());
-        springLayout.putConstraint(SpringLayout.EAST, btnCardD, cardD_left + card_width, SpringLayout.WEST,
+        springLayout.putConstraint(SpringLayout.EAST, btnCardD, cardD_left + cardWidth, SpringLayout.WEST,
                 estimationGame.getContentPane());
-        springLayout.putConstraint(SpringLayout.SOUTH, btnCardD, cardD_top + card_height, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.SOUTH, btnCardD, cardD_top + cardHeight, SpringLayout.NORTH,
                 estimationGame.getContentPane());
 
         btnCardD.setVisible(false);
