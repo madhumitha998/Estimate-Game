@@ -322,7 +322,7 @@ public class GameLogic {
 		        
                 String cardFaceLocation = path +  "../images/cards/" +rankCardToString.get(rank)+suitToString.get(suit)+
                         ".gif";
-                System.out.println(cardFaceLocation + "Hi");
+                // System.out.println(cardFaceLocation + "Hi");
 //                System.out.println(cardFaceLocation);
                 // ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/cards/b.gif"));
                 ImageIcon cardFace = new ImageIcon(cardFaceLocation);
