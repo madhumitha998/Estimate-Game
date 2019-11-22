@@ -6,6 +6,9 @@ import estimate.scoreboard.*;
 
 public class TestScoreboard {
 
+    /**
+     * Adds prediction for round to the overallscoreboard
+     */
     @Test
     public void testPredictionToScoreboard() {
         Scoreboard testScoreboard = new Scoreboard();
@@ -15,12 +18,18 @@ public class TestScoreboard {
         testScoreboard.printScoreForRound(1);
     }
 
+    /**
+     * Prints all the scores for all rounds
+     */
     @Test
     public void testPrintAllScores() {
         Scoreboard testScoreboard = new Scoreboard();
         testScoreboard.printScoreForAllRounds();
     }
 
+    /**
+     * Test calculation for a score in a round
+     */
     @Test
     public void testCalculateRoundScore() {
         Scoreboard testScoreboard = new Scoreboard();
@@ -33,6 +42,9 @@ public class TestScoreboard {
         testScoreboard.printScoreForRound(1);
     }
 
+    /**
+     * Calculates the score base on all the results
+     */
     @Test
     public void testCalculateTotalScore() {
         Scoreboard testScoreboard = new Scoreboard();
@@ -50,6 +62,9 @@ public class TestScoreboard {
         System.out.println(testScoreboard.getTotalScore());
     }
 
+    /**
+     * returns the winner of the game, if any
+     */
     @Test
     public void testGetWinner() {
         Scoreboard testScoreboard = new Scoreboard();
