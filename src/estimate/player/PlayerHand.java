@@ -14,6 +14,9 @@ public class PlayerHand extends Hand {
 
     private ArrayList<Card> hand = (ArrayList<Card>)(super.hand);
 
+    /**
+     * Creates an instance of PlayerHand
+     */
     public PlayerHand() {
         super();
     }
@@ -51,15 +54,26 @@ public class PlayerHand extends Hand {
         return playableCards;
     }
 
-
+    /**
+     *  Evaluates the hand
+     *  @return an integer corresponding to the rating of the hand.
+     */
     public int evaluateHand(){
         return 1;
     };
 
+    /**
+     * Returns the player hand as an array list of Cards
+     * @return a list of cards held in the hand
+     */
     public ArrayList<Card> getHand(){
         return hand;
     }
 
+    /**
+     * Returns a description of the player hand.
+     * @return a description of player hand
+     */
     public String toString() {
         String returnString = String.format(" " );
         for (Card c : hand) {
