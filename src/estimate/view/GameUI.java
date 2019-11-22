@@ -121,7 +121,7 @@ public class GameUI {
         estimationGame.getContentPane().setBackground(new Color(7,99,36));
         estimationGame.setBackground(SystemColor.desktop);
         estimationGame.setResizable(true);
-        estimationGame.setBounds(50, 50, 880, 830);
+        estimationGame.setBounds(280, 280, 860, 800);
         estimationGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         springLayout = new SpringLayout();
         estimationGame.getContentPane().setLayout(springLayout);
