@@ -131,6 +131,8 @@ public class TestGameLogic {
 
         test.initialisePlayers();
         test.initialiseDeck();
+
+
         test.setDealer(1);
 
         test.initialiseDeck();
@@ -157,9 +159,16 @@ public class TestGameLogic {
         System.out.println("Position for first round when no cards are played" + Arrays.deepToString(arrayPlayersTest.getArrayOfPlayers().toArray()));
 
         System.out.println();
-
+        test.setTrumpCard();
         for (Player p : arrayPlayersTest.getArrayOfPlayers()){
-            tableHand.addCard(p, p.removeFromHand(0)); ;
+
+            Card c = p.removeFromHand(0);
+
+            tableHand.addCard(p, c);
+            if (p.getPlayerId() == 0 ) {
+                test.setLeadSuitCard(c);
+            }
+
         }
         PlayerCardArray winner = tableHand.sortedTableHand(test.getTrumpCard().getSuit(), test.getLeadSuitCard().getSuit()).get(0);
 
