@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestScore {
 
+    /**
+     * Check to see if prediction is added into scoreboard
+     */
     @Test
     public void testAddPrediction() {
         Score score = new Score();
@@ -15,6 +18,9 @@ public class TestScore {
         score.printAllDetails();
     }
 
+    /**
+     * Check to see if tricks won are added
+     */
     @Test
     public void testAddTricksWon() {
         Score score = new Score();
@@ -24,6 +30,9 @@ public class TestScore {
         score.printAllDetails();
     }
 
+    /**
+     * Check to see if score is calculated from tricks and bids
+     */
     @Test
     public void testCalculateScore() {
         Score score = new Score();
@@ -38,7 +47,6 @@ public class TestScore {
         score.printAllDetails();
 
         System.out.println(score.getScore());
-
     }
 
 

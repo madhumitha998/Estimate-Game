@@ -6,7 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestPlayerCardArray {
     /**
-     * Test PlayerCardArray
+     * Test PlayerCardArray's compare function
+     * Should return negative for the larger card
      */
     @Test
     public void testPlayerCardArray() {

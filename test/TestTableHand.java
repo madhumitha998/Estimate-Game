@@ -6,8 +6,13 @@ import estimate.player.ArrayOfPlayers;
 import estimate.player.Player;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class TestTableHand {
 
+    /**
+     * Test printing of the tableHand
+     */
     @Test
     public void testTableHandPrinting(){
         GameLogic test = new GameLogic();
@@ -24,6 +29,9 @@ public class TestTableHand {
 
     }
 
+    /**
+     * Ensure that cards on the table are sorted in descending order (Largest first)
+     */
     @Test
     public void testTableHandSort() {
         Card testTrump = new Card(Suit.CLUBS, Rank.TWO, null );
@@ -42,7 +50,7 @@ public class TestTableHand {
         tableHand.addCard(test.getArrayOfPlayers().getArrayOfPlayers().get(0),testCard4);
 
         System.out.println(tableHand.sortedTableHand(null, testCard1.getSuit())) ;
-        System.out.println("Expected: 2H, 5S, JC, KD");
+        System.out.println("Expected: AD, ND, SH, NC");
 
     }
 
@@ -64,10 +72,21 @@ public class TestTableHand {
         tableHand.addCard(test.getArrayOfPlayers().getArrayOfPlayers().get(0),testCard4);
 
         System.out.println(tableHand.sortedTableHand(null,null)) ;
-        System.out.println("Expected: Hearts, Clubs, D, AD");
+
+//        TableHand results = new TableHand();
+//        results.addCard(test.getArrayOfPlayers().getArrayOfPlayers().get(0),testCard3);
+//        results.addCard(test.getArrayOfPlayers().getArrayOfPlayers().get(0),testCard1);
+//        results.addCard(test.getArrayOfPlayers().getArrayOfPlayers().get(0),testCard2);
+//        results.addCard(test.getArrayOfPlayers().getArrayOfPlayers().get(0),testCard4);
+//
+        System.out.println("Expected: SD, AD, ND, NC");
+//        assertEquals(tableHand.sortedTableHand(null,null), results.getTableHand());
 
     }
 
+    /**
+     * Test the table hand sorting order with trump
+     */
     @Test
     public void testTableHandSortWithTrump() {
         Card testTrump = new Card(Suit.CLUBS, Rank.TWO, null );
@@ -85,8 +104,8 @@ public class TestTableHand {
         tableHand.addCard(test.getArrayOfPlayers().getArrayOfPlayers().get(0),testCard3);
         tableHand.addCard(test.getArrayOfPlayers().getArrayOfPlayers().get(0),testCard4);
 
-        System.out.println(tableHand.sortedTableHand(null, testCard1.getSuit())) ;
-        System.out.println("Expected: 2H, 5S, JC, KD");
+        System.out.println(tableHand.sortedTableHand(Suit.CLUBS, testCard1.getSuit())) ;
+        System.out.println("Expected: NC, AD, ND, SH");
 
     }
 }
