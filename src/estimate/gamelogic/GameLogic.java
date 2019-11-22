@@ -316,7 +316,7 @@ public class GameLogic {
 
         for (Suit suit: suits) {
             for (Rank rank: rankCards) {
-                String cardFaceLocation = "/resource/cards/"+rankCardToString.get(rank)+suitToString.get(suit)+
+                String cardFaceLocation = "/images/cards/" +rankCardToString.get(rank)+suitToString.get(suit)+
                         ".gif";
 //                System.out.println(cardFaceLocation);
                 // ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/cards/b.gif"));

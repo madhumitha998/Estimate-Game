@@ -512,7 +512,7 @@ public class GameUI {
 			            estimationGame.getContentPane());
 
 			        try {
-		                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+		                ImageIcon img = new ImageIcon(this.getClass().getResource("/images/cards/b.gif"));
 		                btnCard1.setIcon(new ImageIcon(
 		                        img.getImage().getScaledInstance(cardHeight, cardWidth, java.awt.Image.SCALE_SMOOTH)));
 		            } catch (NullPointerException e) {
@@ -550,7 +550,7 @@ public class GameUI {
 			            estimationGame.getContentPane());
 
 			        try {
-		                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+		                ImageIcon img = new ImageIcon(this.getClass().getResource("/images/cards/b.gif"));
 		                btnCard2.setIcon(new ImageIcon(
 		                        img.getImage().getScaledInstance(cardWidth, cardHeight, java.awt.Image.SCALE_SMOOTH)));
 		            } catch (NullPointerException e) {
@@ -589,7 +589,7 @@ public class GameUI {
 			            estimationGame.getContentPane());
 
 			        try {
-		                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+		                ImageIcon img = new ImageIcon(this.getClass().getResource("/images/cards/b.gif"));
 		                btnCard3.setIcon(new ImageIcon(
 		                        img.getImage().getScaledInstance(cardHeight, cardWidth, java.awt.Image.SCALE_SMOOTH)));
 		            } catch (NullPointerException e) {
@@ -1285,7 +1285,7 @@ public class GameUI {
         btnAvatarA.setFocusPainted(false);
 
         try {
-            ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/dog_avatar.jpg"));
+            ImageIcon img = new ImageIcon(GameUI.class.getResource("/images/dog_avatar.jpg"));
             btnAvatarA.setIcon(new ImageIcon(img.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)));
         } catch (NullPointerException e) {
             System.out.println("Image not found");
@@ -1351,7 +1351,7 @@ public class GameUI {
         btnAvatarB.setFocusPainted(false);
 
         try {
-            ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/bot_avatar.jpg"));
+            ImageIcon img = new ImageIcon(GameUI.class.getResource("/images/bot_avatar.jpg"));
             btnAvatarB.setIcon(new ImageIcon(img.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)));
         } catch (NullPointerException e) {
             System.out.println("Image not found");
@@ -1415,7 +1415,7 @@ public class GameUI {
         btnAvatarC.setFocusPainted(false);
 
         try {
-            ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/bot_avatar.jpg"));
+            ImageIcon img = new ImageIcon(GameUI.class.getResource("/images/bot_avatar.jpg"));
             btnAvatarC.setIcon(new ImageIcon(img.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)));
         } catch (NullPointerException e) {
             System.out.println("Image not found");
@@ -1495,7 +1495,7 @@ public class GameUI {
         btnAvatarD.setFocusPainted(false);
 
         try {
-            ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/bot_avatar.jpg"));
+            ImageIcon img = new ImageIcon(GameUI.class.getResource("/images/bot_avatar.jpg"));
             btnAvatarD.setIcon(new ImageIcon(img.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)));
         } catch (NullPointerException e) {
             System.out.println("Image not found");

@@ -1,1 +1,1 @@
-javac -d classFiles -sourcepath src src/estimate/view/MainMenuUI.java
+javac -d classes -sourcepath src src/estimate/view/MainMenuUI.java
