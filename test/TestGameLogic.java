@@ -123,6 +123,11 @@ public class TestGameLogic {
 
     }
 
+    /**
+     * Test the player's order.
+     * 1. Test correct order in next subround
+     * 2. Test correct order in new round
+     */
     @Test
     public void testSetPlayerOrder() {
 //        Check that there are no cards at first
@@ -185,8 +190,17 @@ public class TestGameLogic {
 
         System.out.println("Position for first round, second trick. This ia after 1 card per person is played: " + Arrays.deepToString(arrayPlayersTest.getArrayOfPlayers().toArray()));
 
+        test.initialiseDeck();
+        test.setDealer(2);
+        test.setPlayersHand(2);
+        test.setTrumpCard();
+        test.setPlayerOrder(2);
+        System.out.println("Position for Second round, first trick. the player left of new dealer should start: " + Arrays.deepToString(arrayPlayersTest.getArrayOfPlayers().toArray()));
     }
 
+    /**
+     * Test to see if a subround runs properly
+     */
     @Test
     public void testStartSubRound(){
         GameLogic test = new GameLogic();
@@ -200,6 +214,9 @@ public class TestGameLogic {
         test.getScoreboard().printScoreForRound(1);
     }
 
+    /**
+     * Test to see if a round works
+     */
     @Test
     public void testRound(){
         GameLogic test = new GameLogic();

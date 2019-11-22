@@ -9,7 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  *
  * @author madhumitha
- * @version 1.0
+ * @author Abel.Wong.2017
+ * @version 1.1
  */
 
 public class TestComputer {
@@ -234,9 +235,9 @@ public class TestComputer {
 
     }
 
-    // 1st trick of round 3, non-dealer, 25 < num <= 50%
+    // 1st trick of round 3, non-dealer, 25 < num <= 50%, total tricks in round off number
     @Test
-    public void bidWinningTricksTest3_2() {
+    public void nonDealer50PercentBid_SecondTest() {
         Computer com1 = new Computer(0,3);
         //normal card
         Card testCard = new Card(Suit.CLUBS, Rank.TWO, null );
@@ -518,7 +519,7 @@ public class TestComputer {
         assertEquals(testCard4,com1.playCard(trumpSuit,null, null));
     }
 
-
+    // Bids predicted positive + trump + lead suit + normal cards
     @Test
     public void testComputerSecondPlayer() {
         Computer com1 = new Computer(4,1);
@@ -606,7 +607,8 @@ public class TestComputer {
         assertEquals(testCard,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
     }
 
-    @Test // Bids predicted positive + No lead suit and trump suit higher + has trump in hand + No lead suit + No trump
+    // Bids predicted positive + No lead suit and trump suit higher + has trump in hand + No lead suit + No trump
+    @Test
     public void testComputerSecondPlayerAndNoChoiceNoLeadNoTrump() {
         Computer com1 = new Computer(4,1);
         com1.setBid(4);
@@ -628,7 +630,8 @@ public class TestComputer {
         assertEquals(testCard,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
     }
 
-    @Test // Bids Predicted == 0 + has multiple lead and lower than HPC + trump suit
+    // Bids Predicted == 0 + has multiple lead and lower than HPC + trump suit
+    @Test
     public void testComputerSecondPlayerNormalTrynaLose() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
@@ -650,7 +653,8 @@ public class TestComputer {
         assertEquals(testCard2,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
     }
 
-    @Test // Bids Predicted == 0 + has multiple lead and lower than HPC + trump suit
+     // Bids Predicted == 0 + has multiple lead and lower than HPC + trump suit
+     @Test
     public void testComputerSecondPlayerNormalTrynaLose2() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
@@ -672,7 +676,8 @@ public class TestComputer {
         assertEquals(testCard2,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
     }
 
-    @Test // Bids Predicted == 0 + has multiple lead and lower than HPC + trump suit + HPC Trump
+    // Bids Predicted == 0 + has multiple lead and lower than HPC + trump suit + HPC Trump
+    @Test
     public void testComputerSecondPlayerNormalTrynaLoseToTRUMP() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
@@ -694,8 +699,9 @@ public class TestComputer {
         assertEquals(testCard4,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
     }
 
-    @Test // Bids Predicted == 0 + has multiple lead + trump suit + HPC Lead + Has Only larger
+    // Bids Predicted == 0 + has multiple lead + trump suit + HPC Lead + Has Only larger
     // cards than trump
+    @Test
     public void testComputerSecondPlayerNormalTrynaLoseToTrumpBUTCANT() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
@@ -717,8 +723,9 @@ public class TestComputer {
         assertEquals(testCard4,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
     }
 
-    @Test // Bids Predicted == 0 + has multiple lead + trump suit + HPC Lead + Has Only larger
+    // Bids Predicted == 0 + has multiple lead + trump suit + HPC Lead + Has Only larger
     // cards than trump
+    @Test
     public void testComputerSecondPlayerNormalTrynaLoseToTrumpBUTCANT2() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
@@ -740,8 +747,9 @@ public class TestComputer {
         assertEquals(testCard4,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
     }
 
-    @Test // Bids Predicted == 0 + has multiple lead  + HPC Lead + Has Only larger
+    // Bids Predicted == 0 + has multiple lead  + HPC Lead + Has Only larger
     // cards than trump
+     @Test
     public void testComputerSecondPlayerNormalTrynaLoseToTrumpBUTCANTAndNoTrump() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
@@ -763,8 +771,9 @@ public class TestComputer {
         assertEquals(testCard2,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
     }
 
-    @Test // Bids Predicted == 0 + has multiple lead  + HPC Lead + Has Only larger
+    // Bids Predicted == 0 + has multiple lead  + HPC Lead + Has Only larger
     // cards than trump
+    @Test
     public void testComputerSecondPlayerNormalTrynaLoseToTrumpBUTCANTAndNoTrump2() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
@@ -786,8 +795,9 @@ public class TestComputer {
         assertEquals(testCard2,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
     }
 
-    @Test // Bids Predicted == 0 + has NO lead or trump  + HPC Lead + Has Only larger
+    // Bids Predicted == 0 + has NO lead or trump  + HPC Lead + Has Only larger
     // cards than trump
+    @Test
     public void testComputerSecondPlayerNormalTrynaLoseANDNOCHOICE() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
@@ -809,8 +819,9 @@ public class TestComputer {
         assertEquals(testCard2,com1.playCard(trumpSuit,leadSuit, highestPlayedCard));
     }
 
-    @Test // Bids Predicted == 0 + has NO lead or trump  + HPC Lead + Has Only larger
+    // Bids Predicted == 0 + has NO lead or trump  + HPC Lead + Has Only larger
     // cards than trump
+    @Test
     public void testComputerSecondPlayerNormalTrynaLoseANDNOCHOICE2() {
         Computer com1 = new Computer(4,1);
         com1.setBid(0);
