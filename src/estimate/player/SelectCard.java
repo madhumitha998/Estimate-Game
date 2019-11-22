@@ -18,16 +18,6 @@ public class SelectCard {
     public SelectCard(){
         
     }
-    //This method returns the smallest Card in hand taking into account trump suit only 
-    //Meant for when computer is first player
-    public Card pickSmallestCard(PlayerHand playerhand, Suit trumpSuit){
-        ArrayList<Card> cardArrayList = playerhand.getHand();
-        
-        cardArrayList.sort(new BidNegFirstCardComparator(trumpSuit));
-
-        return cardArrayList.get(0);
-    }
-
     //This method returns the highest Card in hand excluding trump suit
     //Meant for when computer is first player
     //trump suit is only played after all options are exhausted
@@ -35,6 +25,16 @@ public class SelectCard {
         ArrayList<Card> cardArrayList = playerhand.getHand();
         
         cardArrayList.sort(new BidPosFirstCardComparator(trumpSuit));
+
+        return cardArrayList.get(0);
+    }
+
+    //This method returns the smallest Card in hand taking into account trump suit only 
+    //Meant for when computer is first player
+    public Card pickSmallestCard(PlayerHand playerhand, Suit trumpSuit){
+        ArrayList<Card> cardArrayList = playerhand.getHand();
+        
+        cardArrayList.sort(new BidNegFirstCardComparator(trumpSuit));
 
         return cardArrayList.get(0);
     }
