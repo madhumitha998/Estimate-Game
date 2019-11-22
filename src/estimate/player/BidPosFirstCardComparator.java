@@ -25,7 +25,10 @@ public class BidPosFirstCardComparator implements Comparator<Card> {
 
     /**
      * Compares two cards for the purposes of sorting.
-     * Cards are ordered first by their suit value, then by their
+     * Cards are ordered in ascending suit value with Trump suit being highest.
+     * They are then ordered in descending rank value.
+     * This is to enable the selection of the highest rank card
+     * in the ascending order of the suit
      *
      * @param c1 the first card to be compared
      * @param c2 the second card to be compared

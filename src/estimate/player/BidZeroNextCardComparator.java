@@ -11,7 +11,8 @@ import java.util.List;
 /**
 * The BidNegNextCardComparator class compares cards when the computer's bid is negative
 * and when the computer is not the first player in the trick
-*
+ * and when no card of TRUMP/lead suit available
+ *
 * @author madhumitha
 * @version 1.0
 */ 
@@ -33,7 +34,10 @@ public class BidZeroNextCardComparator implements Comparator<Card> {
 
     /**
      * Compares two cards for the purposes of sorting.
-     * Cards are ordered first by their suit value, then by their
+     * Cards are ordered in ascending suit value excluding trump suit and lead suit.
+     * They are then ordered in descending rank value.
+     * This is to enable the selection of the highest rank card
+     * of another suit in the ascending order of the suit
      *
      * @param c1 the first card to be compared
      * @param c2 the second card to be compared
