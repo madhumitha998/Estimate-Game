@@ -1,11 +1,3 @@
-/**
-* The Player class defines a player in the game
-* 
-*
-* @author  Madhumitha
-* @version 1.2
-* @since   2019-10-19 
-*/
 package estimate.player;
 
 import cards.*;
@@ -13,6 +5,13 @@ import estimate.player.*;
 import java.lang.reflect.Array;
 import java.util.*;
 
+/**
+* The Player class defines a player in the game
+* 
+*
+* @author  Madhumitha
+* @version 1.0
+*/
 public class Player {
     private int id;
     private int position;

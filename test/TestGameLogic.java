@@ -1,9 +1,8 @@
 import cards.Card;
-import cards.*;
+
 import java.util.*;
 import estimate.gamelogic.GameLogic;
 import estimate.gamelogic.PlayerCardArray;
-import estimate.gamelogic.Round;
 import estimate.gamelogic.TableHand;
 import estimate.player.ArrayOfPlayers;
 import estimate.player.Player;
@@ -15,7 +14,8 @@ public class TestGameLogic {
     @Test
     public void testNewDeck(){
         GameLogic test = new GameLogic();
-        assertEquals(test.getDeck().getSizeOfDeck(), 0);
+        test.initialiseDeck();
+        assertEquals(test.getDeck().getSizeOfDeck(), 52);
     }
 
     /**
@@ -94,11 +94,11 @@ public class TestGameLogic {
         test.setPlayersHand(3);
 
         // Ensure no printed line in console
-        test.setTrump();
+        test.setTrumpCard();
 
-        assertTrue(test.getTrumpSuit() instanceof Card);
+        assertTrue(test.getTrumpCard() instanceof Card);
 
-        System.out.println(test.getTrumpSuit());
+        System.out.println(test.getTrumpCard());
 
         test.initialiseDeck();
         System.out.println(test.getDeck().getNumberOfCardsRemaining());
@@ -131,6 +131,8 @@ public class TestGameLogic {
 
         test.initialisePlayers();
         test.initialiseDeck();
+
+
         test.setDealer(1);
 
         test.initialiseDeck();
@@ -157,11 +159,18 @@ public class TestGameLogic {
         System.out.println("Position for first round when no cards are played" + Arrays.deepToString(arrayPlayersTest.getArrayOfPlayers().toArray()));
 
         System.out.println();
-
+        test.setTrumpCard();
         for (Player p : arrayPlayersTest.getArrayOfPlayers()){
-            tableHand.addCard(p, p.removeFromHand(0)); ;
+
+            Card c = p.removeFromHand(0);
+
+            tableHand.addCard(p, c);
+            if (p.getPlayerId() == 0 ) {
+                test.setLeadSuitCard(c);
+            }
+
         }
-        PlayerCardArray winner = tableHand.sortedTableHand(test.getTrumpSuit().getSuit(), test.getLeadSuit().getSuit()).get(0);
+        PlayerCardArray winner = tableHand.sortedTableHand(test.getTrumpCard().getSuit(), test.getLeadSuitCard().getSuit()).get(0);
 
         System.out.println("Winner of first Trick: " + winner.getPlayerId());
 
@@ -183,7 +192,7 @@ public class TestGameLogic {
         GameLogic test = new GameLogic();
         test.startNewGame();
         test.setPlayersHand(1); //Done testing
-        test.setTrump(); //Done testing
+        test.setTrumpCard(); //Done testing
         test.setPlayerOrder(1);
         test.startSubRound(1 );
 

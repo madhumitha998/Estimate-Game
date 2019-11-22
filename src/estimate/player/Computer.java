@@ -1,17 +1,16 @@
+package estimate.player;
+
+import cards.*;
+import java.util.*;
+import java.lang.Math;
+
 /**
 * The Computer class can place bids and play cards
 * 
 *
 * @author  Madhumitha
-* @version 1.2
-* @since   2019-10-19 
+* @version 1.0
 */
-
-package estimate.player;
-import cards.*;
-import java.util.*;
-import java.lang.Math;
-
 public class Computer extends Player{
 
     public Computer(int id,int position){
@@ -101,15 +100,15 @@ public class Computer extends Player{
         //if computer is first player, position should be 0
         if(getPosition()==0){
             if(bid>0){
-                return selectCard.pickLargestCard(playerHand,trumpSuit);
+                return selectCard.pickCardFirstPlayerPositive(playerHand,trumpSuit);
             } else {
-                return selectCard.pickSmallestCard(playerHand,trumpSuit);
+                return selectCard.pickCardFirstPlayerNegative(playerHand,trumpSuit);
             }
         } else {
             if(bid>0){
-                return selectCard.pickBestCard1(playerHand,trumpSuit,leadSuit,highestPlayedCard);
+                return selectCard.pickCardNextPlayerPositive(playerHand,trumpSuit,leadSuit,highestPlayedCard);
             } else {
-                return selectCard.pickBestCard2(playerHand,trumpSuit,leadSuit,highestPlayedCard);
+                return selectCard.pickCardNextPlayerNegative(playerHand,trumpSuit,leadSuit,highestPlayedCard);
             }
         }
     }

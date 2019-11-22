@@ -1,14 +1,18 @@
 package estimate.player;
+
 import cards.*;
 import java.util.*;
 import java.lang.Math;
 import estimate.player.SelectCard;
 import java.util.Comparator;
+
 /**
- *
- * @author madhumitha
- * @version 1.0
- */ 
+* The BidNegFirstCardComparator class compares cards when the computer's bid is negative
+* and when the computer is the first player in the trick
+*
+* @author  Madhumitha
+* @version 1.0
+*/
 public class BidNegFirstCardComparator implements Comparator<Card> {
     private Suit trumpSuit;
 

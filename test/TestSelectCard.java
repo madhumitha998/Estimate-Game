@@ -1,8 +1,6 @@
 import cards.Card;
 import cards.Rank;
 import cards.Suit;
-import estimate.player.Computer;
-import estimate.player.Player;
 import estimate.player.PlayerHand;
 import estimate.player.SelectCard;
 
@@ -29,8 +27,8 @@ public class TestSelectCard {
         computerHand.addCard(testCard3);
         computerHand.addCard(testCard4);
 
-        assertEquals(testCard, selectCard.pickSmallestCard(computerHand, Suit.SPADES));
-        assertEquals(testCard4, selectCard.pickSmallestCard(computerHand, Suit.CLUBS));
+        assertEquals(testCard, selectCard.pickCardFirstPlayerNegative(computerHand, Suit.SPADES));
+        assertEquals(testCard4, selectCard.pickCardFirstPlayerNegative(computerHand, Suit.CLUBS));
     }
 
     @Test
@@ -50,8 +48,8 @@ public class TestSelectCard {
         computerHand.addCard(testCard3);
         computerHand.addCard(testCard4);
 
-        assertEquals(testCard3, selectCard.pickLargestCard(computerHand, Suit.SPADES));
-        assertEquals(testCard2, selectCard.pickLargestCard(computerHand, Suit.CLUBS));
+        assertEquals(testCard3, selectCard.pickCardFirstPlayerPositive(computerHand, Suit.SPADES));
+        assertEquals(testCard2, selectCard.pickCardFirstPlayerPositive(computerHand, Suit.CLUBS));
     }
 
     @Test
@@ -71,8 +69,8 @@ public class TestSelectCard {
         computerHand.addCard(testCard3);
         computerHand.addCard(testCard4);
 
-        assertEquals(testCard2, selectCard.pickLargestCard(computerHand, Suit.HEARTS));
-        assertEquals(testCard3, selectCard.pickLargestCard(computerHand, Suit.CLUBS));
+        assertEquals(testCard2, selectCard.pickCardFirstPlayerPositive(computerHand, Suit.HEARTS));
+        assertEquals(testCard3, selectCard.pickCardFirstPlayerPositive(computerHand, Suit.CLUBS));
     }
 
     @Test
@@ -95,7 +93,7 @@ public class TestSelectCard {
         computerHand.addCard(testCard3);
         computerHand.addCard(testCard4);
 
-        assertEquals(testCard4, selectCard.pickBestCard1(computerHand, Suit.CLUBS,Suit.DIAMONDS,testCard5) );
+        assertEquals(testCard4, selectCard.pickCardNextPlayerPositive(computerHand, Suit.CLUBS,Suit.DIAMONDS,testCard5) );
         
     }
 
@@ -119,7 +117,7 @@ public class TestSelectCard {
         computerHand.addCard(testCard3);
         computerHand.addCard(testCard4);
 
-        assertEquals(testCard3, selectCard.pickBestCard2(computerHand, Suit.CLUBS,Suit.DIAMONDS,testCard5) );
+        assertEquals(testCard3, selectCard.pickCardNextPlayerNegative(computerHand, Suit.CLUBS,Suit.DIAMONDS,testCard5) );
         
     }
 

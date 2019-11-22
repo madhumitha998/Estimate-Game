@@ -1,22 +1,33 @@
 package estimate.player;
+
 import cards.*;
 import java.util.*;
-import java.lang.Math;
 
 /**
- *
- * @author madhumitha
- * @version 1.0
- */
-
+* The SelectCard class returns the best card to play when the computer is
+* the first player with a positive bid
+* the first player with a negative bid
+* not the first player with a positive bid
+* not the first player with a negative bid
+*
+* @author  Madhumitha
+* @version 1.0
+*/
 public class SelectCard {
 
     public SelectCard(){
         
     }
-    //This method returns the smallest Card in hand taking into account trump suit only 
-    //Meant for when computer is first player
-    public Card pickSmallestCard(PlayerHand playerhand, Suit trumpSuit){
+
+    public Card pickCardFirstPlayerPositive(PlayerHand playerhand, Suit trumpSuit){
+        ArrayList<Card> cardArrayList = playerhand.getHand();
+        
+        cardArrayList.sort(new BidPosFirstCardComparator(trumpSuit));
+
+        return cardArrayList.get(0);
+    }
+    
+    public Card pickCardFirstPlayerNegative(PlayerHand playerhand, Suit trumpSuit){
         ArrayList<Card> cardArrayList = playerhand.getHand();
         
         cardArrayList.sort(new BidNegFirstCardComparator(trumpSuit));
@@ -24,18 +35,7 @@ public class SelectCard {
         return cardArrayList.get(0);
     }
 
-    //This method returns the highest Card in hand excluding trump suit
-    //Meant for when computer is first player
-    //trump suit is only played after all options are exhausted
-    public Card pickLargestCard(PlayerHand playerhand, Suit trumpSuit){
-        ArrayList<Card> cardArrayList = playerhand.getHand();
-        
-        cardArrayList.sort(new BidPosFirstCardComparator(trumpSuit));
-
-        return cardArrayList.get(0);
-    }
-
-   public Card pickBestCard1(PlayerHand playerhand, Suit trumpSuit, Suit leadSuit, Card highestPlayedCard){
+   public Card pickCardNextPlayerPositive(PlayerHand playerhand, Suit trumpSuit, Suit leadSuit, Card highestPlayedCard){
        ArrayList<Card> cardArrayList = playerhand.getHand();
 
        String trumpSuitName = trumpSuit.getName();
@@ -129,7 +129,7 @@ public class SelectCard {
        }
    }
 
-   public Card pickBestCard2(PlayerHand playerhand, Suit trumpSuit, Suit leadSuit, Card highestPlayedCard){
+   public Card pickCardNextPlayerNegative(PlayerHand playerhand, Suit trumpSuit, Suit leadSuit, Card highestPlayedCard){
     ArrayList<Card> cardArrayList = playerhand.getHand();
 
     String trumpSuitName = trumpSuit.getName();
