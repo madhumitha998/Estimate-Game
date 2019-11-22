@@ -198,8 +198,8 @@ public class GameUI {
 				finishSubRound();
 
 				System.out.println("ROUND OVER; SETTING LEAD SUIT TO NULL");
-				gameLogic.setLeadSuit(null);
-				System.out.println(gameLogic.getLeadSuit());
+				gameLogic.setLeadSuitCard(null);
+				System.out.println(gameLogic.getLeadSuitCard());
 
 				clearLeadUI();
 				displayTableHandUI();
@@ -261,6 +261,7 @@ public class GameUI {
 		System.out.println("PRINTING ARRAY OF PLAYERS:");
 		System.out.println(gameLogic.getArrayOfPlayers().getArrayOfPlayers());
 
+		displayPositionUI();
 		displayBidsWonUI();
 
 		if (currentPlayer ==  gameLogic.getArrayOfPlayers().getArrayOfPlayers().get( gameLogic.getArrayOfPlayers().getArrayOfPlayers().size()-1).getPlayerId()){
@@ -724,6 +725,98 @@ public class GameUI {
 	}
 
 
+	public void displayPositionUI(){
+		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
+
+			if (p.getPlayerId() == 0) {
+				if (!(positionList.isEmpty())) {
+					for (JLabel item : positionList) {
+						estimationGame.getContentPane().remove(item);
+					}
+					positionList.clear();
+				}
+
+				JLabel lblPosition = new JLabel("Position: " + (p.getPosition()+1));
+
+				springLayout.putConstraint(SpringLayout.WEST, lblPosition, 295, SpringLayout.WEST,
+						estimationGame.getContentPane());
+				lblPosition.setForeground(Color.WHITE);
+				springLayout.putConstraint(SpringLayout.NORTH, lblPosition, 555, SpringLayout.NORTH,
+						estimationGame.getContentPane());
+				lblPosition.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+				positionList.add(lblPosition);
+				estimationGame.getContentPane().add(lblPosition);
+			}
+
+			if (p.getPlayerId() == 1) {
+				if (!(positionList1.isEmpty())) {
+					for (JLabel item : positionList1) {
+						estimationGame.getContentPane().remove(item);
+					}
+					positionList1.clear();
+				}
+
+				JLabel lblPosition1 = new JLabel("Position: " + (p.getPosition()+1));
+
+				springLayout.putConstraint(SpringLayout.WEST, lblPosition1, 190, SpringLayout.WEST,
+						estimationGame.getContentPane());
+				lblPosition1.setForeground(Color.WHITE);
+				springLayout.putConstraint(SpringLayout.NORTH, lblPosition1, 440, SpringLayout.NORTH,
+						estimationGame.getContentPane());
+				lblPosition1.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+				positionList1.add(lblPosition1);
+				estimationGame.getContentPane().add(lblPosition1);
+			}
+
+			if (p.getPlayerId() == 2) {
+				if (!(positionList2.isEmpty())) {
+					for (JLabel item : positionList2) {
+						estimationGame.getContentPane().remove(item);
+					}
+					positionList2.clear();
+				}
+
+				JLabel lblPosition2 = new JLabel("Position: " + (p.getPosition()+1));
+
+				springLayout.putConstraint(SpringLayout.WEST, lblPosition2, 275, SpringLayout.WEST,
+						estimationGame.getContentPane());
+				lblPosition2.setForeground(Color.WHITE);
+				springLayout.putConstraint(SpringLayout.NORTH, lblPosition2, 150, SpringLayout.NORTH,
+						estimationGame.getContentPane());
+				lblPosition2.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+				positionList2.add(lblPosition2);
+				estimationGame.getContentPane().add(lblPosition2);
+			}
+
+			if (p.getPlayerId() == 3) {
+				if (!(positionList3.isEmpty())) {
+					for (JLabel item : positionList3) {
+						estimationGame.getContentPane().remove(item);
+					}
+					positionList3.clear();
+				}
+
+				JLabel lblPosition3 = new JLabel("Position: " + (p.getPosition()+1));
+
+				springLayout.putConstraint(SpringLayout.WEST, lblPosition3, 620, SpringLayout.WEST,
+						estimationGame.getContentPane());
+				lblPosition3.setForeground(Color.WHITE);
+				springLayout.putConstraint(SpringLayout.NORTH, lblPosition3, 440, SpringLayout.NORTH,
+						estimationGame.getContentPane());
+				lblPosition3.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+				positionList3.add(lblPosition3);
+				estimationGame.getContentPane().add(lblPosition3);
+			}
+		}
+
+		estimationGame.validate();
+		estimationGame.repaint();
+	}
+
 	/**
      * Displays a message that informs the player the tricks amount he selected
      */
@@ -740,7 +833,7 @@ public class GameUI {
         springLayout.putConstraint(SpringLayout.WEST, lblBid, 295, SpringLayout.WEST,
                 estimationGame.getContentPane());
         lblBid.setForeground(Color.WHITE);
-        springLayout.putConstraint(SpringLayout.NORTH, lblBid, 585, SpringLayout.NORTH,
+        springLayout.putConstraint(SpringLayout.NORTH, lblBid, 575, SpringLayout.NORTH,
                 estimationGame.getContentPane());
         lblBid.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
@@ -760,7 +853,7 @@ public class GameUI {
 
 					JLabel lblBid1 = new JLabel("Tricks to win: " + p.getBid());
 
-					springLayout.putConstraint(SpringLayout.WEST, lblBid1, 180, SpringLayout.WEST,
+					springLayout.putConstraint(SpringLayout.WEST, lblBid1, 190, SpringLayout.WEST,
 							estimationGame.getContentPane());
 					lblBid1.setForeground(Color.WHITE);
 					springLayout.putConstraint(SpringLayout.NORTH, lblBid1, 460, SpringLayout.NORTH,
@@ -769,27 +862,6 @@ public class GameUI {
 
 					bidList1.add(lblBid1);
 					estimationGame.getContentPane().add(lblBid1);
-				}
-
-				if (p.getPlayerId() == 3) {
-					if (!(bidList3.isEmpty())) {
-						for (JLabel item : bidList3) {
-							estimationGame.getContentPane().remove(item);
-						}
-						bidList3.clear();
-					}
-
-					JLabel lblBid3 = new JLabel("Tricks to win: " + p.getBid());
-
-					springLayout.putConstraint(SpringLayout.WEST, lblBid3, 610, SpringLayout.WEST,
-							estimationGame.getContentPane());
-					lblBid3.setForeground(Color.WHITE);
-					springLayout.putConstraint(SpringLayout.NORTH, lblBid3, 460, SpringLayout.NORTH,
-							estimationGame.getContentPane());
-					lblBid3.setFont(new Font("Segoe Script", Font.PLAIN, 15));
-
-					bidList3.add(lblBid3);
-					estimationGame.getContentPane().add(lblBid3);
 				}
 
 				if (p.getPlayerId() == 2) {
@@ -805,12 +877,33 @@ public class GameUI {
 					springLayout.putConstraint(SpringLayout.WEST, lblBid2, 275, SpringLayout.WEST,
 							estimationGame.getContentPane());
 					lblBid2.setForeground(Color.WHITE);
-					springLayout.putConstraint(SpringLayout.NORTH, lblBid2, 180, SpringLayout.NORTH,
+					springLayout.putConstraint(SpringLayout.NORTH, lblBid2, 170, SpringLayout.NORTH,
 							estimationGame.getContentPane());
 					lblBid2.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
 					bidList2.add(lblBid2);
 					estimationGame.getContentPane().add(lblBid2);
+				}
+
+				if (p.getPlayerId() == 3) {
+					if (!(bidList3.isEmpty())) {
+						for (JLabel item : bidList3) {
+							estimationGame.getContentPane().remove(item);
+						}
+						bidList3.clear();
+					}
+
+					JLabel lblBid3 = new JLabel("Tricks to win: " + p.getBid());
+
+					springLayout.putConstraint(SpringLayout.WEST, lblBid3, 620, SpringLayout.WEST,
+							estimationGame.getContentPane());
+					lblBid3.setForeground(Color.WHITE);
+					springLayout.putConstraint(SpringLayout.NORTH, lblBid3, 460, SpringLayout.NORTH,
+							estimationGame.getContentPane());
+					lblBid3.setFont(new Font("Segoe Script", Font.PLAIN, 15));
+
+					bidList3.add(lblBid3);
+					estimationGame.getContentPane().add(lblBid3);
 				}
 			}
 		}
@@ -834,7 +927,7 @@ public class GameUI {
 		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon, 295, SpringLayout.WEST,
 				estimationGame.getContentPane());
 		lblBidsWon.setForeground(Color.WHITE);
-		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon, 605, SpringLayout.NORTH,
+		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon, 595, SpringLayout.NORTH,
 				estimationGame.getContentPane());
 		lblBidsWon.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
@@ -847,7 +940,7 @@ public class GameUI {
 
 		JLabel lblBidsWon1 = new JLabel("Tricks won: " + roundBidsWon1);
 
-		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon1, 180, SpringLayout.WEST,
+		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon1, 190, SpringLayout.WEST,
 				estimationGame.getContentPane());
 		lblBidsWon1.setForeground(Color.WHITE);
 		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon1, 480, SpringLayout.NORTH,
@@ -866,7 +959,7 @@ public class GameUI {
 		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon2, 275, SpringLayout.WEST,
 				estimationGame.getContentPane());
 		lblBidsWon2.setForeground(Color.WHITE);
-		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon2, 200, SpringLayout.NORTH,
+		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon2, 190, SpringLayout.NORTH,
 				estimationGame.getContentPane());
 		lblBidsWon2.setFont(new Font("Segoe Script", Font.PLAIN, 15));
 
@@ -879,7 +972,7 @@ public class GameUI {
 
 		JLabel lblBidsWon3 = new JLabel("Tricks won: " + roundBidsWon3);
 
-		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon3, 610, SpringLayout.WEST,
+		springLayout.putConstraint(SpringLayout.WEST, lblBidsWon3, 620, SpringLayout.WEST,
 				estimationGame.getContentPane());
 		lblBidsWon3.setForeground(Color.WHITE);
 		springLayout.putConstraint(SpringLayout.NORTH, lblBidsWon3, 480, SpringLayout.NORTH,
@@ -894,99 +987,6 @@ public class GameUI {
 		estimationGame.getContentPane().add(lblBidsWon2);
 		bidWonList3.add(lblBidsWon3);
 		estimationGame.getContentPane().add(lblBidsWon3);
-
-		estimationGame.validate();
-		estimationGame.repaint();
-	}
-
-
-	public void displayPositionUI(){
-		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
-
-			if (p.getPlayerId() == 0) {
-				if (!(positionList.isEmpty())) {
-					for (JLabel item : positionList) {
-						estimationGame.getContentPane().remove(item);
-					}
-					positionList.clear();
-				}
-
-				JLabel lblPosition = new JLabel("Position: " + p.getPosition());
-
-				springLayout.putConstraint(SpringLayout.WEST, lblPosition, 295, SpringLayout.WEST,
-						estimationGame.getContentPane());
-				lblPosition.setForeground(Color.WHITE);
-				springLayout.putConstraint(SpringLayout.NORTH, lblPosition, 565, SpringLayout.NORTH,
-						estimationGame.getContentPane());
-				lblPosition.setFont(new Font("Segoe Script", Font.PLAIN, 15));
-
-				positionList.add(lblPosition);
-				estimationGame.getContentPane().add(lblPosition);
-			}
-
-			if (p.getPlayerId() == 1) {
-				if (!(positionList1.isEmpty())) {
-					for (JLabel item : positionList1) {
-						estimationGame.getContentPane().remove(item);
-					}
-					positionList1.clear();
-				}
-
-				JLabel lblPosition1 = new JLabel("Position: " + p.getPosition());
-
-				springLayout.putConstraint(SpringLayout.WEST, lblPosition1, 180, SpringLayout.WEST,
-						estimationGame.getContentPane());
-				lblPosition1.setForeground(Color.WHITE);
-				springLayout.putConstraint(SpringLayout.NORTH, lblPosition1, 440, SpringLayout.NORTH,
-						estimationGame.getContentPane());
-				lblPosition1.setFont(new Font("Segoe Script", Font.PLAIN, 15));
-
-				positionList1.add(lblPosition1);
-				estimationGame.getContentPane().add(lblPosition1);
-			}
-
-			if (p.getPlayerId() == 2) {
-				if (!(positionList2.isEmpty())) {
-					for (JLabel item : positionList2) {
-						estimationGame.getContentPane().remove(item);
-					}
-					positionList2.clear();
-				}
-
-				JLabel lblPosition2 = new JLabel("Position: " + p.getPosition());
-
-				springLayout.putConstraint(SpringLayout.WEST, lblPosition2, 275, SpringLayout.WEST,
-						estimationGame.getContentPane());
-				lblPosition2.setForeground(Color.WHITE);
-				springLayout.putConstraint(SpringLayout.NORTH, lblPosition2, 160, SpringLayout.NORTH,
-						estimationGame.getContentPane());
-				lblPosition2.setFont(new Font("Segoe Script", Font.PLAIN, 15));
-
-				positionList2.add(lblPosition2);
-				estimationGame.getContentPane().add(lblPosition2);
-			}
-
-			if (p.getPlayerId() == 3) {
-				if (!(positionList3.isEmpty())) {
-					for (JLabel item : positionList3) {
-						estimationGame.getContentPane().remove(item);
-					}
-					positionList3.clear();
-				}
-
-				JLabel lblPosition3 = new JLabel("Position: " + p.getPosition());
-
-				springLayout.putConstraint(SpringLayout.WEST, lblPosition3, 610, SpringLayout.WEST,
-						estimationGame.getContentPane());
-				lblPosition3.setForeground(Color.WHITE);
-				springLayout.putConstraint(SpringLayout.NORTH, lblPosition3, 440, SpringLayout.NORTH,
-						estimationGame.getContentPane());
-				lblPosition3.setFont(new Font("Segoe Script", Font.PLAIN, 15));
-
-				positionList3.add(lblPosition3);
-				estimationGame.getContentPane().add(lblPosition3);
-			}
-		}
 
 		estimationGame.validate();
 		estimationGame.repaint();
