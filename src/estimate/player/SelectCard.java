@@ -26,7 +26,7 @@ public class SelectCard {
 
         return cardArrayList.get(0);
     }
-    
+
     public Card pickCardFirstPlayerNegative(PlayerHand playerhand, Suit trumpSuit){
         ArrayList<Card> cardArrayList = playerhand.getHand();
         
