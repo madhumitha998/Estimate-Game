@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
+ * Tests methods in Computer class
  *
  * @author madhumitha
  * @author Abel.Wong.2017
  * @version 1.1
  */
-
 public class TestComputer {
     @Test
     //1st trick of round 4, dealer, num <= 25%

@@ -51,9 +51,8 @@ public class PlayerHand extends Hand {
         return playableCards;
     }
 
-    // What's this supposed to do?
+
     public int evaluateHand(){
-        /* dummy return value for now */
         return 1;
     };
 

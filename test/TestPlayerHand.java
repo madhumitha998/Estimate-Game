@@ -7,12 +7,14 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+/**
+ * Tests methods within the PlayerHand class
+ *
+ * @author  Madhumitha
+ * @version 1.0
+ */
 public class TestPlayerHand {
-    /**
-     * Test to see if player's hand works
-     * Should be able to add cards in hand and get card from hand
-     */
+
     @Test
     public void playerHandTest() {
         PlayerHand playerhand = new PlayerHand();

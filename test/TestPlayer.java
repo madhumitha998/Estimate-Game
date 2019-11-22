@@ -8,10 +8,14 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Tests methods within Player class
+ *
+ * @author  Madhumitha
+ * @version 1.0
+ */
 public class TestPlayer {
-    /**
-     * Test methods within player class
-     */
+
     @Test
     public void playerTest() {
         Player player1 = new Player(0,3);
