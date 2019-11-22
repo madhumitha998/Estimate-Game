@@ -519,7 +519,7 @@ public class GameLogic {
         }
 //        Evaluate the subround and add to scoreboard
         System.out.println("Lead SUit : " + this.leadSuitCard.getSuit());
-        ArrayList<PlayerCardArray> sortedTableHand = tableHand.sortedTableHand(this.trumpSuitCard.getSuit(),
+        List<PlayerCardArray> sortedTableHand = tableHand.sortedTableHand(this.trumpSuitCard.getSuit(),
                 this.leadSuitCard.getSuit());
 
         System.out.println(sortedTableHand);
