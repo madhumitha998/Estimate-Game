@@ -10,6 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestSelectCard {
+    /**
+     * Picks the smallest card depending on Trump
+     */
     @Test
     public void pickSmallestCardTest(){
         SelectCard selectCard = new SelectCard();
@@ -31,6 +34,9 @@ public class TestSelectCard {
         assertEquals(testCard4, selectCard.pickCardFirstPlayerNegative(computerHand, Suit.CLUBS));
     }
 
+    /**
+     *
+     */
     @Test
     public void pickLargestCardTest1(){
         SelectCard selectCard = new SelectCard();
@@ -52,6 +58,9 @@ public class TestSelectCard {
         assertEquals(testCard2, selectCard.pickCardFirstPlayerPositive(computerHand, Suit.CLUBS));
     }
 
+    /**
+     *
+     */
     @Test
     public void pickLargestCardTest2(){
         SelectCard selectCard = new SelectCard();
