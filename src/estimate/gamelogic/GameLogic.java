@@ -1,12 +1,19 @@
 package estimate.gamelogic;
 
-import java.util.*;
-
-import cards.*;
-import estimate.player.*;
+import cards.Card;
+import cards.Deck;
+import cards.Rank;
+import cards.Suit;
+import estimate.player.ArrayOfPlayers;
+import estimate.player.Computer;
+import estimate.player.Player;
 import estimate.scoreboard.Scoreboard;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Main logic of game is here. GameLogic is called by the controller / GUI to execute business logic
@@ -317,7 +324,6 @@ public class GameLogic {
         for (Suit suit: suits) {
             for (Rank rank: rankCards) {
                 String path = GameLogic.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-                        System.out.println(path);
             
 		        
                 String cardFaceLocation = path +  "../images/cards/" +rankCardToString.get(rank)+suitToString.get(suit)+
