@@ -198,8 +198,8 @@ public class GameUI {
 				finishSubRound();
 
 				System.out.println("ROUND OVER; SETTING LEAD SUIT TO NULL");
-				gameLogic.setLeadSuit(null);
-				System.out.println(gameLogic.getLeadSuit());
+				gameLogic.setLeadSuitCard(null);
+				System.out.println(gameLogic.getLeadSuitCard());
 
 				clearLeadUI();
 				displayTableHandUI();
