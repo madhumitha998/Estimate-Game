@@ -2,7 +2,6 @@ package estimate.player;
 
 import cards.*;
 import java.util.*;
-import java.lang.Math;
 
 /**
 * The SelectCard class returns the best card to play when the computer is
