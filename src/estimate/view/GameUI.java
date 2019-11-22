@@ -19,7 +19,7 @@ import java.util.List;
  * Main GUI of the game. Contains all the methods to display selected options by player.
  * GameUI is called by the main menu, GUI. The logic is controlled by GameLogic.
  * @author Elias Lim
- * @version 2.0 
+ * @version 2.8
  * @since   Nov 4, 2019
  */
 
@@ -44,6 +44,10 @@ public class GameUI {
 	private int cardWidth = 75;
     private int cardHeight = 108;
 
+    private JLabel lblNameA;
+	private JLabel lblNameB;
+	private JLabel lblNameC;
+	private JLabel lblNameD;
 	private JButton btnAvatarA;
     private JButton btnCardA;
     private JButton btnCardB;
@@ -55,7 +59,7 @@ public class GameUI {
 	private JLabel lblScoreD;
 	private JLabel lblNoti;
 	private String notification;
-
+	private String winnerName;
 
 	private ArrayList<JLabel> bidList = new ArrayList<JLabel>();
 	private ArrayList<JLabel> bidList1 = new ArrayList<JLabel>();
@@ -124,6 +128,7 @@ public class GameUI {
 
         notification = "Click your player icon to start game!";
 
+		/* initializes the players */
         initPlayer0();
         initPlayer1();
         initPlayer2();
@@ -132,11 +137,13 @@ public class GameUI {
         initNoti();
         drawNoti(null);
 
+		/* initializes global variables in gamelogic */
         gameLogic = new GameLogic();
         gameLogic.getScoreboard();
 		gameLogic.getTableHand();
 		gameLogic.startNewGame();
 
+		/* starts the game on button click */
         btnAvatarA.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -194,30 +201,34 @@ public class GameUI {
 			numberOfSubRounds = cardsToDealPerRound[round - 1];
 			displaySubRoundUI();
 
+			/* checks if a subround is completed */
 			if (completeSubRound()) {
+				/* execute calculations for trick winner and clean up after the subround */
 				finishSubRound();
 
-				System.out.println("ROUND OVER; SETTING LEAD SUIT TO NULL");
+				/* clears the lead suit and displays the cards left */
 				gameLogic.setLeadSuitCard(null);
-				System.out.println(gameLogic.getLeadSuitCard());
-
 				clearLeadUI();
 				displayTableHandUI();
 				displayCardUI();
 
 				roundCounter++;
 
+				/* checks if round is completed */
 				if (completeRound()) {
 
+					/* updates number of tricks won for the UI */
 					roundBidsWon = 0;
 					roundBidsWon1 = 0;
 					roundBidsWon2 = 0;
 					roundBidsWon3 = 0;
 
+					/* updates the scoreboard */
 					updateScoreUI();
             		System.out.println(gameLogic.getScoreboard().getTotalScore());
             		int[] winner = gameLogic.getScoreboard().getWinner(round);
 
+					/* check if game is completed */
             		if (completeGame(winner)){
             			JOptionPane.showMessageDialog(new JFrame(), "THE GRAND WINNER IS Player " + winner[0] + " with " + winner[1] + " POINTS!!!!", "Info",
                                 JOptionPane.INFORMATION_MESSAGE);
@@ -230,6 +241,7 @@ public class GameUI {
 				}
 			}
 
+			/* continues playing logic */
 			if (waitingUser) {
 				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PLAYER'S TURN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 				drawNoti("Your turn");
@@ -274,6 +286,7 @@ public class GameUI {
 					currentPlayer += 1;
 				}
 
+				/* Get the highest card in the hand */
 		        Card highestPlayedCard;
 		        Suit leadSuit2;
 
@@ -289,8 +302,8 @@ public class GameUI {
 		            highestPlayedCard = gameLogic.getTableHand().sortedTableHand(gameLogic.getTrumpCard().getSuit(), gameLogic.getLeadSuitCard().getSuit()).get(0).getPlayerCard();
 		        }
 
+				/* if first player is a computer, play the first card and set the lead suit */
 		        if (p instanceof Computer) {
-
 	                Computer pComputer = (Computer) p;
 	                System.out.println("Printing computer: " + pComputer);
 
@@ -304,16 +317,19 @@ public class GameUI {
 	                }
 
 	                gameLogic.getTableHand().addCard(p, p.removeFromHand(cardForCompToPlay));
-	                displayTableHandUI();
-	                // Display Table Hand
+
+					/* Display Table Hand */
+					displayTableHandUI();
 	                System.out.println(gameLogic.getTableHand().toString());
 	                break;
 
 	            } else {
-	                //Display Hand to user
+					/* if first player is the player, play the first card and set the lead suit */
+
+					/* Display Hand to user */
 	                System.out.println("Player's Hand: " + p.getHand());
 
-	                // Get input from user
+					/* Get input from user */
 	                displayCardUI();
 
 	                try {
@@ -339,6 +355,8 @@ public class GameUI {
      * After each SubRound, this method is called to calculate the scores and get the trick winner
      */
 	public void finishSubRound(){
+
+		/* sorts the cards on in the table pool in a decsending order */
         List<PlayerCardArray> sortedTableHand =
 				gameLogic.getTableHand().sortedTableHand(gameLogic.getTrumpCard().getSuit(),
                 gameLogic.getLeadSuitCard().getSuit());
@@ -347,13 +365,25 @@ public class GameUI {
 
         PlayerCardArray winner = sortedTableHand.get(0);
 
-        // Display winner of the round
+		/* Display winner of the round */
         System.out.println("The winner of this round is player ID: " + winner.getPlayerId());
         gameLogic.getScoreboard().addTricksWon(round, winner.getPlayerId());
 
-        JOptionPane.showMessageDialog(null, "Round: " + round + "\nSubround: " + (roundCounter+1) + "\nWinner is player ID: " + winner.getPlayerId());
+		/* Get the winner name */
+		if (winner.getPlayerId() == 0){
+			winnerName = lblNameA.getText();
+		} else if (winner.getPlayerId() == 1){
+			winnerName = lblNameB.getText();
+		}else if (winner.getPlayerId() == 2){
+			winnerName = lblNameC.getText();
+		}else if (winner.getPlayerId() == 3){
+			winnerName = lblNameD.getText();
+		}
 
-        //set Winner for player
+		/* displays the message dialog box informing winner of the round */
+        JOptionPane.showMessageDialog(null, "Round: " + round + "\nSubround: " + (roundCounter+1) + "\nWinner is: " + winnerName);
+
+		/* set Winner for player */
         for (Player p : gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
             if ( p.getPlayerId() == winner.getPlayerId() ) {
                 p.setTrickWinner(true);
@@ -362,6 +392,7 @@ public class GameUI {
             }
         }
 
+		/* updates the UI informing play how many tricks won so far */
 		for (Player p : gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
 			if (winner.getPlayerId() == 0){
 				roundBidsWon += 1;
@@ -378,7 +409,7 @@ public class GameUI {
 			}
 		}
 
-        //Set position for players
+		/* Set position for players */
         System.out.println("OLD PLAYER ORDER: " + gameLogic.getArrayOfPlayers().getArrayOfPlayers());
         if (round != 11) {
             gameLogic.setPlayerOrder(round);
@@ -391,7 +422,8 @@ public class GameUI {
             }
             System.out.println("NEW PLAYER ORDER: " + gameLogic.getArrayOfPlayers().getArrayOfPlayers());
         }
-        // Clear tableHand at end of subround
+
+		/* Clear tableHand at end of subround */
         gameLogic.getTableHand().clearTableHand();
 	}
 
@@ -422,7 +454,6 @@ public class GameUI {
 			System.out.println("ROUND ####### " + round);
 			gameLogic.getScoreboard().calculateRoundScore(round);
 			gameLogic.getScoreboard().calculateTotalScore();
-//			gameLogic.getScoreboard().printScoreForAllRounds();
 			roundCounter = 0;
 			round += 1;
 			gameLogic.setRound(round);
@@ -481,7 +512,7 @@ public class GameUI {
 			            estimationGame.getContentPane());
 
 			        try {
-		                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+		                ImageIcon img = new ImageIcon(this.getClass().getResource("/images/cards/b.gif"));
 		                btnCard1.setIcon(new ImageIcon(
 		                        img.getImage().getScaledInstance(cardHeight, cardWidth, java.awt.Image.SCALE_SMOOTH)));
 		            } catch (NullPointerException e) {
@@ -519,7 +550,7 @@ public class GameUI {
 			            estimationGame.getContentPane());
 
 			        try {
-		                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+		                ImageIcon img = new ImageIcon(this.getClass().getResource("/images/cards/b.gif"));
 		                btnCard2.setIcon(new ImageIcon(
 		                        img.getImage().getScaledInstance(cardWidth, cardHeight, java.awt.Image.SCALE_SMOOTH)));
 		            } catch (NullPointerException e) {
@@ -558,7 +589,7 @@ public class GameUI {
 			            estimationGame.getContentPane());
 
 			        try {
-		                ImageIcon img = new ImageIcon(this.getClass().getResource("/resource/cards/b.gif"));
+		                ImageIcon img = new ImageIcon(this.getClass().getResource("/images/cards/b.gif"));
 		                btnCard3.setIcon(new ImageIcon(
 		                        img.getImage().getScaledInstance(cardHeight, cardWidth, java.awt.Image.SCALE_SMOOTH)));
 		            } catch (NullPointerException e) {
@@ -658,7 +689,6 @@ public class GameUI {
      */
 	public ArrayList<Card> getPlayableCards(Player p) {
         ArrayList<Card> playableCards;
-	    //Display playableHand to user
 	    if (gameLogic.getLeadSuitCard() == null) {
 	        playableCards = p.getPlayableHand(null, gameLogic.getTrumpCard().getSuit());
 	        System.out.println(playableCards);
@@ -682,6 +712,7 @@ public class GameUI {
         ArrayList<Integer> availableBids = new ArrayList<Integer>();
         numberOfSubRounds = cardsToDealPerRound[round - 1];
 
+		/* loop through the players and set their bids */
 		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
 			if (p instanceof Computer) {
 				waitingUser = false;
@@ -703,11 +734,14 @@ public class GameUI {
 			availableBidsString[i] = Integer.toString(availableBids.get(i));
 		}
 
+		/* check if it is the player's turn */
 		if (waitingUser()) {
 			waitingUser = true;
 		} else {
 			waitingUser = false;
 		}
+
+		/* prompt the user to select a bid with dialog box */
     	int bidSelected = JOptionPane.showOptionDialog(null,
                         "Select one from the available bids:", "BID WINDOW", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, availableBidsString, availableBidsString[0]);
 		
@@ -724,6 +758,9 @@ public class GameUI {
 	}
 
 
+	/**
+	 * Displays the position message UI
+	 */
 	public void displayPositionUI(){
 		for (Player p: gameLogic.getArrayOfPlayers().getArrayOfPlayers()) {
 
@@ -815,6 +852,7 @@ public class GameUI {
 		estimationGame.validate();
 		estimationGame.repaint();
 	}
+
 
 	/**
      * Displays a message that informs the player the tricks amount he selected
@@ -909,6 +947,7 @@ public class GameUI {
         estimationGame.validate();
 	    estimationGame.repaint();
 	}
+
 
 	/**
 	 * Displays a message that informs the player how many tricks he won that round
@@ -1085,7 +1124,7 @@ public class GameUI {
 
 
 	/**
-     * Displays a message informing player of the trump suit
+     * Displays a message informing player of the round number
      */
 	public void displayRoundUI() {
 
@@ -1113,7 +1152,7 @@ public class GameUI {
 
 
 	/**
-     * Displays a message informing player of the trump suit
+     * Displays a message informing player of the subround number
      */
 	public void displaySubRoundUI() {
 
@@ -1212,7 +1251,7 @@ public class GameUI {
     private void initNoti() {
         lblNoti = new JLabel("");
 
-        springLayout.putConstraint(SpringLayout.WEST, lblNoti, 300, SpringLayout.WEST, estimationGame.getContentPane());
+        springLayout.putConstraint(SpringLayout.WEST, lblNoti, 335, SpringLayout.WEST, estimationGame.getContentPane());
         springLayout.putConstraint(SpringLayout.SOUTH, lblNoti, -10, SpringLayout.NORTH, btnAvatarA);
         lblNoti.setForeground(new Color(224, 255, 255));
         lblNoti.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -1246,7 +1285,7 @@ public class GameUI {
         btnAvatarA.setFocusPainted(false);
 
         try {
-            ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/dog_avatar.jpg"));
+            ImageIcon img = new ImageIcon(GameUI.class.getResource("/images/dog_avatar.jpg"));
             btnAvatarA.setIcon(new ImageIcon(img.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)));
         } catch (NullPointerException e) {
             System.out.println("Image not found");
@@ -1254,7 +1293,7 @@ public class GameUI {
 
         estimationGame.getContentPane().add(btnAvatarA);
 
-		JLabel lblNameA = new JLabel("You");
+		lblNameA = new JLabel("Player 1");
 
         springLayout.putConstraint(SpringLayout.NORTH, lblNameA, 5, SpringLayout.SOUTH, btnAvatarA);
         springLayout.putConstraint(SpringLayout.WEST, lblNameA, 0, SpringLayout.WEST, btnAvatarA);
@@ -1282,7 +1321,7 @@ public class GameUI {
 
         btnCardA = new JButton();
 
-        int cardA_top = 420;
+        int cardA_top = 415;
         int cardA_left = 425;
 
         springLayout.putConstraint(SpringLayout.WEST, btnCardA, cardA_left, SpringLayout.WEST,
@@ -1312,7 +1351,7 @@ public class GameUI {
         btnAvatarB.setFocusPainted(false);
 
         try {
-            ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/bot_avatar.jpg"));
+            ImageIcon img = new ImageIcon(GameUI.class.getResource("/images/bot_avatar.jpg"));
             btnAvatarB.setIcon(new ImageIcon(img.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)));
         } catch (NullPointerException e) {
             System.out.println("Image not found");
@@ -1321,7 +1360,7 @@ public class GameUI {
 
         estimationGame.getContentPane().add(btnAvatarB);
 
-		JLabel lblNameB = new JLabel("Robot B");
+		lblNameB = new JLabel("Robot A");
 
         springLayout.putConstraint(SpringLayout.EAST, lblNameB, 0, SpringLayout.EAST, btnAvatarB);
         springLayout.putConstraint(SpringLayout.WEST, lblNameB, 0, SpringLayout.WEST, btnAvatarB);
@@ -1349,7 +1388,7 @@ public class GameUI {
 
         btnCardB = new JButton();
 
-        int cardB_top = 25;
+        int cardB_top = 0;
         int cardB_left = 50;
 
         springLayout.putConstraint(SpringLayout.WEST, btnCardB, cardB_left, SpringLayout.EAST, btnAvatarB);
@@ -1376,7 +1415,7 @@ public class GameUI {
         btnAvatarC.setFocusPainted(false);
 
         try {
-            ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/bot_avatar.jpg"));
+            ImageIcon img = new ImageIcon(GameUI.class.getResource("/images/bot_avatar.jpg"));
             btnAvatarC.setIcon(new ImageIcon(img.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)));
         } catch (NullPointerException e) {
             System.out.println("Image not found");
@@ -1398,7 +1437,7 @@ public class GameUI {
 
         estimationGame.getContentPane().add(lblScoreC);
 
-		JLabel lblNameC = new JLabel("Robot C");
+		lblNameC = new JLabel("Robot B");
 
         springLayout.putConstraint(SpringLayout.NORTH, lblScoreC, 5, SpringLayout.SOUTH, lblNameC);
         springLayout.putConstraint(SpringLayout.NORTH, lblNameC, 5, SpringLayout.NORTH, btnAvatarC);
@@ -1456,7 +1495,7 @@ public class GameUI {
         btnAvatarD.setFocusPainted(false);
 
         try {
-            ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/bot_avatar.jpg"));
+            ImageIcon img = new ImageIcon(GameUI.class.getResource("/images/bot_avatar.jpg"));
             btnAvatarD.setIcon(new ImageIcon(img.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)));
         } catch (NullPointerException e) {
             System.out.println("Image not found");
@@ -1464,9 +1503,9 @@ public class GameUI {
 
         estimationGame.getContentPane().add(btnAvatarD);
 
-		JLabel lblNameD = new JLabel("Robot D");
+		lblNameD = new JLabel("Robot C");
 
-        springLayout.putConstraint(SpringLayout.NORTH, lblNameD, 5, SpringLayout.SOUTH, btnAvatarD);
+		springLayout.putConstraint(SpringLayout.NORTH, lblNameD, 5, SpringLayout.SOUTH, btnAvatarD);
         springLayout.putConstraint(SpringLayout.WEST, lblNameD, 0, SpringLayout.WEST, btnAvatarD);
         springLayout.putConstraint(SpringLayout.EAST, lblNameD, 0, SpringLayout.EAST, btnAvatarD);
         lblNameD.setHorizontalAlignment(SwingConstants.CENTER);
