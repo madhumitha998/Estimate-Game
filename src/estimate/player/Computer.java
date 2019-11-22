@@ -136,13 +136,13 @@ public class Computer extends Player{
             if(bid>0){
                 return selectCard.pickCardFirstPlayerPositive(playerHand,trumpSuit);
             } else {
-                return selectCard.pickCardFirstPlayerNegative(playerHand,trumpSuit);
+                return selectCard.pickCardFirstPlayerZero(playerHand,trumpSuit);
             }
         } else {
             if(bid>0){
                 return selectCard.pickCardNextPlayerPositive(playerHand,trumpSuit,leadSuit,highestPlayedCard);
             } else {
-                return selectCard.pickCardNextPlayerNegative(playerHand,trumpSuit,leadSuit,highestPlayedCard);
+                return selectCard.pickCardNextPlayerZero(playerHand,trumpSuit,leadSuit,highestPlayedCard);
             }
         }
     }

@@ -19,24 +19,55 @@ public class SelectCard {
         
     }
 
-    public Card pickCardFirstPlayerPositive(PlayerHand playerhand, Suit trumpSuit){
-        ArrayList<Card> cardArrayList = playerhand.getHand();
+    /**
+     * Returns the best Card to play when the computer is
+     * the First player of the trick and
+     * the Computer's bid is positive
+     * <p>It follows a set of rules defined in BidPosFirstCardComparator</p>
+     *
+     * @param  playerHand  the Hand of Cards that will be evaluated
+     * @param  trumpSuit the trumpSuit used in that round of the game
+     * @return the best Card to play following a set of rules
+     */
+    public Card pickCardFirstPlayerPositive(PlayerHand playerHand, Suit trumpSuit){
+        ArrayList<Card> cardArrayList = playerHand.getHand();
         
         cardArrayList.sort(new BidPosFirstCardComparator(trumpSuit));
 
         return cardArrayList.get(0);
     }
 
-    public Card pickCardFirstPlayerNegative(PlayerHand playerhand, Suit trumpSuit){
-        ArrayList<Card> cardArrayList = playerhand.getHand();
+    /**
+     * Returns the best Card to play when the computer is
+     * the First player of the trick and
+     * the Computer's bid is zero
+     * <p>It follows a set of rules defined in BidZeroFirstCardComparator</p>
+     *
+     * @param  playerHand  the Hand of Cards that will be evaluated
+     * @param  trumpSuit the trumpSuit used in that round of the game
+     * @return the best Card to play following a set of rules
+     */
+    public Card pickCardFirstPlayerZero(PlayerHand playerHand, Suit trumpSuit){
+        ArrayList<Card> cardArrayList = playerHand.getHand();
         
-        cardArrayList.sort(new BidNegFirstCardComparator(trumpSuit));
+        cardArrayList.sort(new BidZeroFirstCardComparator(trumpSuit));
 
         return cardArrayList.get(0);
     }
 
-   public Card pickCardNextPlayerPositive(PlayerHand playerhand, Suit trumpSuit, Suit leadSuit, Card highestPlayedCard){
-       ArrayList<Card> cardArrayList = playerhand.getHand();
+    /**
+     * Returns the best Card to play when the computer is
+     * Not the first player of the trick and
+     * the Computer's bid is positive
+     *
+     * @param  playerHand  the Hand of Cards that will be evaluated
+     * @param  trumpSuit the trumpSuit used in that round of the game
+     * @param  leadSuit the leadSuit used in that trick of the game
+     * @param  highestPlayedCard the highest played card so far in the trick
+     * @return the best Card to play following a set of rules
+     */
+   public Card pickCardNextPlayerPositive(PlayerHand playerHand, Suit trumpSuit, Suit leadSuit, Card highestPlayedCard){
+       ArrayList<Card> cardArrayList = playerHand.getHand();
 
        String trumpSuitName = trumpSuit.getName();
        String leadSuitName = leadSuit.getName();
@@ -129,8 +160,19 @@ public class SelectCard {
        }
    }
 
-   public Card pickCardNextPlayerNegative(PlayerHand playerhand, Suit trumpSuit, Suit leadSuit, Card highestPlayedCard){
-    ArrayList<Card> cardArrayList = playerhand.getHand();
+    /**
+     * Returns the best Card to play when the computer is
+     * Not the first player of the trick and
+     * the Computer's bid is zero
+     *
+     * @param  playerHand  the Hand of Cards that will be evaluated
+     * @param  trumpSuit the trumpSuit used in that round of the game
+     * @param  leadSuit the leadSuit used in that trick of the game
+     * @param  highestPlayedCard the highest played card so far in the trick
+     * @return the best Card to play following a set of rules
+     */
+   public Card pickCardNextPlayerZero(PlayerHand playerHand, Suit trumpSuit, Suit leadSuit, Card highestPlayedCard){
+    ArrayList<Card> cardArrayList = playerHand.getHand();
 
     String trumpSuitName = trumpSuit.getName();
     String leadSuitName = leadSuit.getName();
@@ -170,7 +212,7 @@ public class SelectCard {
      Collections.sort(leadRestCards);
      Collections.sort(trumpLowerCards);
      Collections.sort(trumpRestCards );
-     otherCards.sort(new BidNegNextCardComparator(trumpSuit, leadSuit));
+     otherCards.sort(new BidZeroNextCardComparator(trumpSuit, leadSuit));
 
      //picking the best card
      if(!leadLowerCards.isEmpty()){
@@ -207,7 +249,7 @@ public class SelectCard {
      Collections.sort(leadRestCards);
      Collections.sort(trumpLowerCards);
      Collections.sort(trumpRestCards );
-     otherCards.sort(new BidNegNextCardComparator(trumpSuit, leadSuit));
+     otherCards.sort(new BidZeroNextCardComparator(trumpSuit, leadSuit));
 
      //picking the best card
      if(!trumpLowerCards.isEmpty()){

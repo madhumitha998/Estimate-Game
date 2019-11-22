@@ -15,11 +15,11 @@ import java.util.List;
 * @author madhumitha
 * @version 1.0
 */ 
-public class BidNegNextCardComparator implements Comparator<Card> {
+public class BidZeroNextCardComparator implements Comparator<Card> {
     private Suit trumpSuit;
     private Suit leadSuit;
 
-    public BidNegNextCardComparator(Suit trumpSuit, Suit leadSuit) {
+    public BidZeroNextCardComparator(Suit trumpSuit, Suit leadSuit) {
         this.trumpSuit = trumpSuit;
         this.leadSuit = leadSuit;
     }

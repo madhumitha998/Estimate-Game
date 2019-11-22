@@ -13,10 +13,10 @@ import java.util.Comparator;
 * @author  Madhumitha
 * @version 1.0
 */
-public class BidNegFirstCardComparator implements Comparator<Card> {
+public class BidZeroFirstCardComparator implements Comparator<Card> {
     private Suit trumpSuit;
 
-    public BidNegFirstCardComparator(Suit trumpSuit) {
+    public BidZeroFirstCardComparator(Suit trumpSuit) {
         this.trumpSuit = trumpSuit;
     }
 
