@@ -1513,10 +1513,13 @@ public class GameUI {
         btnAvatarD.setFocusPainted(false);
 
         try {
-            String path = GameUI.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "../images/bot_avatar.jpg";
-                        System.out.println(path);
-            ImageIcon img = new ImageIcon(path);
-            
+            String path = GameUI.class.getProtectionDomain().getCodeSource().getLocation().getPath() ;
+            String newPath = path.substring(0, path.length() - 8);
+            newPath += "images/bot_avatar.jpg";
+            // + "../images/bot_avatar.jpg";
+                        System.out.println(newPath);
+            ImageIcon img = new ImageIcon(newPath);
+            System.out.println(img);
             btnAvatarD.setIcon(new ImageIcon(img.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)));
         } catch (NullPointerException e) {
             System.out.println("Image not found");
