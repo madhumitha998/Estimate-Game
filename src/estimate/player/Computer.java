@@ -13,6 +13,12 @@ import java.lang.Math;
 */
 public class Computer extends Player{
 
+    /**
+     * Constructs an instance of Computer with parameters id and position
+     *
+     * @param  id  the unique identifier of the computer in the game
+     * @param  position the position of the computer in that trick
+     */
     public Computer(int id,int position){
         super(id,position);
     }

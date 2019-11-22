@@ -1,8 +1,6 @@
 package estimate.player;
 
 import cards.*;
-import estimate.player.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -30,21 +28,28 @@ public class Player {
         this.position = position;
     }
 
+    /**
+     *
+     *
+     * @param leadSuit
+     * @param trumpSuit
+     * @return
+     */
     public ArrayList<Card> getPlayableHand(Suit leadSuit, Suit trumpSuit) {
         return this.hand.getPlayableHand(leadSuit, trumpSuit);
     }
 
     /**
-     * Get the Player's ID
-     * @return
+     * Gets the Player's ID
+     * @return player's ID
      */
     public int getPlayerId() {
         return this.id;
     }
 
     /**
-     * Get the Position of the player
-     * @return
+     * Gets the Position of the player from index 0-3
+     * @return position index of player
      */
     public int getPosition(){
         return position;
@@ -52,7 +57,7 @@ public class Player {
 
 
     /**
-     * Set the Position of the player
+     * Sets the Position of the player from index 0-3
      * @param position
      */
     public void setPosition(int position){
@@ -62,7 +67,7 @@ public class Player {
 
     /**
      * Returns the player's hand. PlayerHand is a separate class
-     * @return
+     * @return player's hand
      */
     public PlayerHand getHand(){
         return hand;
@@ -78,20 +83,26 @@ public class Player {
 
 
     /**
-     * Remove Card from hand
-     * @param
-     * @return
+     * Removes Card from player's hand
+     * @param cardIndex
+     * @return Card removed
      */
     public Card removeFromHand(int cardIndex){
         return hand.removeCard(cardIndex);
     }
+
+    /**
+     * Removes Card from player's hand
+     * @param card
+     * @return Card removed
+     */
     public Card removeFromHand(Card card){
         return hand.removeCard(card);
     }
 
     /**
      * Get Player's bid for the current round
-     * @return
+     * @return player's bid for the round
      */
     public int getBid(){
         return bid;
@@ -122,7 +133,7 @@ public class Player {
     }
 
     /**
-     * Returns the status of the dealer
+     * Returns whether the player is dealer or not
      * @return
      */
     public boolean isDealer(){
@@ -137,10 +148,20 @@ public class Player {
         isDealer = value;
     }
 
+    /**
+     * Returns string value of player's position and Id
+     * @return
+     */
     public String toString() {
         return String.format("Id: %s, Position: %s", this.getPlayerId() ,this.getPosition() );
     }
 
+    /**
+     * Returns list of available bids
+     * @param tricksToWinForRound
+     * @param totalBidsSoFar
+     * @return
+     */
     public ArrayList<Integer> getAvailableBids(int tricksToWinForRound, int totalBidsSoFar) {
         ArrayList<Integer> returnList = new ArrayList<>();
 

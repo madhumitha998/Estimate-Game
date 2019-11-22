@@ -16,10 +16,24 @@ import java.util.Comparator;
 public class BidZeroFirstCardComparator implements Comparator<Card> {
     private Suit trumpSuit;
 
+    /**
+     * Constructs an instance of BidZeroFirstCardComparator
+     *
+     * @param  trumpSuit the trump Suit for the round
+     */
     public BidZeroFirstCardComparator(Suit trumpSuit) {
         this.trumpSuit = trumpSuit;
     }
 
+    /**
+     * Compares two cards for the purposes of sorting.
+     * Cards are ordered first by their suit value, then by their
+     *
+     * @param c1 the first card to be compared
+     * @param c2 the second card to be compared
+     * @return a negative integer, zero, or a positive integer if c1 is
+     * less than, equal to, or greater than c2.
+     */
     public int compare(Card c1, Card c2) {
         List<String> suitList = Arrays.asList("Clubs","Diamonds","Hearts","Spades");
         ArrayList<String> suitArrayList = new ArrayList<>();
