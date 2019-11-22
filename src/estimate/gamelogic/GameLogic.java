@@ -316,11 +316,16 @@ public class GameLogic {
 
         for (Suit suit: suits) {
             for (Rank rank: rankCards) {
-                String cardFaceLocation = "/images/cards/" +rankCardToString.get(rank)+suitToString.get(suit)+
+                String path = GameLogic.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+                        System.out.println(path);
+            
+		        
+                String cardFaceLocation = path +  "../images/cards/" +rankCardToString.get(rank)+suitToString.get(suit)+
                         ".gif";
+                System.out.println(cardFaceLocation + "Hi");
 //                System.out.println(cardFaceLocation);
                 // ImageIcon img = new ImageIcon(GameUI.class.getResource("/resource/cards/b.gif"));
-                ImageIcon cardFace = new ImageIcon(this.getClass().getResource(cardFaceLocation));
+                ImageIcon cardFace = new ImageIcon(cardFaceLocation);
                 Card aCard = new Card(suit,rank,cardFace);
                 deckOfCards.addCard(aCard);
             }
