@@ -100,15 +100,15 @@ public class Computer extends Player{
         //if computer is first player, position should be 0
         if(getPosition()==0){
             if(bid>0){
-                return selectCard.pickLargestCard(playerHand,trumpSuit);
+                return selectCard.pickCardFirstPlayerPositive(playerHand,trumpSuit);
             } else {
-                return selectCard.pickSmallestCard(playerHand,trumpSuit);
+                return selectCard.pickCardFirstPlayerNegative(playerHand,trumpSuit);
             }
         } else {
             if(bid>0){
-                return selectCard.pickBestCard1(playerHand,trumpSuit,leadSuit,highestPlayedCard);
+                return selectCard.pickCardNextPlayerPositive(playerHand,trumpSuit,leadSuit,highestPlayedCard);
             } else {
-                return selectCard.pickBestCard2(playerHand,trumpSuit,leadSuit,highestPlayedCard);
+                return selectCard.pickCardNextPlayerNegative(playerHand,trumpSuit,leadSuit,highestPlayedCard);
             }
         }
     }
