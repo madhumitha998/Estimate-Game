@@ -4,11 +4,11 @@ import cards.*;
 import java.util.*;
 
 /**
-* The SelectCard class returns the best card to play when the computer is
-* the first player with a positive bid
-* the first player with a negative bid
-* not the first player with a positive bid
-* not the first player with a negative bid
+* The SelectCard class returns the best card to play when the computer is:
+* <p>the first player with a positive bid</p>
+* <p>the first player with a negative bid</p>
+* <p>not the first player with a positive bid</p>
+* <p>not the first player with a negative bid</p>
 *
 * @author  Madhumitha
 * @version 1.0
