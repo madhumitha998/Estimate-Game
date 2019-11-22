@@ -1,14 +1,10 @@
 import cards.Card;
 import cards.*;
-import java.util.*;
 import estimate.gamelogic.GameLogic;
-import estimate.gamelogic.PlayerCardArray;
-import estimate.gamelogic.Round;
 import estimate.gamelogic.TableHand;
 import estimate.player.ArrayOfPlayers;
 import estimate.player.Player;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class TestTableHand {
 

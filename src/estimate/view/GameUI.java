@@ -151,14 +151,14 @@ public class GameUI {
 		System.out.println("PREPPING ROUND " + round + " SETUP. Game Logic round (should be aligned) : " + gameLogic.getRound());
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		
-		System.out.println("PRINTING LEADSUIT OF NEW ROUND " + gameLogic.getLeadSuit());
+		System.out.println("PRINTING LEADSUIT OF NEW ROUND " + gameLogic.getLeadSuitCard());
 		gameLogic.initialiseDeck();
 		gameLogic.setDealer(round);
 		
 		System.out.println("Players Hand (Should be empty): " + gameLogic.getArrayOfPlayers().getArrayOfPlayers().get(0).getHand());
 		
 		gameLogic.setPlayersHand(round);
-		gameLogic.setTrump();
+		gameLogic.setTrumpCard();
 		gameLogic.setPlayerOrder(round);
 		gameLogic.getTableHand().clearTableHand();
 
@@ -216,7 +216,7 @@ public class GameUI {
             			return;
             		} else {
 						if (roundCounter == cardsToDealPerRound[round-1]){
-							gameLogic.setLeadSuit(null);
+							gameLogic.setLeadSuitCard(null);
 						}
             			newRound();
             		}
@@ -269,16 +269,16 @@ public class GameUI {
 		        Card highestPlayedCard;
 		        Suit leadSuit2;
 
-		        if (gameLogic.getLeadSuit() == null) {
+		        if (gameLogic.getLeadSuitCard() == null) {
 		            leadSuit2 = null;
 		        } else {
-		            leadSuit2 = gameLogic.getLeadSuit().getSuit();
+		            leadSuit2 = gameLogic.getLeadSuitCard().getSuit();
 		        }
 
-		        if (gameLogic.getTableHand().sortedTableHand( gameLogic.getTrumpSuit().getSuit(), leadSuit2 ).size() == 0 ) {
+		        if (gameLogic.getTableHand().sortedTableHand( gameLogic.getTrumpCard().getSuit(), leadSuit2 ).size() == 0 ) {
 		            highestPlayedCard = null;
 		        } else {
-		            highestPlayedCard = gameLogic.getTableHand().sortedTableHand(gameLogic.getTrumpSuit().getSuit(), gameLogic.getLeadSuit().getSuit()).get(0).getPlayerCard();
+		            highestPlayedCard = gameLogic.getTableHand().sortedTableHand(gameLogic.getTrumpCard().getSuit(), gameLogic.getLeadSuitCard().getSuit()).get(0).getPlayerCard();
 		        }
 
 		        if (p instanceof Computer) {
@@ -286,12 +286,12 @@ public class GameUI {
 	                Computer pComputer = (Computer) p;
 	                System.out.println("Printing computer: " + pComputer);
 
-	                Card cardForCompToPlay = pComputer.playCard(gameLogic.getTrumpSuit().getSuit(), leadSuit2, highestPlayedCard);
+	                Card cardForCompToPlay = pComputer.playCard(gameLogic.getTrumpCard().getSuit(), leadSuit2, highestPlayedCard);
 	                System.out.println("Computer's Hand" + p.getHand() + "\n");
 
 	                if (p.getPosition() == 0) {
-	                    gameLogic.setLeadSuit(cardForCompToPlay);
-	                	String leadSuitString = "" + gameLogic.getLeadSuit().getSuit();
+	                    gameLogic.setLeadSuitCard(cardForCompToPlay);
+	                	String leadSuitString = "" + gameLogic.getLeadSuitCard().getSuit();
 	                    displayLead(leadSuitString);
 	                }
 
@@ -310,8 +310,8 @@ public class GameUI {
 
 	                try {
 		                if (p.getPosition() == 0) {
-		                    gameLogic.setLeadSuit(p.getHand().getCard(index));
-		                	String leadSuitString = "" + gameLogic.getLeadSuit().getSuit();
+		                    gameLogic.setLeadSuitCard(p.getHand().getCard(index));
+		                	String leadSuitString = "" + gameLogic.getLeadSuitCard().getSuit();
 		                    displayLead(leadSuitString);
 		                }
                 		gameLogic.getTableHand().addCard(p,p.removeFromHand(p.getHand().getCard(index)));
@@ -331,8 +331,8 @@ public class GameUI {
      * After each SubRound, this method is called to calculate the scores and get the trick winner
      */
 	public void finishSubRound(){
-        ArrayList<PlayerCardArray> sortedTableHand = gameLogic.getTableHand().sortedTableHand(gameLogic.getTrumpSuit().getSuit(),
-                gameLogic.getLeadSuit().getSuit());
+        ArrayList<PlayerCardArray> sortedTableHand = gameLogic.getTableHand().sortedTableHand(gameLogic.getTrumpCard().getSuit(),
+                gameLogic.getLeadSuitCard().getSuit());
 
         System.out.println(sortedTableHand);
 
@@ -642,14 +642,14 @@ public class GameUI {
 	public ArrayList<Card> getPlayableCards(Player p) {
         ArrayList<Card> playableCards;
 	    //Display playableHand to user
-	    if (gameLogic.getLeadSuit() == null) {
-	        playableCards = p.getPlayableHand(null, gameLogic.getTrumpSuit().getSuit());
+	    if (gameLogic.getLeadSuitCard() == null) {
+	        playableCards = p.getPlayableHand(null, gameLogic.getTrumpCard().getSuit());
 	        System.out.println(playableCards);
-	        System.out.println("Player's playable Cards: " + p.getPlayableHand(null, gameLogic.getTrumpSuit().getSuit()));
+	        System.out.println("Player's playable Cards: " + p.getPlayableHand(null, gameLogic.getTrumpCard().getSuit()));
 	    } else {
-	        playableCards = p.getPlayableHand(gameLogic.getLeadSuit().getSuit(), gameLogic.getTrumpSuit().getSuit());
-	        System.out.println("Player's playable Cards: " + p.getPlayableHand(gameLogic.getLeadSuit().getSuit(),
-	                gameLogic.getTrumpSuit().getSuit()));
+	        playableCards = p.getPlayableHand(gameLogic.getLeadSuitCard().getSuit(), gameLogic.getTrumpCard().getSuit());
+	        System.out.println("Player's playable Cards: " + p.getPlayableHand(gameLogic.getLeadSuitCard().getSuit(),
+	                gameLogic.getTrumpCard().getSuit()));
 	    }
 
 	    return playableCards;
@@ -671,7 +671,7 @@ public class GameUI {
 				Computer pComputer = (Computer) p;
 
 				pComputer.bidWinningTricks(numberOfSubRounds, gameLogic.getScoreboard().getTotalBidForRound(round),
-                            gameLogic.getTrumpSuit().getSuit());
+                            gameLogic.getTrumpCard().getSuit());
 				int predictedBid = p.getBid();
 				gameLogic.getScoreboard().addPrediction(round,p.getPlayerId(),predictedBid);
 			} else {
@@ -1034,7 +1034,7 @@ public class GameUI {
      * Displays a message informing player of the trump suit
      */
 	public void displayTrumpUI() {
-		String trumpSuitString = gameLogic.getTrumpSuit().getSuit().getName();
+		String trumpSuitString = gameLogic.getTrumpCard().getSuit().getName();
 
 		if (!(trumpList.isEmpty())){
 			for (JLabel item: trumpList){
