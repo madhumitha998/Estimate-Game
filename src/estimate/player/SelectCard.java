@@ -1,14 +1,19 @@
 package estimate.player;
+
 import cards.*;
 import java.util.*;
 import java.lang.Math;
 
 /**
- *
- * @author madhumitha
- * @version 1.0
- */
-
+* The SelectCard class returns the best card to play when the computer is
+* the first player with a positive bid
+* the first player with a negative bid
+* not the first player with a positive bid
+* not the first player with a negative bid
+*
+* @author  Madhumitha
+* @version 1.0
+*/
 public class SelectCard {
 
     public SelectCard(){

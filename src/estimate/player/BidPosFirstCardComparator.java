@@ -4,11 +4,12 @@ import java.util.*;
 import java.util.Comparator;
 
 /**
- *
- * @author madhumitha
- * @version 1.0
- */
-
+* The BidPosFirstCardComparator class compares cards when the computer's bid is positive
+* and when the computer is the first player in the trick
+*
+* @author  Madhumitha
+* @version 1.0
+*/
 public class BidPosFirstCardComparator implements Comparator<Card> {
     private Suit trumpSuit;
 

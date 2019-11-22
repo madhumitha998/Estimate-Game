@@ -1,17 +1,16 @@
+package estimate.player;
+
+import cards.*;
+import java.util.*;
+import java.lang.Math;
+
 /**
 * The Computer class can place bids and play cards
 * 
 *
 * @author  Madhumitha
-* @version 1.2
-* @since   2019-10-19 
+* @version 1.0
 */
-
-package estimate.player;
-import cards.*;
-import java.util.*;
-import java.lang.Math;
-
 public class Computer extends Player{
 
     public Computer(int id,int position){

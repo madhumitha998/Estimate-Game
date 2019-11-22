@@ -9,10 +9,12 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- *
- * @author madhumitha
- * @version 1.0
- */ 
+* The BidNegNextCardComparator class compares cards when the computer's bid is negative
+* and when the computer is not the first player in the trick
+*
+* @author madhumitha
+* @version 1.0
+*/ 
 public class BidNegNextCardComparator implements Comparator<Card> {
     private Suit trumpSuit;
     private Suit leadSuit;

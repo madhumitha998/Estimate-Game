@@ -1,15 +1,15 @@
-/**
- * The Computer class can place bids and play cards
- *
- *
- * @author  Madhumitha
- * @version 1.2
- * @since   2019-10-19
- */
 package estimate.player;
 
 import cards.*; 
 import java.util.*;
+
+/**
+* The PlayerHand class defines a hand of cards 
+* 
+*
+* @author  Madhumitha
+* @version 1.0
+*/
 public class PlayerHand extends Hand {
 
     private ArrayList<Card> hand = (ArrayList<Card>)(super.hand);
